@@ -423,7 +423,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * { field : 'reportId' ,visible: false }, {
@@ -1130,7 +1130,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * { field : 'reportId' ,visible: false }, {
@@ -1483,7 +1483,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * { field : 'reportId' ,visible: false }, {
@@ -1837,7 +1837,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * { field : 'reportId' ,visible: false }, {
@@ -2181,7 +2181,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * a. Customer Program Code b. Customer
