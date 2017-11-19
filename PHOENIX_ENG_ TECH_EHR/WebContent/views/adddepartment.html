@@ -1,0 +1,163 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt">
+			<!-- <div class="block-header">
+				<h2>
+					Update Employee List <small></small>
+				</h2>
+			</div> -->
+
+			<div class="card" data-ng-controller="adddepartmentcontroller">
+				<div class="card-header">
+					<h2>
+						Add Department<small></small>
+					</h2>
+					<div class="card-body card-padding">
+						<div class='row'>
+							<div class='col-sm-4'>
+								<!-- <div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-label zmdi-hc-fw"> </i>Department Id </span>
+									<div class="fg-line"></div>
+								</div>
+								<br> -->
+								<div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-flag zmdi-hc-fw"> </i>Department Name</span>
+									<div class="fg-line"></div>
+								</div>
+								<br>
+								<div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-flag zmdi-hc-fw"> </i>Department Code</span>
+									<div class="fg-line"></div>
+								</div>
+								
+								<div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-flag zmdi-hc-fw"> </i>Parent Department</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-account-box zmdi-hc-fw"></i>Manager</span>
+									<div class="fg-line"></div>
+								</div>
+								<!-- <div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i> Effective Start Date</span>
+									<div class="fg-line"></div>
+								</div> 
+								<div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-calendar zmdi-hc-fw"></i> Effective End Date</span>
+									<div class="fg-line"></div>
+								</div>  -->
+							</div>	
+							
+							<div class='col-sm-4'>
+								<!-- <div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" placeholder="Enter Department Id">
+									</div>	
+								</div>
+								<br/> -->
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" placeholder="Enter Department Name" ng-model='departmentName' id="departmentName" onkeypress="validateInstant(this)">
+									</div>	
+								</div>
+								<br/>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" placeholder="Enter Department Code" ng-model='departmentCode' id="departmentCode" onkeypress="validateInstant(this)">
+									</div>	
+								</div>
+								<br>
+								<div class="form-group">
+										<div class="fg-line">
+											<div class="select">
+												<select class="form-control" name="parentDepartment" ng-model='parentDepartment' id="parentDepartment" onchange="validateInstant(this)">
+													
+													<option ng-repeat='department in departments' value='{{department.departmentId}}'>{{department.parentDepartment.departmentName}}--->{{department.departmentName}}</option>
+													
+												</select>
+											</div>
+									</div>										
+								</div>
+								<br/>
+								<div class="form-group">
+										<div class="fg-line">
+											<div class="select">
+												<select class="form-control" name="managerId" ng-model='managerId' id="managerId" onchange="validateInstant(this)">
+													
+													<option value='{{manager.employeeId}}' ng-repeat='manager in managers'>{{manager.firstName}}&nbsp;{{manager.lastName}}</option>
+													
+												</select>
+											</div>
+									</div>										
+								</div>
+					<!-- 			<br/>
+								<div class="form-group" ng-controller='DatepickerDemoCtrl'>	
+									<div class="fg-line">
+										<div class="date-picker input-group dp-blue"
+										ng-class="{ 'is-opened': opened == true }">
+
+										<div class="fg-line"
+											ng-class="{ 'fg-toggled': opened == true }">
+											<input ng-click="open($event, 'opened')" type="text"
+												class="form-control" uib-datepicker-popup="{{format}}"
+												show-weeks="false" ng-model="dtPopup" is-open="opened"
+												min-date="minDate" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												placeholder="Select Effective Start Date" />
+										</div>
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-calendar ma-icon"></i></span>
+									</div>
+									</div>
+								</div>
+								
+								<div class="form-group" ng-controller='DatepickerDemoCtrl2'>	
+									<div class="fg-line">
+										<div class="date-picker input-group dp-blue"
+										ng-class="{ 'is-opened': opened == true }">
+
+										<div class="fg-line"
+											ng-class="{ 'fg-toggled': opened == true }">
+											<input ng-click="open($event, 'opened')" type="text"
+												class="form-control" uib-datepicker-popup="{{format}}"
+												show-weeks="false" ng-model="dtPopup" is-open="opened"
+												min-date="minDate" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												placeholder="Select Effective End Date" />
+										</div>
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-calendar ma-icon"></i></span>
+									</div>
+									</div>
+								</div><br/>
+								 -->
+								<br><br>
+								<div class="form-group">
+									<span>
+										<button class="btn btn-primary btn-icon-text waves-effect" ng-click='creatDepartment()'>
+										<i class="zmdi zmdi-check-all"></i> Add Department</button>
+													
+										<button class="btn btn-danger btn-icon-text waves-effect" ng-click='clearDepartment()'>
+										<i class="zmdi zmdi-close"></i> Clear</button>
+									</span>
+								</div>
+							</div>	
+							
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>

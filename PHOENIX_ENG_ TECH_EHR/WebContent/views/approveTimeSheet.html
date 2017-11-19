@@ -1,0 +1,252 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt">
+			<div class="block-header">
+				<h2>TimeSheet Approval</h2>
+			</div>
+
+			<div class="card" data-ng-controller="timesheetapproval">
+				<div class="card-header">
+					<h2>
+						<small></small>
+					</h2>
+					<!-- <ul class="actions">
+							<li class="dropdown" uib-dropdown><a href=""
+								uib-dropdown-toggle> <i class="zmdi zmdi-more-vert"></i>
+							</a>
+
+								<ul class="dropdown-menu dropdown-menu-right">
+									<li><a href="">Refresh</a></li>
+									<li><a href="">Approve All</a></li>
+									<li><a href="">Reject All</a></li>
+								</ul></li>
+						</ul> -->
+				</div>
+
+				<div class='table-responsive'>
+					<!-- <div class="input-group">
+									<input class="form-control" ng-model="searchText"
+										placeholder="Search" type="search" ng-change="search()" /> <span
+										class="input-group-addon"> <span
+										class="glyphicon glyphicon-search"></span>
+									</span>
+								</div> -->
+					<table class="table  table-hover data-table myTable">
+						<thead>
+							<tr>
+								<th class="EmpId"><i class=""> </i><a href=""
+									ng-click="sort('employeeId',$event)">Employee Id <span
+										class="{{Header[0]}}"></span>
+								</a></th>
+								<th class="name"><i
+									class="zmdi zmdi-assignment-account zmdi-hc-fw"></i><a
+									ng-click="sort('firstName')" href=""> First name<span
+										class="{{Header[1]}}"></span>
+								</a></th>
+
+								<th class="Email"><i class=""></i><a
+									ng-click="sort('lastName')" href=""> Last name <span
+										class="{{Header[2]}}"></span>
+								</a></th>
+								<th class="Email"><i class=""></i><a
+									ng-click="sort('weekStartDate')" href=""> From date <span
+										class="{{Header[3]}}"></span>
+								</a></th>
+								<th class="Email"><i class=""></i><a
+									ng-click="sort('weekEndDate')" href=""> To date <span
+										class="{{Header[4]}}"></span>
+								</a></th>
+								<th class="Email"><i class=""></i><a
+									ng-click="sort('totalHours')" href=""> Total hour <span
+										class="{{Header[5]}}"></span>
+								</a></th>
+								<th class="Email"><i class=""></i><a
+									ng-click="sort('timesheetStatus')" href=""> Status <span
+										class="{{Header[6]}}"></span>
+								</a></th>
+								<th class="Email"><i class=""></i><a href=""> Details <span
+										class="{{Header[7]}}"></span>
+								</a></th>
+								<th class="Email"><i class=""></i><a href=""> Action <span
+										class="{{Header[8]}}"></span>
+								</a></th>
+
+
+							</tr>
+						</thead>
+						<tbody>
+							<tr
+								ng-repeat="item in ItemsByPage[currentPage] | orderBy:columnToOrder:reverse">
+								<td>{{item.id.employeeId}}</td>
+								<td>{{item.firstName}}</td>
+								<td>{{item.lastName}}</td>
+								<td>{{item.id.weekStartDate}}</td>
+								<td>{{item.weekEndDate}}</td>
+								<td>{{item.totalHours}}</td>
+								<td>{{item.id.timesheetStatus}}</td>
+								<td>
+									<!-- <div class="col-sm-4" data-name="info-outline"
+										uib-tooltip="click here to see details"
+										ng-click="showDetails(item.id.employeeId,item.id.weekStartDate,item.id.weekEndDate)">
+										<p>
+											<i class="zmdi zmdi-info-outline zmdi-hc-fw"></i>
+										</p>
+									</div> -->
+									<div class="col-sm-4" data-name="info-outline"
+										style="cursor: pointer" data-toggle="modal"
+										data-target="#timesheetmodal"
+										ng-click="showDetails(item.id.timesheetSequence)">
+										<i class="zmdi zmdi-info-outline zmdi-hc-fw"></i>
+									</div>
+								</td>
+								<td>
+									<button data-swal-success-msg
+										class="btn bgm-orange btn-icon waves-effect waves-circle"
+										ng-click="approveTimeSheet(item)">
+										<i class="zmdi zmdi-check"></i>
+									</button>&nbsp;&nbsp;|&nbsp;&nbsp;
+									<button data-swal-cancel-msg
+										class="btn bgm-cyan btn-icon waves-effect waves-circle"
+										ng-click="rejecttimeSheet(item)">
+										<i class="zmdi zmdi-close"></i>
+									</button>
+								</td>
+
+
+							</tr>
+						</tbody>
+					</table>
+					<ul class="pagination pagination-sm">
+						<li ng-class="{active:0}"><a href="" ng-click="firstPage()">First</a></li>
+						<li ng-repeat="n in range(ItemsByPage.length)"><a href=""
+							ng-click="setPage()" ng-bind="n+1">1</a></li>
+						<li><a href="" ng-click="lastPage()">Last</a></li>
+					</ul>
+
+
+
+				</div>
+
+				<div class="modal fade" id="timesheetmodal" tabindex="-1"
+					role="dialog" aria-labelledby="myModalLabel">
+				<div class="modal-dialog modal-lg" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title" id="myModalLabel">TimeSheet Details</h4>
+							</div>
+							<div class="modal-body"
+								style="max-height: 500px; overflow-y: auto">
+								<div class='card-body table-responsive'>
+									<table class="table table-hover">
+										<thead>
+											<tr class="bg-info">
+												<th>Employee ID</th>
+												<th>Start Date</th>
+												<th>End Date</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<th>{{timeSheetDetails.employeeId}}</th>
+												<th>{{timeSheetDetails.startDateOfWeek|
+													date:'dd-MM-yyyy'}}</th>
+												<th>{{timeSheetDetails.endDateOfWeek|
+													date:'dd-MM-yyyy'}}</th>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<br>
+								<div class='card-body table-responsive'>
+									<table class="table table-hover table-striped">
+										<thead>
+											<tr class="bg-info">
+												<th>Task Name</th>
+												<th>Project Name</th>
+												<th>Project Type</th>
+												<th>Customer</th>
+												<th>Department</th>
+												<th class="text-center" ng-repeat="item in weekDays">{{item.day}}<br />{{item.date}}
+												</th>
+												<th>Total Hours</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr ng-repeat="task in tasks">
+												<th>{{task.taskName}}</th>
+												<th>{{task.projectName}}</th>
+												<th>{{task.projectType}}</th>
+												<th>{{task.customerName}}</th>
+												<th>{{task.departmentId}}</th>
+												<td class="text-center" ng-repeat="dayHR in task.dates">{{dayHR?dayHR:0}}</td>
+												<td class="text-center">{{task.totalHours}}</td>
+											</tr>
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="5"
+													style="text-decoration: underline; font-weight: bold;">Total
+													Week Hours</td>
+												<td class="text-center"
+													style="text-decoration: underline; font-weight: bold;"
+													ng-repeat="item in weekDaysHR.dates">{{item}}</td>
+												<td class="text-center"
+													style="text-decoration: underline; font-weight: bold;">{{weekDaysHR.totalHours}}</td>
+											</tr>
+										</tfoot>
+									</table>
+
+
+
+								</div>
+								<div class="row" style='border: 1px grey solid !important'>
+
+									<div class='col-sm-4'>
+										<div class="form-group">
+											<span class="input-group-addon"> Comments: </span>
+
+										</div>
+									</div>
+									<div class='col-sm-4'>
+
+										<div class="fg-line" style="margin-top: 5px;">{{timesheetcomments}}</div>
+									</div>
+								</div>
+
+
+							</div>
+							<div class="modal-footer">
+								<button class="btn btn-danger btn-icon-text waves-effect"
+									ng-click="clearTimeSheet()" data-dismiss="modal">
+									<i class="zmdi zmdi-close"></i> Close
+								</button>
+							</div>
+
+						</div>
+
+					</div>
+					<!-- <div id="recent-items-chart" class="flot-chart" data-line-chart></div> -->
+				</div>
+
+			</div>
+
+		</div>
+
+
+	</section>
+</section>

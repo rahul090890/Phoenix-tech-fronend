@@ -1,0 +1,220 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt">
+			<!-- <div class="block-header">
+				<h2>
+					Update Employee List <small></small>
+				</h2>
+			</div> -->
+
+			<div class="card" data-ng-controller="cpceditcontroller">
+				<div class="card-header">
+					<h2>
+						Update Customer Program Code<small></small>
+					</h2>
+					<div class="card-body card-padding">
+						<div class='table-responsive'>
+							<div class="input-group">
+								<input class="form-control" ng-model="searchText"
+									placeholder="Search" type="search" ng-change="search()" /> <span
+									class="input-group-addon"> <span
+									class="glyphicon glyphicon-search"></span>
+								</span>
+							</div>
+							<table class="table  table-hover data-table myTable">
+								<thead>
+									<tr>
+										<th class="EmpId"><i class="zmdi zmdi-label zmdi-hc-fw">
+										</i><a href="" ng-click="sort('customerProgramId',$event)">Id
+												<span class="{{Header[0]}}"></span>
+										</a></th>
+										<th class="name"><i
+											class="zmdi zmdi-assignment-account zmdi-hc-fw"></i><a
+											ng-click="sort('customer')" href=""> Customer<span
+												class="{{Header[1]}}"></span>
+										</a></th>
+
+										<th class="Email"><i class="zmdi zmdi-city zmdi-hc-fw"></i><a
+											ng-click="sort('customerProgramCode')" href=""> Program
+												Name <span class="{{Header[2]}}"></span>
+										</a></th>
+										<th class="Email"><i class="zmdi zmdi-city zmdi-hc-fw"></i><a
+											ng-click="sort('customerProgramType')" href=""> Program
+												Type <span class="{{Header[3]}}"></span>
+										</a></th>
+										<!-- <th class="Email"><i class="zmdi zmdi-city zmdi-hc-fw"></i><a
+											href=""> Projects <span class="{{Header[4]}}"></span>
+										</a></th> -->
+										<th class="Email">
+											<!-- <a ng-click="sort('lastName')" href=""> --> <a>
+												Actions <span class="{{Header[5]}}"></span>
+										</a>
+										</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr
+										ng-repeat="item in ItemsByPage[currentPage] | orderBy:columnToOrder:reverse">
+										<td>{{item.customerProgramId}}</td>
+										<td>{{item.customer.customerName}}</td>
+										<td>{{item.customerProgramCode}}</td>
+										<td>{{item.customerProgramType}}</td>
+										<!-- <td><span ng-repeat="project in item.projects"
+											ng-model='projectids'>
+												<p>{{project.projectName}}</p>
+										</span></td> -->
+										<td>
+											<p>
+												<span><a ng-click="editcpcDetails(item)">Edit</a></span>
+												<!-- &nbsp;| &nbsp; <span><a ng-click="deletecpcDetails(item)">Delete</a></span> -->
+											</p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<ul class="pagination pagination-sm">
+								<li ng-class="{active:0}"><a href="" ng-click="firstPage()">First</a></li>
+								<li ng-repeat="n in range(ItemsByPage.length)"><a href=""
+									ng-click="setPage()" ng-bind="n+1">1</a></li>
+								<li><a href="" ng-click="lastPage()">Last</a></li>
+							</ul>
+
+
+
+						</div>
+
+						<div class='row' id='updatecpcDetails'
+							style='border: 1px grey solid !important'>
+							<div class='col-sm-4'>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-label zmdi-hc-fw"> </i>Id </span>
+									<div class="fg-line"></div>
+								</div>
+
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-camera-front zmdi-hc-fw"> </i>Customer</span>
+									<div class="fg-line"></div>
+								</div>
+								<!-- <div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-camera-front zmdi-hc-fw"> </i> Projects </span>
+									<div class="fg-line"></div>
+								</div> -->
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-camera-front zmdi-hc-fw"> </i> Program Name</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-camera-front zmdi-hc-fw"> </i> Program Type</span>
+									<div class="fg-line"></div>
+								</div>
+							</div>
+
+							<div class='col-sm-4'>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control"
+											placeholder="Customer Program Id"
+											ng-model='customerProgramId' disabled>
+									</div>
+								</div>
+
+								<div class="form-group">
+									<div class="fg-line">
+										<div class="select">
+											<select class="form-control" ng-model='customerid' id="customerId"
+											onchange="validateInstant(this)"
+												ng-options="customer.customerId  as customer.customerName    for customer in customers"></select>
+
+										</div>
+									</div>
+								</div>
+								<br>
+								<!-- <div class="form-group">
+									<div class="fg-line">
+									<div ng-dropdown-multiselect="" options="example14data" selected-model="example14model" checkboxes="true" extra-settings="example14settings" id="lenght"></div>
+									
+										<div class="select">
+											<select chosen multiple data-placeholder="Select a Project..." class="w-100" ng-model='project'
+												ng-options="projectdetails.projectid  as projectdetails.projectName    for projectdetails in projects">
+
+											</select>
+
+										</div>
+									</div>
+								</div> -->
+								<!-- <div class="form-group">
+									<div class="fg-line">
+										<div ng-dropdown-multiselect="" options="example14data"
+											selected-model="example14model" checkboxes="true"
+											extra-settings="example14settings"></div>
+
+										 <div class="select">
+											<select chosen multiple data-placeholder="Select a Project..." class="w-100" ng-model='project'
+												ng-options="projectdetails.projectid  as projectdetails.projectName    for projectdetails in projects">
+
+											</select>
+
+										</div> 
+									</div>
+								</div> --> 
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" id="customerprogName"
+											onkeypress="validateInstant(this)"
+											placeholder="Customer Program Name"
+											ng-model='customerProgramCode2'>
+
+									</div>
+								</div>
+								<br />
+								<div class="form-group">
+									<div class="fg-line">
+										<div class="select">
+											<select class="form-control" ng-model='customerProgramType' id="customerProgCodeType"
+											onchange="validateInstant(this)"
+												ng-options="customerProgramCode.groupKey  as customerProgramCode.groupValue    for customerProgramCode in customerProgramCodelist.customerProgramType">
+
+											</select>
+										</div>
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<span>
+										<button class="btn btn-primary btn-icon-text waves-effect"
+											ng-click='savecpcDetails()'>
+											<i class="zmdi zmdi-check-all"></i> Update
+										</button>
+
+										<button class="btn btn-danger btn-icon-text waves-effect"
+											ng-click='resetcpcuser()'>
+											<i class="zmdi zmdi-close"></i> Cancel
+										</button>
+									</span>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+</section>

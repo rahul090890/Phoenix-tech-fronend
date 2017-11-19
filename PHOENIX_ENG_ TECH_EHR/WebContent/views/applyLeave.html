@@ -1,0 +1,351 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt" ng-controller="leavebalancecontroller">
+
+			<!-- <div class="block-header">
+				<h2>
+					Leave Request <small></small>
+				</h2>
+			</div> -->
+			<div class="card">
+				<!-- <div class="card-header">
+					<h2>
+						Leave Summary<small></small>
+					</h2>
+				</div> -->
+
+				<div class="">
+					<table style="width: 100%">
+						<thead>
+							<tr>
+								<th class='col-sm-4'>Leave Type</th>
+								<th class='col-sm-4'>Leave Available</th>
+								<th class='col-sm-4'>Leave Pending</th>
+								
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="" ng-repeat=" x in leaveupdates"
+								style="border: 1px solid #EDECEC;">
+								<td class='col-sm-4'><span style="color: Black;">{{x.leaveType}}</span></td>
+								<td class='col-sm-4'><span style="color: green;">{{x.eligible}}</span></td>
+								<td class='col-sm-4'><span style="color: red;">{{x.pendingApproval}}</span></td>
+								
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="card">
+				<div class="card-body card-padding">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Employee
+										id</i></span>
+								<div class="fg-line"></div>
+							</div>
+
+							<br />
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Employee
+										Name</i></span>
+								<div class="fg-line"></div>
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Department</i></span>
+								<div class="fg-line"></div>
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Email
+										Address</i></span>
+								<div class="fg-line"></div>
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Leave
+										Type</i></span>
+
+							</div>
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">From-Date
+								</i></span>
+
+							</div>
+							<br /> <br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">To-Date </i></span>
+
+							</div>
+							<br /> <br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Leave
+										Available </i></span>
+
+							</div>
+							<br /> <br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Days
+										Taken </i></span>
+
+							</div>
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Remaining
+										Leaves </i></span>
+
+							</div>
+						</div>
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control" ng-model="employeeid"
+										disabled>
+								</div>
+
+							</div>
+
+							<br />
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control" ng-model='employeename'
+										disabled>
+								</div>
+
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control"
+										ng-model='employeedepartment' disabled>
+								</div>
+
+							</div>
+
+							<br />
+							<br>
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control"
+										ng-model='employeeemail' disabled>
+								</div>
+
+							</div>
+
+							<br />
+							<br>
+
+
+							<div class="form-group">
+								<div class="fg-line">
+
+									<div class="select">
+										<select class="form-control" name="category-group"
+											id="categoryGroup" class="form-control"
+											ng-model="itemSelected"
+											ng-change="updateleavesdetails(itemSelected)"
+											ng-options=" category.leaveType for category in leaveupdates">
+
+										</select>
+
+									</div>
+								</div>
+							</div>
+
+							<br />
+
+
+
+							<div class="form-group" style="margin-top: 5px;">
+								<div class="fg-line">
+
+									<div class="date-picker input-group dp-blue"
+										ng-class="{ 'is-opened': opened == true }">
+										<span class="input-group-addon" style="background-color:transparent"><i
+											class="zmdi zmdi-calendar ma-icon"></i></span>
+										<div class="fg-line"
+											ng-class="{ 'fg-toggled': opened == true }">
+											<input ng-click="open($event, 1)" id='applyLeaveStartDate' type="text" readonly
+												class="form-control" uib-datepicker-popup="{{format}}"
+												show-weeks="false" ng-model="dtPopup" is-open="opened"
+												min-date="minDate" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												placeholder="Select Date" ng-change="refreshLeavetaken('applyLeaveStartDate')" />
+										</div>
+
+									</div>
+
+								</div>
+							</div>
+
+							<br />
+							<div class="form-group" style="margin-top: 5px;">
+								<div class="fg-line">
+
+									<div class="date-picker input-group dp-blue"
+										ng-class="{ 'is-opened': opened2 == true }">
+										<span class="input-group-addon" style="background-color:transparent"><i
+											class="zmdi zmdi-calendar ma-icon"></i></span>
+										<div class="fg-line"
+											ng-class="{ 'fg-toggled': opened2 == true }">
+											<input ng-click="open($event, 2)"  id='applyLeaveEndDate' type="text" readonly
+												class="form-control" uib-datepicker-popup="{{format}}"
+												show-weeks="false" ng-model="dtPopup1" is-open="opened2"
+												min-date="minDate" datepicker-options="dateOptions"
+												ng-required="true" close-text="Close"
+												placeholder="Select Date" ng-change="refreshLeavetaken('applyLeaveEndDate')" />
+										</div>
+
+									</div>
+
+								</div>
+
+							</div>
+
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control" ng-model="totalLeaves"
+										disabled>
+								</div>
+
+							</div>
+							<br />
+
+							<div class="form-group">
+								<div class="fg-line" style="display: inline-block;">
+									<input type="text" class="form-control" ng-model="leaveTaken"
+										disabled>
+								</div>
+								<!-- <div class="col-sm-12" style="display: inline-block;">
+									<button style="float: right" title="Calculate Leave taken"
+										ng-click="refreshLeavetaken()"
+										class="btn bgm-teal btn-icon waves-effect waves-circle">
+										<i class="zmdi zmdi-refresh"></i>
+									</button>
+								</div> -->
+							</div>
+							<br />
+
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" id="applyLeaveRemaining" class="form-control" ng-model="remainLeaves" onchange="validateInstant(this)" disabled>
+
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<div class="card-body card-padding">
+					<div class="row">
+						<div class="col-sm-4">
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Supervisor
+										Name </i></span>
+								<div class="fg-line"></div>
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Supervisor
+										email</i></span>
+								<div class="fg-line"></div>
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Supervisor
+										ID </i></span>
+								<div class="fg-line"></div>
+							</div>
+							<br>
+							<div class="form-group">
+								<span class="input-group-addon"><i class="">Comments
+								</i></span>
+								<div class="fg-line"></div>
+							</div>
+
+						</div>
+
+						<div class="col-sm-4">
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control" ng-model='managername'
+										disabled>
+								</div>
+
+							</div>
+
+							<br />
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control" ng-model='manageremail'
+										disabled>
+								</div>
+
+							</div>
+
+							<br />
+
+							<div class="form-group">
+								<div class="fg-line">
+									<input type="text" class="form-control" ng-model='managerid' disabled>
+								</div>
+
+							</div>
+							<br>
+							
+							<div class="form-group">
+								<div class="fg-line">
+									<textArea type="text" required class="form-control" onkeypress="validateInstant(this)" ng-model='comments' id='applyLeaveComments'></textArea>
+								</div>
+
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<button class="btn bgm-lightblue waves-effect" style="float: right;" ng-click='applyleave()'>Apply</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+	</section>
+
+</section>
+
+<footer id="footer" data-ng-include src="'template/footer.html'"></footer>
+
+

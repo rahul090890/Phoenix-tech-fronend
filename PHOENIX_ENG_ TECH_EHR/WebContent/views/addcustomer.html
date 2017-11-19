@@ -1,0 +1,146 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt">
+			<!-- <div class="block-header">
+				<h2>
+					Update Employee List <small></small>
+				</h2>
+			</div> -->
+
+			<div class="card" data-ng-controller="addcustomercontroller">
+				<div class="card-header">
+					<h2>
+						Add Customer<small></small>
+					</h2>
+					<div class="card-body card-padding">
+						<div class='row'>
+							<div class='col-sm-4'>
+								<!-- <div class="form-group">
+									<span class="input-group-addon"><i class="zmdi zmdi-label zmdi-hc-fw"> </i> ID</span>
+									<div class="fg-line"></div>
+								</div> -->
+
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-assignment-account zmdi-hc-fw"></i>Customer
+										Name</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-city zmdi-hc-fw" title="Customer Code"></i>Customer
+										Code</span>
+									<div class="fg-line"></div>
+								</div><br>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-city zmdi-hc-fw" title="Customer Address"></i>Address</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-globe zmdi-hc-fw"></i>Country</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-pin zmdi-hc-fw"></i>Zip Code</span>
+									<div class="fg-line"></div>
+								</div>
+							</div>
+
+							<div class='col-sm-4'>
+								<!-- <div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" placeholder="Enter Customer Id">
+									</div>	
+								</div> -->
+
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control"
+											ng-model='customerName' placeholder="Enter Customer Name"
+											id="customerName" onkeypress="validateInstant(this)">
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control"
+											ng-model='customerCode' placeholder="Enter Customer Code"
+											id="customerCode" onkeypress="validateInstant(this)">
+									</div>
+								</div><br>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control"
+											ng-model='customerAddress' id='customerAddress'
+											onkeypress="validateInstant(this)"
+											placeholder="Enter Customer Address">
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="fg-line">
+
+										<div class="select">
+											<br> <select class="form-control" ng-model="country"
+												id="country" onchange="validateInstant(this)"
+												ng-options="country.name for country in countries track by country.code">
+											</select>
+
+											<!-- <div class="flagstrap" id="select_country"
+											ng-model='customerCountry' data-input-name="NewBuyer_country"
+											data-selected-country=""></div> -->
+										</div>
+
+									</div>
+								</div>
+</br>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" ng-model='customerZip'
+											id="customerZip" onkeypress="validateInstant(this)"
+											placeholder="Enter Zip Code">
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<span>
+										<button class="btn btn-primary btn-icon-text waves-effect"
+											ng-click='addcustomer();'>
+											<i class="zmdi zmdi-check-all"></i> Add Customer
+										</button>
+
+										<button class="btn btn-danger btn-icon-text waves-effect" ng-click='clearaddcustomer()'>
+											<i class="zmdi zmdi-close" ></i> Clear
+										</button>
+									</span>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</section>
+
+</section>
+<script>
+	$(document).ready(function() {
+		$('#select_country').attr('data-selected-country', 'IN');
+		$('#select_country').flagStrap();
+	});
+</script>

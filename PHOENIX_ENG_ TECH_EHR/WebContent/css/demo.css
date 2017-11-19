@@ -1,0 +1,388 @@
+/*
+ * Following CSS codes are used only for demo purpose thus you can remove them completly whenever you want. 
+ */
+ .pen-title {
+  padding: 50px 0;
+  text-align: center;
+  letter-spacing: 2px;
+}
+.pen-title h1 {
+  margin: 0 0 20px;
+  font-size: 48px;
+  font-weight: 300;
+}
+.pen-title span {
+  font-size: 12px;
+}
+.pen-title span .fa {
+  color: #33b5e5;
+}
+.pen-title span a {
+  color: #33b5e5;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+/* Form Module */
+.form-module {
+  position: relative;
+  background: #ffffff;
+  max-width: 320px;
+  width: 100%;
+  border-top: 5px solid #33b5e5;
+  box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+  margin: 0 auto;
+}
+.form-module .toggle {
+  cursor: pointer;
+  position: absolute;
+  top: -0;
+  right: -0;
+  background: #33b5e5;
+  width: 30px;
+  height: 30px;
+  margin: -5px 0 0;
+  color: #ffffff;
+  font-size: 12px;
+  line-height: 30px;
+  text-align: center;
+}
+.form-module .toggle .tooltip {
+  position: absolute;
+  top: 5px;
+  right: -65px;
+  display: block;
+  background: rgba(0, 0, 0, 0.6);
+  width: auto;
+  padding: 5px;
+  font-size: 10px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.form-module .toggle .tooltip:before {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: -5px;
+  display: block;
+  border-top: 5px solid transparent;
+  border-bottom: 5px solid transparent;
+  border-right: 5px solid rgba(0, 0, 0, 0.6);
+}
+.form-module .form {
+  display: none;
+  padding: 40px;
+}
+.form-module .form:nth-child(2) {
+  display: block;
+}
+.form-module h2 {
+  margin: 0 0 20px;
+  color: #33b5e5;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1;
+}
+.form-module input {
+  outline: none;
+  display: block;
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  margin: 0 0 20px;
+  padding: 10px 15px;
+  box-sizing: border-box;
+  font-wieght: 400;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.form-module input:focus {
+  border: 1px solid #33b5e5;
+  color: #333333;
+}
+.form-module button {
+  cursor: pointer;
+  background: #33b5e5;
+  width: 100%;
+  border: 0;
+  padding: 10px 15px;
+  color: #ffffff;
+  -webkit-transition: 0.3s ease;
+  transition: 0.3s ease;
+}
+.form-module button:hover {
+  background: #178ab4;
+}
+.form-module .cta {
+  background: #f2f2f2;
+  width: 100%;
+  padding: 15px 40px;
+  box-sizing: border-box;
+  color: #666666;
+  font-size: 12px;
+  text-align: center;
+}
+.form-module .cta a {
+  color: #333333;
+  text-decoration: none;
+}
+ .fa {
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transform: translate(0, 0);
+}
+.fa-pencil:before {
+    content: "\f040";
+}
+.fa-remove:before, .fa-close:before, .fa-times:before {
+    content: "\f00d";
+}
+.fa-remove:before, .fa-close:before, .fa-times:before {
+    content: "\f00d";
+}
+ .dialogdemoThemeInheritance .container {
+  text-align: center; }
+.glyphicon {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-search:before {
+    content: "\e003";
+}
+
+.glyphicon-chevron-down:before {
+    content: "\e114";
+}
+
+.glyphicon-chevron-up:before {
+    content: "\e113";
+}
+
+.toggle-switch .ts-label {
+    min-width: 130px;
+}
+
+.media-demo .media {
+    margin-bottom: 25px;
+}
+
+.media-demo .media .media {
+    margin-top: 25px;
+}
+
+.dropdown-basic-demo {
+    display: inline-block;
+    margin: 0 15px 20px 0;
+}
+
+.dropdown-basic-demo .dropdown-menu {
+    display: block;
+    position: relative;
+    transform: scale(1);
+    opacity: 1;
+    filter: alpha(opacity=1);
+    z-index: 0;
+}
+
+.dropdown-btn-demo .dropdown, .dropdown-btn-demo .btn-group, .btn-demo .btn {
+    display: inline-block;
+    margin: 0 5px 7px 0;
+}
+
+.modal-preview-demo .modal {
+    position: relative; 
+    display: block; 
+    z-index: 0; 
+    background: rgba(0,0,0,0.1);
+}
+
+.margin-bottom > *{
+    margin-bottom: 20px;
+}
+
+.popover-demo .popover {
+    position: relative;
+    display: inline-block;
+    opacity: 1;
+    margin: 0 10px 30px;
+    z-index: 0;
+}
+
+.color-block {
+    height: 100px;
+    color: rgba(255,255,255,0.9);
+    text-align: center;
+    padding: 15px 0;
+    border-radius: 2px;
+    margin-bottom: 25px;
+}
+
+.color-block span {
+    display: block;
+}
+
+.color-block .color {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.color-block .code {
+    margin: 5px 0;
+}
+
+.color-block .less {
+    font-size: 11px;
+}
+
+.animation-demo .row {
+    margin: 25px -6px 0;
+    margin-bottom: -10px;
+}
+
+.animation-demo .card-body img {
+    width: 100%;
+    z-index: 1;
+    position: relative;
+}
+
+.animation-demo .col-xs-6 {
+    padding: 0 6px;
+    margin-bottom: 12px;
+}
+
+.animation-demo .btn {
+    width: 100%;
+    text-transform: none;
+}
+
+.bs-item {
+    background: #fff;
+    margin-bottom: 30px;
+    height: 100px;
+    text-align: center;
+    font-size: 14px;
+    border-radius: 2px;
+}
+
+.bs-item:before {
+    display: inline-block;
+    content: "";
+    height: 100px;
+    width: 1px;
+    vertical-align: middle;
+}
+
+.btn-colors > .btn {
+    min-width: 112px;
+}
+
+.btn-demo > .btn, .btn-group-demo > .btn-group {
+    margin: 0 5px 10px 0;
+}
+
+
+
+.icons-demo .card-body .zmdi, .card-body .socicon {
+    font-size: 23px;
+    vertical-align: middle;
+    color: #333;
+    margin-right: 10px;
+}
+
+.icons-demo .card-body .col-sm-4 {
+    padding: 0 7px;
+}
+
+.icons-demo .card-body .col-sm-4 p {
+    padding: 8px;
+    border-radius: 2px;
+    margin-bottom: 0;
+}
+
+.icons-demo .card-body .col-sm-4 p:hover {
+    background: #eee;
+    cursor: pointer;
+}
+
+.notifications .btn {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.datepicker-demo .dd-block {
+    display: inline-block;
+    margin-bottom: 20px;
+    margin-right: 25px;
+    vertical-align: top;
+}
+
+.input-group-addon .zmdi{
+	font-size:18px;
+}
+
+.searchInput{
+	float:left;
+	width:70% !important;
+}
+
+.seacrhBtn{
+	float:right;
+}
+
+.rowtimesheet{
+	/* border:1px solid #0d8aee; */
+}
+
+.leaveInfo .btn-icon{
+	font-size: 18px;
+	display:none;
+}
+
+#empLogout{
+	/*margin-top:5px;
+	padding:5px;*/
+}
+
+#addworkLog,#deleteWorkLog{
+	cursor:pointer;
+}
+
+.timesheetContent{
+	font-size: 11px;
+	border: 1px solid #0d8aee;
+}
+
+.timesheetContent select {
+	font-size:10px;
+}
+
+#timeTable .col-sm-1{
+	width:11%;
+}
+
+#timeTable .col-sm-5{
+	width:23%;
+}
+#checkAll{
+	margin:5px;
+}
+
+
+#timeHead{
+/* 	background:#0d8aee; */
+	color:#fff;
+	height:30px;
+	padding-top:5px;
+	margin-left: -1px;
+    margin-right: -1px;
+}

@@ -1,0 +1,30 @@
+{
+    "list": [
+        {
+            "total_leave":12,
+            "leavetype":"Annual leave",
+            "leavepending":"2",
+             "leaveavalible":"8"
+           
+        },
+        {
+             "total_leave":4,
+            "leavetype":"Sick leave",
+            "leavepending":"2",
+             "leaveavalible":"1"
+        },
+        {
+             "total_leave":40,
+            "leavetype":"Meternity leave",
+            "leavepending":"0",
+             "leaveavalible":"40"
+        },
+        {
+              "total_leave":5,
+            "leavetype":"Other leave",
+            "leavepending":"2",
+             "leaveavalible":"0"
+        }
+      
+    ]
+}

@@ -1,0 +1,262 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt">
+			<!-- <div class="block-header">
+				<h2>
+					Update Employee List <small></small>
+				</h2>
+			</div> -->
+
+			<div class="card" data-ng-controller="editdepartmentcontroller">
+				<div class="card-header">
+					<h2>
+						Update Department<small></small>
+					</h2>
+					<div class="card-body card-padding">
+						<div class="row">
+							<div class='table-responsive'>
+								<div class="input-group">
+									<input class="form-control" ng-model="searchText"
+										placeholder="Search" type="search" ng-change="search()" /> <span
+										class="input-group-addon"> <span
+										class="glyphicon glyphicon-search"></span>
+									</span>
+								</div>
+								<table class="table  table-hover data-table myTable">
+									<thead>
+										<tr>
+											<!-- <th class="EmpId"><i class="zmdi zmdi-label zmdi-hc-fw">
+											</i><a href="" ng-click="sort('departmentId',$event)">Department
+													Id <span class="{{Header[0]}}"></span>
+											</a></th> -->
+											<th class="EmpId"><i class="zmdi zmdi-label zmdi-hc-fw">
+											</i><a href="" ng-click="sort('departmentCode',$event)">Department
+													Code <span class="{{Header[0]}}"></span>
+											</a></th>
+											<th class="name"><i
+												class="zmdi zmdi-assignment-account zmdi-hc-fw"></i><a
+												ng-click="sort('departmentName')" href=""> Department
+													Name<span class="{{Header[1]}}"></span>
+											</a></th>
+
+											<th class="Email"><i class="zmdi zmdi-city zmdi-hc-fw"></i><a
+												ng-click="sort('parentDepartmentName')" href=""> Parent
+													Department Name <span class="{{Header[2]}}"></span>
+											</a></th>
+
+											<!-- <th class="Email"><i class="zmdi zmdi-globe zmdi-hc-fw">
+											</i><a ng-click="sort('manager')" href="">Manager <span
+													class="{{Header[3]}}"></span>
+											</a></th> -->
+
+
+											<th class="Email">
+												<!-- <a ng-click="sort('lastName')" href=""> --> <a>
+													Actions <span class="{{Header[4]}}"></span>
+											</a>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											ng-repeat="item in ItemsByPage[currentPage] | orderBy:columnToOrder:reverse">
+											<td>{{item.departmentCode}}</td>
+											<td>{{item.departmentName}}</td>
+											<td>{{item.parentDepartment.departmentName}}</td>
+											<!-- <td>{{item.manager.firstName}}&nbsp;{{item.manager.lastName}}</td> -->
+											<td>
+												<p>
+													<span><a ng-click="editdepartmentDetails(item)">Edit</a></span>
+													<!-- &nbsp;| &nbsp; <span><a  ng-click="deleteDepartment(item)">Delete</a></span> -->
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<ul class="pagination pagination-sm">
+									<li ng-class="{active:0}"><a href=""
+										ng-click="firstPage()">First</a></li>
+									<li ng-repeat="n in range(ItemsByPage.length)"><a href=""
+										ng-click="setPage()" ng-bind="n+1">1</a></li>
+									<li><a href="" ng-click="lastPage()">Last</a></li>
+								</ul>
+
+
+
+							</div>
+
+
+
+
+							<div class='row' id="departmentupdatedetails"
+								style='border: 1px grey solid !important'>
+								<div class='col-sm-4'>
+									<!-- <div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-label zmdi-hc-fw"> </i>Department Id </span>
+										<div class="fg-line"></div>
+									</div> -->
+									<div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-label zmdi-hc-fw"> </i>Department Code </span>
+										<div class="fg-line"></div>
+									</div>
+									<br>
+									<div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-flag zmdi-hc-fw"> </i>Department Name</span>
+										<div class="fg-line"></div>
+									</div>
+
+									<div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-flag zmdi-hc-fw"> </i>Parent Department</span>
+										<div class="fg-line"></div>
+									</div>
+									<div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-account-box zmdi-hc-fw"></i>Manager</span>
+										<div class="fg-line"></div>
+									</div>
+									<!-- 	<br>
+									<div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-calendar zmdi-hc-fw"></i>Effective Start
+											Date</span>
+										<div class="fg-line"></div>
+									</div>
+									<br />
+									<div class="form-group">
+										<span class="input-group-addon"><i
+											class="zmdi zmdi-calendar zmdi-hc-fw"></i>Effective End Date</span>
+										<div class="fg-line"></div>
+									</div> -->
+								</div>
+
+								<div class='col-sm-4'>
+									<!-- <div class="form-group">
+										<div class="fg-line">
+											<div class="input" name="departmentId">
+												<input type="text" class="form-control" disabled="disabled"
+													ng-model='departmentid' value='{{departmentid}}'>
+											</div>
+										</div>
+									</div> -->
+									<div class="form-group">
+										<div class="fg-line">
+											<div class="input" name="departmentCode">
+												<input type="text" class="form-control" id='departmentCode'
+													ng-model='departmentCode' value='{{departmentCode}}'>
+											</div>
+										</div>
+									</div>
+									<br />
+									<div class="form-group">
+										<div class="fg-line">
+											<div class="input" name="departmentName">
+												<input type="text" class="form-control"  id="departmentName" onkeypress="validateInstant(this)" 
+													ng-model='departmentName' value='{{departmentName}}'>
+											</div>
+										</div>
+
+									</div>
+									<br />
+									<div class="form-group">
+										<div class="fg-line">
+											<div class="select">
+												<select class="form-control" ng-model='parentDepartment'  id="parentDepartment" onchange="validateInstant(this)"
+													ng-options="department.departmentId  as department.parentDepartment.departmentName+'--->'+ department.departmentName    for department in departments"></select>
+
+											</div>
+										</div>
+
+									</div>
+									<br />
+									<div class="form-group">
+										<div class="fg-line">
+											<div class="select">
+											<select class="form-control" ng-model='managerId'  id="managerId" onchange="validateInstant(this)"
+											ng-options="manager.employeeId  as manager.firstName +' '+ manager.lastName    for manager in managersList"></select>
+												<!-- <select class="form-control" ng-model='managerId'>
+													<option ng-repeat='manager in managersList'
+														value='{{manager.employeeId}}'>{{manager.firstName}}&nbsp;{{manager.lastName}}</option>
+
+												</select> -->
+											</div>
+										</div>
+									</div>
+									<br />
+									<!-- 	<div class="form-group">
+										<div class="fg-line">
+											<div class="date-picker input-group dp-blue"
+												ng-class="{ 'is-opened': opened == true }">
+
+												<div class="fg-line"
+													ng-class="{ 'fg-toggled': opened == true }">
+													<input ng-click="open($event, 'opened')" type="text"
+														class="form-control" uib-datepicker-popup="{{format}}"
+														show-weeks="false" ng-model="dtPopup" is-open="opened"
+														min-date="minDate" datepicker-options="dateOptions"
+														ng-required="true" close-text="Close" placeholder=""
+														value='01-01-2013' />
+												</div>
+												<span class="input-group-addon"><i
+													class="zmdi zmdi-calendar ma-icon"></i></span>
+											</div>
+										</div>
+									</div>
+									<br />
+									<div class="form-group">
+										<div class="fg-line">
+											<div class="date-picker input-group dp-blue"
+												ng-class="{ 'is-opened': opened == true }">
+
+												<div class="fg-line"
+													ng-class="{ 'fg-toggled': opened == true }">
+													<input ng-click="open($event, 'opened')" type="text"
+														class="form-control" uib-datepicker-popup="{{format}}"
+														show-weeks="false" ng-model="dtPopup" is-open="opened"
+														min-date="minDate" datepicker-options="dateOptions"
+														ng-required="true" close-text="Close" placeholder=""
+														value='01-01-2016' />
+												</div>
+												<span class="input-group-addon"><i
+													class="zmdi zmdi-calendar ma-icon"></i></span>
+											</div>
+										</div>
+									</div> -->
+									<br />
+									<div class="form-group">
+										<span>
+											<button class="btn btn-primary btn-icon-text waves-effect"
+												ng-click="savedepartmentUpdate()">
+												<i class="zmdi zmdi-check-all"></i> Update Department
+											</button>
+
+											<button class="btn btn-danger btn-icon-text waves-effect"
+												ng-click="resetupdateDepartment()">
+												<i class="zmdi zmdi-close"></i> Cancel
+											</button>
+										</span>
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>

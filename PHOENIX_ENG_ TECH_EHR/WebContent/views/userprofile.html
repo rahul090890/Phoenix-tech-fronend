@@ -1,0 +1,221 @@
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+	<section id="content" class="page-view ng-scope" data-ui-view="">
+		<div class="container ng-scope">
+
+			<!-- <div class="block-header">
+				<h2>
+					Pream B<small>Engineer , Hydrabad,India</small>
+				</h2>
+
+				<ul class="actions m-t-20 hidden-xs">
+					<li class="dropdown" uib-dropdown=""><a href="" 
+						uib-dropdown-toggle="" class="dropdown-toggle"
+						aria-haspopup="true" aria-expanded="false"> <i
+							class="zmdi zmdi-more-vert"></i>
+					</a>
+
+						<ul class="dropdown-menu dropdown-menu-right">
+							<li><a href="">Privacy Settings</a></li>
+							<li><a href="">Account Settings</a></li>
+							<li><a href="">Other Settings</a></li>
+						</ul></li>
+				</ul>
+			</div> -->
+
+			<div class="card ng-scope" id="profile-main"
+				data-ng-controller="profileCtrl as pctrl">
+				<div
+					class="pm-overview c-overflow mCustomScrollbar _mCS_1 mCS-autoHide"
+					style="overflow: visible;">
+					<div id="mCSB_1"
+						class="mCustomScrollBox mCS-minimal-dark mCSB_vertical_horizontal mCSB_outside"
+						tabindex="0">
+						<div id="mCSB_1_container"
+							class="mCSB_container mCS_x_hidden mCS_no_scrollbar_x"
+							style="position: relative; top: 0px; left: 0px; width: 100%;"
+							dir="ltr">
+							
+
+							<div class="pmo-block pmo-contact hidden-xs">
+								<h2>Contact</h2>
+
+								<ul>
+									<li class="ng-binding"><i class="zmdi zmdi-account"></i>
+										{{employeeId}}</li>
+									<li class="ng-binding"><i class="zmdi zmdi-email"></i>
+										{{emailId}}</li>
+									<!-- <li class="ng-binding"><i class="zmdi zmdi-facebook-box"></i>
+										malinda.hollaway</li>
+									<li class="ng-binding"><i class="zmdi zmdi-twitter"></i>
+										@malinda (twitter.com/malinda)</li> -->
+									<li><i class="zmdi zmdi-pin"></i>
+										<address class="m-b-0 ng-binding">
+											{{address}}
+										</address></li>
+								</ul>
+							</div>
+
+							
+						</div>
+					</div>
+					<div id="mCSB_1_scrollbar_vertical"
+						class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_vertical"
+						style="display: block;">
+						<div class="mCSB_draggerContainer">
+							<div id="mCSB_1_dragger_vertical" class="mCSB_dragger"
+								style="position: absolute; min-height: 50px; display: block; height: 587px; max-height: 695px; top: 0px;"
+								oncontextmenu="return false;">
+								<div class="mCSB_dragger_bar" style="line-height: 50px;"></div>
+							</div>
+							<div class="mCSB_draggerRail"></div>
+						</div>
+					</div>
+					<div id="mCSB_1_scrollbar_horizontal"
+						class="mCSB_scrollTools mCSB_1_scrollbar mCS-minimal-dark mCSB_scrollTools_horizontal"
+						style="display: none;">
+						<div class="mCSB_draggerContainer">
+							<div id="mCSB_1_dragger_horizontal" class="mCSB_dragger"
+								style="position: absolute; min-width: 50px; width: 0px; left: 0px;"
+								oncontextmenu="return false;">
+								<div class="mCSB_dragger_bar"></div>
+							</div>
+							<div class="mCSB_draggerRail"></div>
+						</div>
+					</div>
+				</div>
+
+				<div class="pm-body clearfix">
+					<!-- ngInclude: 'template/profile-menu.html' -->
+					<ul class="tab-nav tn-justified ng-scope"
+						data-ng-include="'template/profile-menu.html'">
+						<li class="btn-wave ng-scope active" data-ui-sref-active="active"><a
+							data-ui-sref="pages.profile.profile-about"
+							href="#/pages/profile/profile-about">About</a></li>
+						<!-- <li class="btn-wave ng-scope" data-ui-sref-active="active"><a
+							data-ui-sref="pages.profile.profile-timeline"
+							href="#/pages/profile/profile-timeline">Password Management</a></li> -->
+						</ul>
+
+					<!-- uiView:  -->
+					<data ui-view="" class="ng-scope">
+					
+					<div class="pmb-block ng-scope">
+						<div class="pmbb-header">
+							<h2>
+								<i class="zmdi zmdi-person m-r-5"></i> Basic Information
+							</h2>
+
+							<!-- ngIf: pctrl.editInfo === 0 -->
+						
+							<!-- end ngIf: pctrl.editInfo === 0 -->
+						</div>
+						<div class="pmbb-body p-l-30">
+							<!-- ngIf: pctrl.editInfo === 0 -->
+							<div class="pmbb-view" >
+								<dl class="dl-horizontal">
+									<dt>Full Name</dt>
+									<dd class="ng-binding">{{firstName}}&nbsp;&nbsp;{{lastName}}</dd>
+								</dl>
+								<!-- <dl class="dl-horizontal">
+									<dt>Employee Id</dt>
+									<dd class="ng-binding">{{employeeId}}</dd>
+								</dl> -->
+								<dl class="dl-horizontal">
+									<dt>Email Id</dt>
+									<dd class="ng-binding">{{emailId}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Login Id</dt>
+									<dd class="ng-binding">{{loginId}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Login Password</dt>
+									<dd class="ng-binding">{{loginPassword}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Deprtment</dt>
+									<dd class="ng-binding">{{departmentName}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Employement Status</dt>
+									<dd class="ng-binding">{{employementStatus}}</dd>
+								</dl>
+								<!-- <dl class="dl-horizontal">
+									<dt>Address</dt>
+									<dd class="ng-binding">{{address}}</dd>
+								</dl> -->
+							</div>
+							<!-- end ngIf: pctrl.editInfo === 0 -->
+
+							<!-- ngIf: pctrl.editInfo === 1 -->
+						</div>
+					</div>
+
+
+					<div class="pmb-block ng-scope">
+						<div class="pmbb-header">
+							<h2>
+								<i class="zmdi zmdi-phone m-r-5"></i> Other Details
+							</h2>
+
+							<!-- ngIf: pctrl.editContact === 0 -->
+							<!-- <ul class="actions ng-scope" data-ng-if="pctrl.editContact === 0">
+								<li class="dropdown" uib-dropdown=""><a href=""
+									uib-dropdown-toggle="" class="dropdown-toggle"
+									aria-haspopup="true" aria-expanded="false"> <i
+										class="zmdi zmdi-more-vert"></i>
+								</a>
+
+									<ul class="dropdown-menu dropdown-menu-right">
+										<li><a data-ng-click="pctrl.editContact = 1" href="">Edit</a>
+										</li>
+									</ul></li>
+							</ul> -->
+							<!-- end ngIf: pctrl.editContact === 0 -->
+						</div>
+						<div class="pmbb-body p-l-30">
+							<!-- ngIf: pctrl.editContact === 0 -->
+							<div class="pmbb-view ng-scope"
+								>
+								<dl class="dl-horizontal">
+									<dt>Supervisor </dt>
+									<dd class="ng-binding">{{manager.firstName}}&nbsp;&nbsp;{{manager.lastName}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Designation</dt>
+									<dd class="ng-binding">{{designation}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Employee Type</dt>
+									<dd class="ng-binding">{{employeeType}}</dd>
+								</dl>
+								<dl class="dl-horizontal">
+									<dt>Role</dt>
+									<dd class="ng-binding">{{role.roleName}}</dd>
+								</dl>
+								
+								<dl class="dl-horizontal">
+									<dt>Joining Date</dt>
+									<dd class="ng-binding">{{dateOfJoin}}</dd>
+								</dl>
+							</div>
+							<!-- end ngIf: pctrl.editContact === 0 -->
+
+							<!-- ngIf: pctrl.editContact === 1 -->
+						</div>
+					</div>
+					</data>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>

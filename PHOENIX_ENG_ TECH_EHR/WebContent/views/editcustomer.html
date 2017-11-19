@@ -1,0 +1,224 @@
+
+<header id="header" data-current-skin={{mactrl.currentSkin}}
+	data-ng-include="'template/header.html'"
+	data-ng-controller="headerCtrl as hctrl"></header>
+
+<section id="main">
+	<aside id="sidebar" data-ng-include="'template/sidebar-left.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.left === true }"></aside>
+
+	<aside id="chat" data-ng-include="'template/chat.html'"
+		data-ng-class="{ 'toggled': mactrl.sidebarToggle.right === true }"></aside>
+
+	<section id="content">
+		<div class="container c-alt">
+			<!-- <div class="block-header">
+				<h2>
+					Update Employee List <small></small>
+				</h2>
+			</div> -->
+
+			<div class="card" data-ng-controller="editcustomercontroller">
+				<div class="card-header">
+					<h2>
+						Update Customer<small></small>
+					</h2>
+					<div class="card-body card-padding">
+						<div class='row'>
+							<div class='table-responsive'>
+								<div class="input-group">
+									<input class="form-control" ng-model="searchText"
+										placeholder="Search" type="search" ng-change="search()" /> <span
+										class="input-group-addon"> <span
+										class="glyphicon glyphicon-search"></span>
+									</span>
+								</div>
+								<table class="table  table-hover data-table myTable">
+									<thead>
+										<tr>
+											<th class="name"><i
+												class="zmdi zmdi-assignment-account zmdi-hc-fw"></i><a
+												ng-click="sort('customerNamme')" href=""> Customer Name<span
+													class="{{Header[1]}}"></span>
+											</a></th>
+											<th class="name"><i
+												class="zmdi zmdi-assignment-account zmdi-hc-fw"></i><a
+												ng-click="sort('customerCode')" href=""> Customer Code<span
+													class="{{Header[5]}}"></span>
+											</a></th>
+											<th class="Email"><i class="zmdi zmdi-city zmdi-hc-fw"></i><a
+												ng-click="sort('zipCode')" href=""> Zip Code <span
+													class="{{Header[2]}}"></span>
+											</a></th>
+
+											<th class="Email"><i class="zmdi zmdi-globe zmdi-hc-fw">
+											</i><a ng-click="sort('country')" href="">Country <span
+													class="{{Header[3]}}"></span>
+											</a></th>
+											<th class="Email"><i class="zmdi zmdi-globe zmdi-hc-fw">
+											</i><a ng-click="sort('address')" href=""> Address <span
+													class="{{Header[4]}}"></span>
+											</a></th>
+
+											<th class="Email">
+												<!-- <a ng-click="sort('lastName')" href=""> --> <a>
+													Actions <span class="{{Header[5]}}"></span>
+											</a>
+											</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr
+											ng-repeat="item in ItemsByPage[currentPage] | orderBy:columnToOrder:reverse">
+											<!-- <td>{{item.customerId}}</td> -->
+											<td>{{item.customerName}}</td>
+											<td>{{item.customerCode}}</td>
+											<td>{{item.zipCode}}</td>
+											<td>{{item.country}}</td>
+											<td>{{item.address}}</td>
+											<td>
+												<p>
+													<span><a ng-click="editcustomerdetails(item)">Edit</a></span>
+													&nbsp;| &nbsp; <span><a ng-click='deletecustomerDetails(item)'>Delete</a></span>
+												</p>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+								<ul class="pagination pagination-sm">
+									<li ng-class="{active:0}"><a href=""
+										ng-click="firstPage()">First</a></li>
+									<li ng-repeat="n in range(ItemsByPage.length)"><a href=""
+										ng-click="setPage()" ng-bind="n+1">1</a></li>
+									<li><a href="" ng-click="lastPage()">Last</a></li>
+								</ul>
+
+
+							</div>
+
+
+
+
+
+
+
+
+
+
+						</div>
+						<div class='row' id="updateCustomerData"
+							style='border: 1px grey solid !important'>
+							<div class='col-sm-4'>
+								<!-- <div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-label zmdi-hc-fw"> </i> Id </span>
+									<div class="fg-line"></div>
+								</div> -->
+
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-assignment-account zmdi-hc-fw"></i>Customer
+										Name</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-assignment-account zmdi-hc-fw"></i>Customer
+										Code</span>
+									<div class="fg-line"></div>
+								</div>
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-city zmdi-hc-fw" title="Customer Address"></i>Address</span>
+									<div class="fg-line"></div>
+								</div>
+
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-globe zmdi-hc-fw"> </i> Country </span>
+									<div class="fg-line"></div>
+								</div>
+
+								<div class="form-group">
+									<span class="input-group-addon"><i
+										class="zmdi zmdi-globe zmdi-hc-fw"> </i> Zip Code </span>
+									<div class="fg-line"></div>
+								</div>
+							</div>
+
+							<div class='col-sm-4'>
+								<!-- <div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" disabled="disabled"
+											ng-model='customerID' value='{{customerID}}'>
+									</div>
+								</div>
+								<br> -->
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" id="customerName"
+											onkeypress="validateInstant(this)" ng-model='customerNAME'
+											value='{{customerNAME}}'>
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" id="customerCode"
+											onkeypress="validateInstant(this)" ng-model='customerCode'
+											value='{{customerCode}}'>
+									</div>
+								</div>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" id="customerAddress"
+											onkeypress="validateInstant(this)" ng-model='customerAddress'
+											value='{{customerAddress}}'>
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<div class="fg-line">
+										<select class="form-control" ng-model='countryname'
+											id="country" onchange="validateInstant(this)"
+											ng-options="country.name  as country.name    for country in countries"></select>
+
+
+										<!-- <select class="form-control" ng-model="country" class='select'
+											ng-options="country.name for country in countries track by country.code">
+											<option value="">-- Select a Country --</option>
+										</select> -->
+
+									</div>
+								</div>
+								<br>
+								<div class="form-group">
+									<div class="fg-line">
+										<input type="text" class="form-control" id="customerZip"
+											onkeypress="validateInstant(this)" ng-model='customerZipCode'
+											value='{{customerZipCode}}'>
+									</div>
+								</div>
+								<div style='height: 20px;'></div>
+								<div class="form-group">
+									<span>
+										<button class="btn btn-primary btn-icon-text waves-effect"
+											ng-click="updateCustomerDetails()">
+											<i class="zmdi zmdi-check-all"></i> Update Customer
+										</button>
+
+										<button class="btn btn-danger btn-icon-text waves-effect"
+											ng-click="resetCustomerUpdate()">
+											<i class="zmdi zmdi-close"></i> Cancel
+										</button>
+									</span>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</section>
