@@ -580,6 +580,9 @@ materialAdmin
 															'error')
 												}
 											}, function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 							var taskdata = $scope.webserviceshost
@@ -607,6 +610,9 @@ materialAdmin
 															'error')
 												}
 											}, function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						}
@@ -642,6 +648,9 @@ materialAdmin
 
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 
@@ -658,6 +667,9 @@ materialAdmin
 							}).then(function mySucces(response) {
 						$scope.customers = response.data;
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -673,6 +685,9 @@ materialAdmin
 							}).then(function mySucces(response) {
 						$scope.departments = response.data;
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 
@@ -689,6 +704,9 @@ materialAdmin
 							}).then(function mySucces(response) {
 						$scope.cpcs = response.data;
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$scope.updateTotalhour = function() {
@@ -1209,6 +1227,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 					$scope.approveLeave = function(item) {
@@ -1410,12 +1431,18 @@ materialAdmin
 																		},
 																		function myError(
 																				response) {
+																			$('#loading-bar').remove();
+																			$('#loading-bar-spinner')
+																					.remove();
 																			console
 																					.log(response);
 																		});
 
 													},
 													function myError(response) {
+														$('#loading-bar').remove();
+														$('#loading-bar-spinner')
+																.remove();
 														console.log(response);
 													});
 
@@ -1624,12 +1651,18 @@ materialAdmin
 																		},
 																		function myError(
 																				response) {
+																			$('#loading-bar').remove();
+																			$('#loading-bar-spinner')
+																					.remove();
 																			console
 																					.log(response);
 																		});
 
 													},
 													function myError(response) {
+														$('#loading-bar').remove();
+														$('#loading-bar-spinner')
+																.remove();
 														console.log(response);
 													})
 
@@ -1672,6 +1705,9 @@ materialAdmin
 							$scope.leaveTypes = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 
@@ -1705,6 +1741,9 @@ materialAdmin
 								swal("success", "Leave credited.", "success");
 
 							}, function myError(response) {
+								$('#loading-bar').remove();
+								$('#loading-bar-spinner')
+										.remove();
 								console.log(response);
 							});
 
@@ -1792,6 +1831,9 @@ materialAdmin
 							$scope.leaveupdates = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -1831,6 +1873,9 @@ materialAdmin
 
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 					$scope.updateleavesdetails = function() {
@@ -1906,22 +1951,22 @@ materialAdmin
 							var leaveType = $scope.itemSelected.leaveType;
 
 							var startyear = $scope.dtPopup.getFullYear();
-							var startmonth = $scope.dtPopup.getMonth();
+							var startmonth = $scope.dtPopup.getMonth()+1;
 							if (startmonth.toString().length == 1) {
 								startmonth = '0' + startmonth;
 							}
-							var startday = $scope.dtPopup.getDay();
+							var startday = $scope.dtPopup.getDate();
 							if (startday.toString().length == 1) {
 								startday = '0' + startday;
 							}
 							var startdate = startyear + '-' + startmonth + '-'
 									+ startday;
 							var endyear = $scope.dtPopup1.getFullYear();
-							var endmonth = $scope.dtPopup1.getMonth();
+							var endmonth = $scope.dtPopup1.getMonth()+1;
 							if (endmonth.toString().length == 1) {
 								endmonth = '0' + endmonth;
 							}
-							var endday = $scope.dtPopup1.getDay();
+							var endday = $scope.dtPopup1.getDate();
 							if (endday.toString().length == 1) {
 								endday = '0' + endday;
 							}
@@ -2042,10 +2087,21 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
-											}, function myError(response) {
+											},
+											function myError(response) {
+												swal(
+														"Error",
+														"Leave already applied for selected period.)",
+														"error");
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						} else {
@@ -2224,6 +2280,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 
@@ -2395,233 +2454,273 @@ materialAdmin
 										$scope.sort('name');
 
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
-					$scope.deletecpcDetails=function(item){/*
-
-						swal(
-								{
-									title : "Are you sure?",
-									text : "You will not be able to recover this CPC !",
-									type : "warning",
-									showCancelButton : true,
-									confirmButtonColor : "#DD6B55",
-									confirmButtonText : "Yes, Delete it!",
-									cancelButtonText : "No, cancel it!",
-									closeOnConfirm : false,
-									closeOnCancel : false
-								},
-								function(isConfirm) {
-									if (isConfirm) {
-
-										var deleteemployee = $scope.webserviceshost
-												+ 'hr/employee';
-										var createRoll = '/delete/'
-												+ userid;
-										deleteemployee = deleteemployee
-												+ createRoll;
-										$http(
-												{
-													method : "DELETE",
-													url : deleteemployee,
-													headers : {
-														'XSRF-TOKEN' : $window.sessionStorage
-																.getItem("Access-Token"),
-														'authorization' : $window.sessionStorage
-																.getItem("AuthKey")
-													}
-												})
-												.then(
-														function mySucces(
-																response) {
-
-															var allusersURL = $scope.webserviceshost
-																	+ 'hr/employee/all';
-															$http(
-																	{
-																		method : "GET",
-																		url : allusersURL,
-																		headers : {
-																			'XSRF-TOKEN' : $window.sessionStorage
-																					.getItem("Access-Token"),
-																			'authorization' : $window.sessionStorage
-																					.getItem("AuthKey")
-																		}
-																	})
-																	.then(
-																			function mySucces(
-																					response) {
-																				console
-																						.log(response.data);
-																				if (response != 'undefiend'
-																						&& response != "") {
-
-																					$scope.allUsers = response.data;
-																					$scope.pageSize = 150;
-																					$scope.allItems = $scope.allUsers;
-																					$scope.reverse = false;
-
-																					$scope.resetAll = function() {
-																						$scope.filteredList = $scope.allItems;
-																						$scope.employeeId = '';
-																						$scope.firstName = '';
-																						$scope.lastName = '';
-																						$scope.emailId = '';
-																						$scope.joiningdate = ''
-																						$scope.searchText = '';
-																						$scope.currentPage = 0;
-																						$scope.Header = [
-																								'',
-																								'',
-																								'',
-																								'',
-																								'',
-																								'',
-																								'' ];
-																					}
-
-																					$scope.search = function() {
-																						$scope.filteredList = filteredListService
-																								.searched(
-																										$scope.allItems,
-																										$scope.searchText);
-
-																						if ($scope.searchText == '') {
-																							$scope.filteredList = $scope.allItems;
-																						}
-																						$scope
-																								.pagination();
-																					}
-
-																					// Calculate
-																					// Total
-																					// Number
-																					// of
-																					// Pages
-																					// based
-																					// on
-																					// Search
-																					// Result
-																					$scope.pagination = function() {
-																						$scope.ItemsByPage = filteredListService
-																								.paged(
-																										$scope.filteredList,
-																										$scope.pageSize);
-																					};
-
-																					$scope.setPage = function() {
-																						$scope.currentPage = this.n;
-																					};
-
-																					$scope.firstPage = function() {
-																						$scope.currentPage = 0;
-																					};
-
-																					$scope.lastPage = function() {
-																						$scope.currentPage = $scope.ItemsByPage.length - 1;
-																					};
-
-																					$scope.range = function(
-																							input,
-																							total) {
-																						var ret = [];
-																						if (!total) {
-																							total = input;
-																							input = 0;
-																						}
-																						for (var i = input; i < total; i++) {
-																							if (i != 0
-																									&& i != total - 1) {
-																								ret
-																										.push(i);
-																							}
-																						}
-																						return ret;
-																					};
-
-																					$scope.resetuser = function() {
-																						$(
-																								'#edituser')
-																								.hide();
-																					}
-																					$scope.sort = function(
-																							sortBy) {
-																						$scope
-																								.resetAll();
-
-																						$scope.columnToOrder = sortBy;
-
-																						// $Filter
-																						// -
-																						// Standard
-																						// Service
-																						$scope.filteredList = $filter(
-																								'orderBy')
-																								(
-																										$scope.filteredList,
-																										$scope.columnToOrder,
-																										$scope.reverse);
-
-																						if ($scope.reverse)
-																							iconName = 'glyphicon glyphicon-chevron-up';
-																						else
-																							iconName = 'glyphicon glyphicon-chevron-down';
-
-																						if (sortBy === 'EmpId') {
-																							$scope.Header[0] = iconName;
-																						} else if (sortBy === 'name') {
-																							$scope.Header[1] = iconName;
-																						} else {
-																							$scope.Header[2] = iconName;
-																						}
-
-																						$scope.reverse = !$scope.reverse;
-
-																						$scope
-																								.pagination();
-																					};
-
-																					// By
-																					// Default
-																					// sort
-																					// ny
-																					// Name
-																					$scope
-																							.sort('name');
-
-																					// console.log($scope.allUsers.length);
-																				}
-																			},
-																			function myError(
-																					response) {
-																				console
-																						.log(response);
-																			});
-
-															swal(
-																	"Deleted SuccessFully!",
-																	"CPC record has been deleted.",
-																	"success");
-
-														},
-														function myError(
-																response) {
-															console
-																	.log(response);
-														});
-
-									} else {
-										swal(
-												"Cancelled",
-												"Request has been cancelled.)",
-												"error");
-									}
-								});
-
-					
-					*/}
+					$scope.deletecpcDetails = function(item) {/*
+																 * 
+																 * swal( { title :
+																 * "Are you
+																 * sure?", text :
+																 * "You will not
+																 * be able to
+																 * recover this
+																 * CPC !", type :
+																 * "warning",
+																 * showCancelButton :
+																 * true,
+																 * confirmButtonColor :
+																 * "#DD6B55",
+																 * confirmButtonText :
+																 * "Yes, Delete
+																 * it!",
+																 * cancelButtonText :
+																 * "No, cancel
+																 * it!",
+																 * closeOnConfirm :
+																 * false,
+																 * closeOnCancel :
+																 * false },
+																 * function(isConfirm) {
+																 * if
+																 * (isConfirm) {
+																 * 
+																 * var
+																 * deleteemployee =
+																 * $scope.webserviceshost +
+																 * 'hr/employee';
+																 * var
+																 * createRoll =
+																 * '/delete/' +
+																 * userid;
+																 * deleteemployee =
+																 * deleteemployee +
+																 * createRoll;
+																 * $http( {
+																 * method :
+																 * "DELETE", url :
+																 * deleteemployee,
+																 * headers : {
+																 * 'XSRF-TOKEN' :
+																 * $window.sessionStorage
+																 * .getItem("Access-Token"),
+																 * 'authorization' :
+																 * $window.sessionStorage
+																 * .getItem("AuthKey") } })
+																 * .then(
+																 * function
+																 * mySucces(
+																 * response) {
+																 * 
+																 * var
+																 * allusersURL =
+																 * $scope.webserviceshost +
+																 * 'hr/employee/all';
+																 * $http( {
+																 * method :
+																 * "GET", url :
+																 * allusersURL,
+																 * headers : {
+																 * 'XSRF-TOKEN' :
+																 * $window.sessionStorage
+																 * .getItem("Access-Token"),
+																 * 'authorization' :
+																 * $window.sessionStorage
+																 * .getItem("AuthKey") } })
+																 * .then(
+																 * function
+																 * mySucces(
+																 * response) {
+																 * console
+																 * .log(response.data);
+																 * if (response !=
+																 * 'undefiend' &&
+																 * response !=
+																 * "") {
+																 * 
+																 * $scope.allUsers =
+																 * response.data;
+																 * $scope.pageSize =
+																 * 150;
+																 * $scope.allItems =
+																 * $scope.allUsers;
+																 * $scope.reverse =
+																 * false;
+																 * 
+																 * $scope.resetAll =
+																 * function() {
+																 * $scope.filteredList =
+																 * $scope.allItems;
+																 * $scope.employeeId =
+																 * '';
+																 * $scope.firstName =
+																 * '';
+																 * $scope.lastName =
+																 * '';
+																 * $scope.emailId =
+																 * '';
+																 * $scope.joiningdate = ''
+																 * $scope.searchText =
+																 * '';
+																 * $scope.currentPage =
+																 * 0;
+																 * $scope.Header = [
+																 * '', '', '',
+																 * '', '', '', '' ]; }
+																 * 
+																 * $scope.search =
+																 * function() {
+																 * $scope.filteredList =
+																 * filteredListService
+																 * .searched(
+																 * $scope.allItems,
+																 * $scope.searchText);
+																 * 
+																 * if
+																 * ($scope.searchText ==
+																 * '') {
+																 * $scope.filteredList =
+																 * $scope.allItems; }
+																 * $scope
+																 * .pagination(); }
+																 *  // Calculate //
+																 * Total //
+																 * Number // of //
+																 * Pages //
+																 * based // on //
+																 * Search //
+																 * Result
+																 * $scope.pagination =
+																 * function() {
+																 * $scope.ItemsByPage =
+																 * filteredListService
+																 * .paged(
+																 * $scope.filteredList,
+																 * $scope.pageSize); };
+																 * 
+																 * $scope.setPage =
+																 * function() {
+																 * $scope.currentPage =
+																 * this.n; };
+																 * 
+																 * $scope.firstPage =
+																 * function() {
+																 * $scope.currentPage =
+																 * 0; };
+																 * 
+																 * $scope.lastPage =
+																 * function() {
+																 * $scope.currentPage =
+																 * $scope.ItemsByPage.length -
+																 * 1; };
+																 * 
+																 * $scope.range =
+																 * function(
+																 * input, total) {
+																 * var ret = [];
+																 * if (!total) {
+																 * total =
+																 * input; input =
+																 * 0; } for (var
+																 * i = input; i <
+																 * total; i++) {
+																 * if (i != 0 &&
+																 * i != total -
+																 * 1) { ret
+																 * .push(i); } }
+																 * return ret; };
+																 * 
+																 * $scope.resetuser =
+																 * function() { $(
+																 * '#edituser')
+																 * .hide(); }
+																 * $scope.sort =
+																 * function(
+																 * sortBy) {
+																 * $scope
+																 * .resetAll();
+																 * 
+																 * $scope.columnToOrder =
+																 * sortBy;
+																 *  // $Filter // - //
+																 * Standard //
+																 * Service
+																 * $scope.filteredList =
+																 * $filter(
+																 * 'orderBy') (
+																 * $scope.filteredList,
+																 * $scope.columnToOrder,
+																 * $scope.reverse);
+																 * 
+																 * if
+																 * ($scope.reverse)
+																 * iconName =
+																 * 'glyphicon
+																 * glyphicon-chevron-up';
+																 * else iconName =
+																 * 'glyphicon
+																 * glyphicon-chevron-down';
+																 * 
+																 * if (sortBy
+																 * === 'EmpId') {
+																 * $scope.Header[0] =
+																 * iconName; }
+																 * else if
+																 * (sortBy ===
+																 * 'name') {
+																 * $scope.Header[1] =
+																 * iconName; }
+																 * else {
+																 * $scope.Header[2] =
+																 * iconName; }
+																 * 
+																 * $scope.reverse =
+																 * !$scope.reverse;
+																 * 
+																 * $scope
+																 * .pagination(); };
+																 *  // By //
+																 * Default //
+																 * sort // ny //
+																 * Name $scope
+																 * .sort('name');
+																 *  //
+																 * console.log($scope.allUsers.length); } },
+																 * function
+																 * myError(
+																 * response) {
+																 * console
+																 * .log(response);
+																 * });
+																 * 
+																 * swal(
+																 * "Deleted
+																 * SuccessFully!",
+																 * "CPC record
+																 * has been
+																 * deleted.",
+																 * "success");
+																 *  }, function
+																 * myError(
+																 * response) {
+																 * console
+																 * .log(response);
+																 * });
+																 *  } else {
+																 * swal(
+																 * "Cancelled",
+																 * "Request has
+																 * been
+																 * cancelled.)",
+																 * "error"); }
+																 * });
+																 * 
+																 * 
+																 */
+					}
 					$scope.editcpcDetails = function(item) {
-					
 
 						$scope.customerProgramId = item.customerProgramId;
 						$scope.customerid = item.customer.customerId;
@@ -2648,6 +2747,9 @@ materialAdmin
 								$scope.customerProgramCodelist = response.data;
 							}
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$http(
@@ -2666,6 +2768,9 @@ materialAdmin
 								$scope.customers = response.data;
 							}
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$('#updatecpcDetails').show();
@@ -2869,6 +2974,9 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
+																		$('#loading-bar').remove();
+																		$('#loading-bar-spinner')
+																				.remove();
 																		console
 																				.log(response);
 																	});
@@ -2878,6 +2986,9 @@ materialAdmin
 															"", "success");
 
 												}, function myError(response) {
+													$('#loading-bar').remove();
+													$('#loading-bar-spinner')
+															.remove();
 													console.log(response);
 												});
 							} else {
@@ -2937,6 +3048,9 @@ materialAdmin
 							$scope.customers = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -2955,6 +3069,9 @@ materialAdmin
 							$scope.customerProgramCodelist = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 
@@ -2997,6 +3114,9 @@ materialAdmin
 							$scope.customerProgramCodelist = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 
@@ -3053,6 +3173,9 @@ materialAdmin
 												 * $scope.example14model = {}
 												 */
 											}, function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						} else {
@@ -3364,6 +3487,9 @@ materialAdmin
 																									},
 																									function myError(
 																											response) {
+																										$('#loading-bar').remove();
+																										$('#loading-bar-spinner')
+																												.remove();
 																										console
 																												.log(response);
 																									});
@@ -3376,6 +3502,9 @@ materialAdmin
 																				},
 																				function myError(
 																						response) {
+																					$('#loading-bar').remove();
+																					$('#loading-bar-spinner')
+																							.remove();
 																					console
 																							.log(response);
 																				});
@@ -3586,6 +3715,9 @@ materialAdmin
 																									},
 																									function myError(
 																											response) {
+																										$('#loading-bar').remove();
+																										$('#loading-bar-spinner')
+																												.remove();
 																										console
 																												.log(response);
 																									});
@@ -3598,6 +3730,9 @@ materialAdmin
 																				},
 																				function myError(
 																						response) {
+																					$('#loading-bar').remove();
+																					$('#loading-bar-spinner')
+																							.remove();
 																					console
 																							.log(response);
 																				});
@@ -3716,6 +3851,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -3742,6 +3880,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -3768,6 +3909,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -3794,6 +3938,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -4058,6 +4205,9 @@ materialAdmin
 																						},
 																						function myError(
 																								response) {
+																							$('#loading-bar').remove();
+																							$('#loading-bar-spinner')
+																									.remove();
 																							console
 																									.log(response);
 																						});
@@ -4065,6 +4215,9 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
+																		$('#loading-bar').remove();
+																		$('#loading-bar-spinner')
+																				.remove();
 																		console
 																				.log(response);
 																	});
@@ -4120,6 +4273,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 
@@ -4157,6 +4313,9 @@ materialAdmin
 							$scope.departments = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -4175,6 +4334,9 @@ materialAdmin
 							$scope.customers = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$scope.addTask = function() {
@@ -4210,6 +4372,9 @@ materialAdmin
 								console.log(response.data);
 
 							}, function myError(response) {
+								$('#loading-bar').remove();
+								$('#loading-bar-spinner')
+										.remove();
 								console.log(response);
 							});
 						} else {
@@ -4994,6 +5159,9 @@ materialAdmin
 						$scope.departments = response.data;
 
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -5011,6 +5179,9 @@ materialAdmin
 						$scope.cpc = response.data;
 
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -5028,6 +5199,9 @@ materialAdmin
 						$scope.customers = response.data;
 
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -5049,6 +5223,9 @@ materialAdmin
 						console.log($scope.projectStatus);
 
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					/*
@@ -5108,6 +5285,9 @@ materialAdmin
 								$scope.cpc = {};
 
 							}, function myError(response) {
+								$('#loading-bar').remove();
+								$('#loading-bar-spinner')
+										.remove();
 								console.log(response);
 							});
 						} else {
@@ -5265,10 +5445,13 @@ materialAdmin
 										}
 
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 					$scope.editprojects = function(item) {
-					
+
 						$("#editprojectdata").show();
 						$location.hash('editprojectdata');
 						$anchorScroll();
@@ -6273,6 +6456,9 @@ materialAdmin
 							$scope.departments = response.data;
 
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$http(
@@ -6290,6 +6476,9 @@ materialAdmin
 							$scope.cpc = response.data;
 
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$http(
@@ -6307,6 +6496,9 @@ materialAdmin
 							$scope.customers = response.data;
 
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$http(
@@ -6330,6 +6522,9 @@ materialAdmin
 											console.log($scope.projectStatus);
 
 										}, function myError(response) {
+											$('#loading-bar').remove();
+											$('#loading-bar-spinner')
+													.remove();
 											console.log(response);
 										});
 
@@ -6355,6 +6550,9 @@ materialAdmin
 											console.log($scope.projectStatus);
 
 										}, function myError(response) {
+											$('#loading-bar').remove();
+											$('#loading-bar-spinner')
+													.remove();
 											console.log(response);
 										});
 
@@ -6362,8 +6560,8 @@ materialAdmin
 					$scope.cancelprojectUpdate = function() {
 						$("#editprojectdata").hide();
 					}
-					
-					$scope.deleteprojects=function(item){
+
+					$scope.deleteprojects = function(item) {
 
 						swal(
 								{
@@ -6381,8 +6579,9 @@ materialAdmin
 									if (isConfirm) {
 
 										var deleteproject = $scope.webserviceshost
-												+ 'hr/project/delete/'+item.projectid;
-										
+												+ 'hr/project/delete/'
+												+ item.projectid;
+
 										$http(
 												{
 													method : "DELETE",
@@ -6397,12 +6596,17 @@ materialAdmin
 												.then(
 														function mySucces(
 																response) {
-															$("#editprojectdata").hide();
-															console.log(response.data);
+															$(
+																	"#editprojectdata")
+																	.hide();
+															console
+																	.log(response.data);
 
 															var allproject = $scope.webserviceshost
 																	+ 'hr/project/all';
-															$("#editprojectdata").hide();
+															$(
+																	"#editprojectdata")
+																	.hide();
 															$http(
 																	{
 																		method : "GET",
@@ -6568,6 +6772,9 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
+																				$('#loading-bar').remove();
+																				$('#loading-bar-spinner')
+																						.remove();
 																				console
 																						.log(response);
 																			});
@@ -6581,19 +6788,20 @@ materialAdmin
 														},
 														function myError(
 																response) {
+															$('#loading-bar').remove();
+															$('#loading-bar-spinner')
+																	.remove();
 															console
 																	.log(response);
 														});
 
 									} else {
-										swal(
-												"Cancelled",
+										swal("Cancelled",
 												"Request has been cancelled.)",
 												"error");
 									}
 								});
 
-					
 					}
 					$scope.updateprojectdata = function() {
 						var projectValidater = validateProject(
@@ -6808,6 +7016,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -6819,6 +7030,9 @@ materialAdmin
 												});
 
 											}, function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						} else {
@@ -6972,6 +7186,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 					$scope.edittaskDetails = function(item) {
@@ -7003,6 +7220,9 @@ materialAdmin
 								$scope.departments = response.data;
 							}
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$http(
@@ -7021,6 +7241,9 @@ materialAdmin
 								$scope.customers = response.data;
 							}
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 					}
@@ -7218,10 +7441,16 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
 											}, function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						} else {
@@ -7287,143 +7516,146 @@ materialAdmin
 																	.then(
 																			function mySucces(
 																					response) {
-																				
-																					$scope.allUsers = response.data;
-																					$scope.pageSize = 150;
-																					$scope.allItems = $scope.allUsers;
-																					$scope.reverse = false;
 
-																					$scope.resetAll = function() {
+																				$scope.allUsers = response.data;
+																				$scope.pageSize = 150;
+																				$scope.allItems = $scope.allUsers;
+																				$scope.reverse = false;
+
+																				$scope.resetAll = function() {
+																					$scope.filteredList = $scope.allItems;
+																					$scope.taskId = '';
+																					$scope.TaskName = '';
+																					$scope.customer = '';
+																					$scope.department = '';
+																					$scope.searchText = '';
+																					$scope.currentPage = 0;
+																					$scope.Header = [
+																							'',
+																							'',
+																							'',
+																							'',
+																							'',
+																							'',
+																							'' ];
+																				}
+
+																				$scope.search = function() {
+																					$scope.filteredList = filteredListService
+																							.searched(
+																									$scope.allItems,
+																									$scope.searchText);
+
+																					if ($scope.searchText == '') {
 																						$scope.filteredList = $scope.allItems;
-																						$scope.taskId = '';
-																						$scope.TaskName = '';
-																						$scope.customer = '';
-																						$scope.department = '';
-																						$scope.searchText = '';
-																						$scope.currentPage = 0;
-																						$scope.Header = [
-																								'',
-																								'',
-																								'',
-																								'',
-																								'',
-																								'',
-																								'' ];
 																					}
-
-																					$scope.search = function() {
-																						$scope.filteredList = filteredListService
-																								.searched(
-																										$scope.allItems,
-																										$scope.searchText);
-
-																						if ($scope.searchText == '') {
-																							$scope.filteredList = $scope.allItems;
-																						}
-																						$scope
-																								.pagination();
-																					}
-
-																					// Calculate
-																					// Total
-																					// Number
-																					// of
-																					// Pages
-																					// based
-																					// on
-																					// Search
-																					// Result
-																					$scope.pagination = function() {
-																						$scope.ItemsByPage = filteredListService
-																								.paged(
-																										$scope.filteredList,
-																										$scope.pageSize);
-																					};
-
-																					$scope.setPage = function() {
-																						$scope.currentPage = this.n;
-																					};
-
-																					$scope.firstPage = function() {
-																						$scope.currentPage = 0;
-																					};
-
-																					$scope.lastPage = function() {
-																						$scope.currentPage = $scope.ItemsByPage.length - 1;
-																					};
-
-																					$scope.range = function(
-																							input,
-																							total) {
-																						var ret = [];
-																						if (!total) {
-																							total = input;
-																							input = 0;
-																						}
-																						for (var i = input; i < total; i++) {
-																							if (i != 0
-																									&& i != total - 1) {
-																								ret
-																										.push(i);
-																							}
-																						}
-																						return ret;
-																					};
-
-																					$scope.sort = function(
-																							sortBy) {
-																						$scope
-																								.resetAll();
-
-																						$scope.columnToOrder = sortBy;
-
-																						// $Filter
-																						// -
-																						// Standard
-																						// Service
-																						$scope.filteredList = $filter(
-																								'orderBy')
-																								(
-																										$scope.filteredList,
-																										$scope.columnToOrder,
-																										$scope.reverse);
-
-																						if ($scope.reverse)
-																							iconName = 'glyphicon glyphicon-chevron-up';
-																						else
-																							iconName = 'glyphicon glyphicon-chevron-down';
-
-																						if (sortBy === 'taskId') {
-																							$scope.Header[0] = iconName;
-																						} else if (sortBy === 'taskName') {
-																							$scope.Header[1] = iconName;
-																						} else if (sortBy === 'customerName') {
-																							$scope.Header[2] = iconName;
-																						} else if (sortBy === 'departmentName') {
-																							$scope.Header[3] = iconName;
-																						} else {
-																							$scope.Header[1] = iconName;
-																						}
-
-																						$scope.reverse = !$scope.reverse;
-
-																						$scope
-																								.pagination();
-																					};
-
-																					// By
-																					// Default
-																					// sort
-																					// ny
-																					// Name
 																					$scope
-																							.sort('taskName');
+																							.pagination();
+																				}
 
-																					// console.log($scope.allUsers.length);
-																				
+																				// Calculate
+																				// Total
+																				// Number
+																				// of
+																				// Pages
+																				// based
+																				// on
+																				// Search
+																				// Result
+																				$scope.pagination = function() {
+																					$scope.ItemsByPage = filteredListService
+																							.paged(
+																									$scope.filteredList,
+																									$scope.pageSize);
+																				};
+
+																				$scope.setPage = function() {
+																					$scope.currentPage = this.n;
+																				};
+
+																				$scope.firstPage = function() {
+																					$scope.currentPage = 0;
+																				};
+
+																				$scope.lastPage = function() {
+																					$scope.currentPage = $scope.ItemsByPage.length - 1;
+																				};
+
+																				$scope.range = function(
+																						input,
+																						total) {
+																					var ret = [];
+																					if (!total) {
+																						total = input;
+																						input = 0;
+																					}
+																					for (var i = input; i < total; i++) {
+																						if (i != 0
+																								&& i != total - 1) {
+																							ret
+																									.push(i);
+																						}
+																					}
+																					return ret;
+																				};
+
+																				$scope.sort = function(
+																						sortBy) {
+																					$scope
+																							.resetAll();
+
+																					$scope.columnToOrder = sortBy;
+
+																					// $Filter
+																					// -
+																					// Standard
+																					// Service
+																					$scope.filteredList = $filter(
+																							'orderBy')
+																							(
+																									$scope.filteredList,
+																									$scope.columnToOrder,
+																									$scope.reverse);
+
+																					if ($scope.reverse)
+																						iconName = 'glyphicon glyphicon-chevron-up';
+																					else
+																						iconName = 'glyphicon glyphicon-chevron-down';
+
+																					if (sortBy === 'taskId') {
+																						$scope.Header[0] = iconName;
+																					} else if (sortBy === 'taskName') {
+																						$scope.Header[1] = iconName;
+																					} else if (sortBy === 'customerName') {
+																						$scope.Header[2] = iconName;
+																					} else if (sortBy === 'departmentName') {
+																						$scope.Header[3] = iconName;
+																					} else {
+																						$scope.Header[1] = iconName;
+																					}
+
+																					$scope.reverse = !$scope.reverse;
+
+																					$scope
+																							.pagination();
+																				};
+
+																				// By
+																				// Default
+																				// sort
+																				// ny
+																				// Name
+																				$scope
+																						.sort('taskName');
+
+																				// console.log($scope.allUsers.length);
+
 																			},
 																			function myError(
 																					response) {
+																				$('#loading-bar').remove();
+																				$('#loading-bar-spinner')
+																						.remove();
 																				console
 																						.log(response);
 																			});
@@ -7435,6 +7667,9 @@ materialAdmin
 														},
 														function myError(
 																response) {
+															$('#loading-bar').remove();
+															$('#loading-bar-spinner')
+																	.remove();
 															console
 																	.log(response);
 														});
@@ -7537,6 +7772,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -7631,6 +7869,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 					$scope.deleteRole = function(item) {
@@ -7816,6 +8057,9 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
+																				$('#loading-bar').remove();
+																				$('#loading-bar-spinner')
+																						.remove();
 																				console
 																						.log(response);
 																			});
@@ -7826,6 +8070,9 @@ materialAdmin
 														},
 														function myError(
 																response) {
+															$('#loading-bar').remove();
+															$('#loading-bar-spinner')
+																	.remove();
 															console
 																	.log(response);
 														});
@@ -8018,6 +8265,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -8067,6 +8317,9 @@ materialAdmin
 												 */
 
 											}, function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						} else {
@@ -8110,6 +8363,9 @@ materialAdmin
 						console.log(response.data);
 						$scope.rolls = response.data;
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$scope.addroll = function() {
@@ -8147,6 +8403,13 @@ materialAdmin
 								$scope.roleName = '';
 								$scope.parentroleId = {};
 							}, function myError(response) {
+								swal(
+										"Error",
+										"Role Name is already present)",
+										"error");
+								$('#loading-bar').remove();
+								$('#loading-bar-spinner')
+										.remove();
 								console.log(response);
 							});
 						} else {
@@ -8306,6 +8569,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 
@@ -8349,6 +8615,9 @@ materialAdmin
 							$scope.departments = response.data;
 
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						var allManager = $scope.webserviceshost
@@ -8366,6 +8635,9 @@ materialAdmin
 								}).then(function mySucces(response) {
 							$scope.managersList = response.data;
 						}, function myError(response) {
+							$('#loading-bar').remove();
+							$('#loading-bar-spinner')
+									.remove();
 							console.log(response);
 						});
 						$scope.resetupdateDepartment = function() {
@@ -8570,6 +8842,9 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
+																		$('#loading-bar').remove();
+																		$('#loading-bar-spinner')
+																				.remove();
 																		console
 																				.log(response);
 																	});
@@ -8578,6 +8853,9 @@ materialAdmin
 														console.log("success")
 													}
 												}, function myError(response) {
+													$('#loading-bar').remove();
+													$('#loading-bar-spinner')
+															.remove();
 													console.log(response);
 												});
 							} else {
@@ -8674,6 +8952,9 @@ materialAdmin
 							$scope.rolesdata = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -8692,6 +8973,9 @@ materialAdmin
 							$scope.referenceData = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -8710,6 +8994,9 @@ materialAdmin
 							$scope.departments = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -8728,6 +9015,9 @@ materialAdmin
 							$scope.managers = response.data;
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 
@@ -8815,6 +9105,9 @@ materialAdmin
 								$scope.employeeStatus = {};
 								$location.path('/headers/edituser');
 							}, function myError(response) {
+								$('#loading-bar').remove();
+								$('#loading-bar-spinner')
+										.remove();
 								console.log(response);
 							});
 						} else {
@@ -8866,6 +9159,9 @@ materialAdmin
 							console.log("success")
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$http(
@@ -8887,6 +9183,9 @@ materialAdmin
 							console.log("success")
 						}
 					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner')
+								.remove();
 						console.log(response);
 					});
 					$scope.clearDepartment = function() {
@@ -8958,6 +9257,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -8969,6 +9271,13 @@ materialAdmin
 													console.log("success")
 												}
 											}, function myError(response) {
+												swal(
+														"Error",
+														"Department Code is already present)",
+														"error");
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
 												console.log(response);
 											});
 						} else {
@@ -10235,6 +10544,9 @@ materialAdmin
 																},
 																function myError(
 																		response) {
+																	$('#loading-bar').remove();
+																	$('#loading-bar-spinner')
+																			.remove();
 																	console
 																			.log(response);
 																});
@@ -10332,6 +10644,9 @@ materialAdmin
 										// console.log($scope.allUsers.length);
 
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 
@@ -10519,6 +10834,9 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
+																				$('#loading-bar').remove();
+																				$('#loading-bar-spinner')
+																						.remove();
 																				console
 																						.log(response);
 																			});
@@ -10531,6 +10849,9 @@ materialAdmin
 														},
 														function myError(
 																response) {
+															$('#loading-bar').remove();
+															$('#loading-bar-spinner')
+																	.remove();
 															console
 																	.log(response);
 														});
@@ -10613,6 +10934,13 @@ materialAdmin
 									console.log("success")
 								}
 							}, function myError(response) {
+								swal(
+										"Error",
+										"Customer Code is already present)",
+										"error");
+								$('#loading-bar').remove();
+								$('#loading-bar-spinner')
+										.remove();
 								console.log(response);
 							});
 						} else {
@@ -11625,6 +11953,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 
@@ -12006,6 +12337,9 @@ materialAdmin
 												// console.log($scope.allUsers.length);
 											}
 										}, function myError(response) {
+											$('#loading-bar').remove();
+											$('#loading-bar-spinner')
+													.remove();
 											console.log(response);
 										});
 
@@ -12205,6 +12539,9 @@ materialAdmin
 											// console.log($scope.allUsers.length);
 										}
 									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner')
+												.remove();
 										console.log(response);
 									});
 					$scope.approveTimeSheet = function(item) {
@@ -12398,6 +12735,9 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
+																				$('#loading-bar').remove();
+																				$('#loading-bar-spinner')
+																						.remove();
 																				console
 																						.log(response);
 																			});
@@ -12408,6 +12748,9 @@ materialAdmin
 														},
 														function myError(
 																response) {
+															$('#loading-bar').remove();
+															$('#loading-bar-spinner')
+																	.remove();
 															console
 																	.log(response);
 														});
@@ -12611,6 +12954,9 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
+																				$('#loading-bar').remove();
+																				$('#loading-bar-spinner')
+																						.remove();
 																				console
 																						.log(response);
 																			});
@@ -12618,6 +12964,9 @@ materialAdmin
 														},
 														function myError(
 																response) {
+															$('#loading-bar').remove();
+															$('#loading-bar-spinner')
+																	.remove();
 															console
 																	.log(response);
 														})
