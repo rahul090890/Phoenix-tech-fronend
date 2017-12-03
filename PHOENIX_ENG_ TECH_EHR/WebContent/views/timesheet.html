@@ -21,7 +21,7 @@
 			<div class="card" data-ng-controller="timesheetcontroller">
 				<div class="card-header">
 					<h2>
-						TimeSheet Filling <small></small>
+						Time Sheet Details <small></small>
 					</h2>
 					<div class="card-body card-padding">
 						<div class='card-body table-responsive'>
@@ -32,7 +32,7 @@
 										<th>Employee Name</th>
 										<th>Role</th>
 										<th>Designation</th>
-										<th>Location</th>
+										<th>Department</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -59,8 +59,8 @@
 											</div></td>
 										<td><div class="fg-line">
 												<input type="text" class="form-control"
-													ng-model='employeelocation' disabled>
-											</div></td>
+													ng-model='employeedepartment' disabled>
+											</div></td> 
 									</tr>
 								</tbody>
 							</table>
@@ -87,7 +87,8 @@
 														show-weeks="false" ng-model="dtPopup" is-open="opened"
 														min-date="minDate" datepicker-options="dateOptions"
 														ng-required="true" close-text="Close"
-														placeholder="Select Date" ng-change="changeweekselected()"
+														placeholder="Week Start Date"
+														ng-change="changeweekselected()"
 														md-date-filter="onlyWeekendsPredicate" />
 												</div>
 
@@ -105,7 +106,7 @@
 													class="zmdi zmdi-calendar ma-icon"></i></span>
 												<div class="fg-line"
 													ng-class="{ 'fg-toggled': opened2 == true }">
-													<input type="text" readonly
+													<input type="text" readonly placeholder="Week Start Date"
 														uib-datepicker-popup="{{format}}" class="form-control"
 														ng-model="dtPopup1" md-date-filter="onlyWeekendsPredicate" />
 												</div>
@@ -295,9 +296,10 @@
 
 
 								</div>
-								<div class="row" id="timeTable" style='border-color: red;border: 1px;'>
+								<div class="row" id="timeTable"
+									style='border-color: red; border: 1px;'>
 									<div class='col-sm-6' ng-if='weekdays'
-										style=' font-weight: 500;text-transform: uppercase;'>Total
+										style='font-weight: 500; text-transform: uppercase;'>Total
 										Week Hours :</div>
 
 									<div class='col-sm-6' ng-if='weekdays'>
@@ -321,7 +323,6 @@
 												<div class="form-group ">
 													<div class="fg-line">
 														<span> <input type="text" class="form-control"
-															
 															readonlystyle="color: red" ng-model="weekTotal" readonly></span>
 													</div>
 												</div>

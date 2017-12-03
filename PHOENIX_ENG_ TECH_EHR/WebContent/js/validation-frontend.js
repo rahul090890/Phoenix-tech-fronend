@@ -130,9 +130,11 @@ function validatecreateEmployee(firstName, lastName, emailId, loginId,
 	}
 
 	try {
-		debugger;
-		var joindate = joindate.getFullYear();
-		checkValidate = true;
+		if(joindate.length>9 || joindate.getFullYear()){
+			checkValidate=true;
+		}
+	/*	var joindate = joindate.getFullYear();
+		checkValidate = true;*/
 	} catch (e) {
 		checkValidateMsgInputGroup('#joindate', 'Please select joining date');
 		checkValidate = false;

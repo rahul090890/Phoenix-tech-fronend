@@ -78,8 +78,8 @@
 											<p>
 												<span><a href="" ng-click="edituserdetails(item)">Edit</a></span>
 												&nbsp;| &nbsp; <span><a
-													ng-click="deleteuserdetails(item.employeeId)" href='#'>Delete</a></span>
-												&nbsp;| &nbsp;<span><a href=''
+													ng-click="deleteuserdetails(item.employeeId)" >Delete</a></span>
+												&nbsp;| &nbsp;<span><a 
 													ng-click="resetPassword(item.employeeId)">Reset Pswd</a></span>
 											</p>
 										</td>
@@ -201,7 +201,7 @@
 									<span class="input-group-addon"><i
 										class="zmdi zmdi-code zmdi-hc-fw"></i></span>
 									<div class="fg-line">
-										<input type="text" class="form-control"
+										<input type="text" class="form-control" readonly
 											ng-model='employeeCode' placeholder="Employee Code"
 											id="employeeCode"
 											onkeypress="validateInstantInputgroup(this)">
@@ -225,7 +225,7 @@
 										class="zmdi zmdi-pin-account zmdi-hc-fw"></i></span>
 									<!-- zmdi zmdi-local-phone -->
 									<div class="fg-line">
-										<input type="text" class="form-control" ng-model='loginId'
+										<input type="text" class="form-control" ng-model='loginId' readonly
 											id="loginId" onkeypress="validateInstantInputgroup(this)"
 											placeholder="Employee Login ID">
 									</div>
@@ -263,9 +263,16 @@
 												<div class="select">
 													<select class="form-control" myRequired
 														ng-model='employeeStatus' id="employeeStatus"
+														onchange="validateInstantInputgroup(this)">
+														<option value="">Select Status</option>
+														<option value='{{data.groupKey}}'
+															ng-repeat='data in referenceData.employeeStatus'>{{data.groupValue}}</option>
+													</select>
+													<!-- <select class="form-control" myRequired
+														ng-model='employeeStatus' id="employeeStatus"
 														onchange="validateInstantInputgroup(this)"
 														ng-options="status.value as status.name   for status in  statusVal"><option
-															value="">Select Employee Status</option></select>
+															value="">Select Employee Status</option></select> -->
 												</div>
 											</div>
 										</div>

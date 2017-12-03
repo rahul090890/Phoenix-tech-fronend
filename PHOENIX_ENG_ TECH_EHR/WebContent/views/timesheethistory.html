@@ -15,7 +15,7 @@
 			<div class="card" data-ng-controller="timesheethistory">
 				<div class="card-header">
 					<h2>
-						TimeSheet History<small> </small>
+						Time Sheet History<small> </small>
 					</h2>
 					<div class='row'>
 						<div class='col-md-3'>
@@ -129,8 +129,8 @@
 								<td>{{item.id.employeeId}}</td>
 								<td>{{item.firstName}}</td>
 								<td>{{item.lastName}}</td>
-								<td>{{item.id.weekStartDate}}</td>
-								<td>{{item.weekEndDate}}</td>
+								<td>{{item.id.weekStartDate| date : 'dd-MMM-yyyy'}}</td>
+								<td>{{item.weekEndDate| date : 'dd-MMM-yyyy'}}</td>
 								<td>{{item.totalHours}}</td>
 								<td>{{item.id.timesheetStatus}}</td>
 								<td>
@@ -192,7 +192,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">TimeSheet Details</h4>
+								<h4 class="modal-title" id="myModalLabel">Time Sheet Details</h4>
 							</div>
 							<div class="modal-body"
 								style="max-height: 500px; overflow-y: auto">
@@ -208,10 +208,8 @@
 										<tbody>
 											<tr>
 												<th>{{timeSheetDetails.employeeId}}</th>
-												<th>{{timeSheetDetails.startDateOfWeek|
-													date:'dd-MM-yyyy'}}</th>
-												<th>{{timeSheetDetails.endDateOfWeek|
-													date:'dd-MM-yyyy'}}</th>
+												<th>{{timeSheetDetails.startDateOfWeek| date : 'dd-MMM-yyyy'}}</th>
+												<th>{{timeSheetDetails.endDateOfWeek| date : 'dd-MMM-yyyy'}}</th>
 											</tr>
 										</tbody>
 									</table>

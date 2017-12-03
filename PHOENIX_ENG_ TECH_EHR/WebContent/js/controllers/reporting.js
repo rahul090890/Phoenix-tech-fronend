@@ -42,8 +42,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();
@@ -71,7 +71,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * { field : 'reportId' ,visible: false }, {
@@ -394,8 +394,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();
@@ -743,8 +743,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();
@@ -772,7 +772,7 @@ materialAdmin
 					$scope.start = '01' + '-' + startmm + '-' + startyyyy;
 					$scope.end = totalNoOfDays + '-' + endmm + '-' + endyyyy;
 
-					$scope.webserviceshost = 'http://localhost:8080/';
+					$scope.webserviceshost = 'http://172.20.70.213:8080/';
 					$scope.gridOptions = {
 						columnDefs : [/*
 										 * { field : 'reportId' ,visible: false }, {
@@ -1101,8 +1101,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();
@@ -1454,8 +1454,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();
@@ -1808,8 +1808,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();
@@ -2152,8 +2152,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var date2 = new Date();
 					var startyyyy = date2.getFullYear();

@@ -20,7 +20,7 @@
 					<div class="card" ng-controller="recentitemCtrl">
 						<div class="card-header">
 							<h2>
-								Leave Requested <small>Leave requested need a approval </small>
+								Leave Requested <small>Leave requested need an approval </small>
 							</h2>
 						</div>
 
@@ -83,8 +83,8 @@
 											<td>{{item.employee.employeeId}}</td>
 											<td>{{item.employee.firstName}}</td>
 											<td>{{item.employee.lastName}}</td>
-											<td>{{item.fromDate}}</td>
-											<td>{{item.toDate}}</td>
+											<td>{{item.fromDate | date : 'dd-MMM-yyyy'}}</td>
+											<td>{{item.toDate  | date : 'dd-MMM-yyyy'}}</td>
 											<td>{{item.noOfDays}}</td>
 											<td>{{item.leaveStatus}}</td>
 											<td>{{item.comments}}</td>
@@ -159,7 +159,7 @@
 					<div class="card" data-ng-controller="timesheetapproval">
 						<div class="card-header">
 							<h2>
-								TimeSheet Approval <small>TimeSheet requested need a
+								Time Sheet Approval <small>Time Sheet requested need a
 									approval </small>
 							</h2>
 							<!-- <ul class="actions">

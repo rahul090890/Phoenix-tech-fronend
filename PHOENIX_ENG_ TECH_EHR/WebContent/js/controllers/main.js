@@ -447,8 +447,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 					$scope.changeweekselected = function() {
 						var startdate = $scope.dtPopup;
 						var date2 = new Date(startdate);
@@ -503,9 +503,11 @@ materialAdmin
 								+ startdd;
 						$scope.end = endyyyy + '-' + endmm + '-' + enddd;
 						$scope.weeksdetails = "selected week as "
-								+ $scope.start + "  to  " + $scope.end;
-						var weeksdetails = [ 'MON', 'TUE', 'WED', 'THUR',
-								'FRI', 'SAT', 'SUN' ];
+								+ $filter('date')($scope.start, "dd-MMM-yyyy")
+								+ "  to  "
+								+ $filter('date')($scope.end, "dd-MMM-yyyy");
+						var weeksdetails = [ 'MON', 'TUE', 'WED', 'THU', 'FRI',
+								'SAT', 'SUN' ];
 
 						var weekday = [];
 						for (var x = 0; x < 7; x++) {
@@ -579,7 +581,8 @@ materialAdmin
 															'No project mapped with current selection',
 															'error')
 												}
-											}, function myError(response) {
+											},
+											function myError(response) {
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -609,7 +612,8 @@ materialAdmin
 															'No Task mapped with current selection',
 															'error')
 												}
-											}, function myError(response) {
+											},
+											function myError(response) {
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -638,7 +642,6 @@ materialAdmin
 											$scope.employeename = response.data.firstName
 													+ ' '
 													+ response.data.lastName;
-											;
 											$scope.employeedesignation = response.data.designation;
 											$scope.employeelocation = response.data.address;
 											$scope.employeeType = response.data.employeeType;
@@ -649,8 +652,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 
@@ -668,8 +670,7 @@ materialAdmin
 						$scope.customers = response.data;
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -686,8 +687,7 @@ materialAdmin
 						$scope.departments = response.data;
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 
@@ -705,8 +705,7 @@ materialAdmin
 						$scope.cpcs = response.data;
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$scope.updateTotalhour = function() {
@@ -1228,8 +1227,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.approveLeave = function(item) {
@@ -1431,8 +1429,11 @@ materialAdmin
 																		},
 																		function myError(
 																				response) {
-																			$('#loading-bar').remove();
-																			$('#loading-bar-spinner')
+																			$(
+																					'#loading-bar')
+																					.remove();
+																			$(
+																					'#loading-bar-spinner')
 																					.remove();
 																			console
 																					.log(response);
@@ -1440,8 +1441,10 @@ materialAdmin
 
 													},
 													function myError(response) {
-														$('#loading-bar').remove();
-														$('#loading-bar-spinner')
+														$('#loading-bar')
+																.remove();
+														$(
+																'#loading-bar-spinner')
 																.remove();
 														console.log(response);
 													});
@@ -1651,8 +1654,11 @@ materialAdmin
 																		},
 																		function myError(
 																				response) {
-																			$('#loading-bar').remove();
-																			$('#loading-bar-spinner')
+																			$(
+																					'#loading-bar')
+																					.remove();
+																			$(
+																					'#loading-bar-spinner')
 																					.remove();
 																			console
 																					.log(response);
@@ -1660,8 +1666,10 @@ materialAdmin
 
 													},
 													function myError(response) {
-														$('#loading-bar').remove();
-														$('#loading-bar-spinner')
+														$('#loading-bar')
+																.remove();
+														$(
+																'#loading-bar-spinner')
 																.remove();
 														console.log(response);
 													})
@@ -1706,8 +1714,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 
@@ -1742,8 +1749,7 @@ materialAdmin
 
 							}, function myError(response) {
 								$('#loading-bar').remove();
-								$('#loading-bar-spinner')
-										.remove();
+								$('#loading-bar-spinner').remove();
 								console.log(response);
 							});
 
@@ -1803,8 +1809,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var employeeid = $window.sessionStorage
 							.getItem("EmployeeId");
@@ -1832,8 +1838,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -1874,8 +1879,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.updateleavesdetails = function() {
@@ -1951,7 +1955,7 @@ materialAdmin
 							var leaveType = $scope.itemSelected.leaveType;
 
 							var startyear = $scope.dtPopup.getFullYear();
-							var startmonth = $scope.dtPopup.getMonth()+1;
+							var startmonth = $scope.dtPopup.getMonth() + 1;
 							if (startmonth.toString().length == 1) {
 								startmonth = '0' + startmonth;
 							}
@@ -1962,7 +1966,7 @@ materialAdmin
 							var startdate = startyear + '-' + startmonth + '-'
 									+ startday;
 							var endyear = $scope.dtPopup1.getFullYear();
-							var endmonth = $scope.dtPopup1.getMonth()+1;
+							var endmonth = $scope.dtPopup1.getMonth() + 1;
 							if (endmonth.toString().length == 1) {
 								endmonth = '0' + endmonth;
 							}
@@ -2050,9 +2054,9 @@ materialAdmin
 												$scope.formats = [
 														'dd-MMMM-yyyy',
 														'yyyy-MM-dd',
-														'dd.MM.yyyy',
+														'dd-MMM-yyyy',
 														'shortDate' ];
-												$scope.format = $scope.formats[1];
+												$scope.format = $scope.formats[2];
 
 												var employeeid = $window.sessionStorage
 														.getItem("EmployeeId");
@@ -2087,8 +2091,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -2281,8 +2288,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 
@@ -2455,8 +2461,7 @@ materialAdmin
 
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.deletecpcDetails = function(item) {/*
@@ -2584,8 +2589,8 @@ materialAdmin
 																 * $scope.filteredList =
 																 * $scope.allItems; }
 																 * $scope
-																 * .pagination(); }
-																 *  // Calculate //
+																 * .pagination(); } //
+																 * Calculate //
 																 * Total //
 																 * Number // of //
 																 * Pages //
@@ -2643,8 +2648,8 @@ materialAdmin
 																 * .resetAll();
 																 * 
 																 * $scope.columnToOrder =
-																 * sortBy;
-																 *  // $Filter // - //
+																 * sortBy; //
+																 * $Filter // - //
 																 * Standard //
 																 * Service
 																 * $scope.filteredList =
@@ -2680,13 +2685,11 @@ materialAdmin
 																 * !$scope.reverse;
 																 * 
 																 * $scope
-																 * .pagination(); };
-																 *  // By //
-																 * Default //
+																 * .pagination(); }; //
+																 * By // Default //
 																 * sort // ny //
 																 * Name $scope
-																 * .sort('name');
-																 *  //
+																 * .sort('name'); //
 																 * console.log($scope.allUsers.length); } },
 																 * function
 																 * myError(
@@ -2701,14 +2704,13 @@ materialAdmin
 																 * "CPC record
 																 * has been
 																 * deleted.",
-																 * "success");
-																 *  }, function
+																 * "success"); },
+																 * function
 																 * myError(
 																 * response) {
 																 * console
 																 * .log(response);
-																 * });
-																 *  } else {
+																 * }); } else {
 																 * swal(
 																 * "Cancelled",
 																 * "Request has
@@ -2748,8 +2750,7 @@ materialAdmin
 							}
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$http(
@@ -2769,8 +2770,7 @@ materialAdmin
 							}
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$('#updatecpcDetails').show();
@@ -2974,8 +2974,15 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
-																		$('#loading-bar').remove();
-																		$('#loading-bar-spinner')
+																		swal(
+																				"Customer Program Code already exist!",
+																				"",
+																				"error");
+																		$(
+																				'#loading-bar')
+																				.remove();
+																		$(
+																				'#loading-bar-spinner')
 																				.remove();
 																		console
 																				.log(response);
@@ -2985,7 +2992,11 @@ materialAdmin
 															"Customer Program updated SuccessFully!",
 															"", "success");
 
-												}, function myError(response) {
+												},
+												function myError(response) {
+													swal(
+															"Customer Program Code already exist!",
+															"", "error");
 													$('#loading-bar').remove();
 													$('#loading-bar-spinner')
 															.remove();
@@ -3049,8 +3060,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -3070,8 +3080,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 
@@ -3115,11 +3124,14 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
-
+					$scope.resetcpc=function(){
+						$scope.customerProgCodeType='';
+						 $scope.customerprogName='';
+						$scope.customerId='';
+					}
 					$scope.createCPC = function() {
 						var cpcValidater = validateCPC(
 								$scope.customerProgCodeType,
@@ -3172,7 +3184,11 @@ materialAdmin
 												/*
 												 * $scope.example14model = {}
 												 */
-											}, function myError(response) {
+											},
+											function myError(response) {
+												swal(
+														"Customer Program Code already exist!",
+														"", "error");
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -3487,8 +3503,11 @@ materialAdmin
 																									},
 																									function myError(
 																											response) {
-																										$('#loading-bar').remove();
-																										$('#loading-bar-spinner')
+																										$(
+																												'#loading-bar')
+																												.remove();
+																										$(
+																												'#loading-bar-spinner')
 																												.remove();
 																										console
 																												.log(response);
@@ -3502,8 +3521,11 @@ materialAdmin
 																				},
 																				function myError(
 																						response) {
-																					$('#loading-bar').remove();
-																					$('#loading-bar-spinner')
+																					$(
+																							'#loading-bar')
+																							.remove();
+																					$(
+																							'#loading-bar-spinner')
 																							.remove();
 																					console
 																							.log(response);
@@ -3715,8 +3737,11 @@ materialAdmin
 																									},
 																									function myError(
 																											response) {
-																										$('#loading-bar').remove();
-																										$('#loading-bar-spinner')
+																										$(
+																												'#loading-bar')
+																												.remove();
+																										$(
+																												'#loading-bar-spinner')
 																												.remove();
 																										console
 																												.log(response);
@@ -3730,8 +3755,11 @@ materialAdmin
 																				},
 																				function myError(
 																						response) {
-																					$('#loading-bar').remove();
-																					$('#loading-bar-spinner')
+																					$(
+																							'#loading-bar')
+																							.remove();
+																					$(
+																							'#loading-bar-spinner')
 																							.remove();
 																					console
 																							.log(response);
@@ -3748,7 +3776,7 @@ materialAdmin
 											}
 											$scope.edituserdetails = function(
 													item) {
-												$scope.dtPopup = item.dateOfJoin;
+
 												$scope.today = function() {
 													$scope.dt = new Date();
 												};
@@ -3781,9 +3809,9 @@ materialAdmin
 												$scope.formats = [
 														'dd-MMMM-yyyy',
 														'yyyy-MM-dd',
-														'dd.MM.yyyy',
+														'dd-MMM-yyyy',
 														'shortDate' ];
-												$scope.format = $scope.formats[1];
+												$scope.format = $scope.formats[2];
 
 												$('#edituser').show();
 
@@ -3804,6 +3832,8 @@ materialAdmin
 												$scope.managerId = item.manager.employeeId;
 												$scope.roleId = item.role.roleid;
 												$scope.designation = item.designation;
+												debugger;
+												$scope.dtPopup = item.dateOfJoin;
 												/*
 												 * $scope.dtPopup =
 												 * item.dateOfJoin;
@@ -3851,8 +3881,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -3880,8 +3913,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -3909,8 +3945,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -3938,8 +3977,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -4024,7 +4066,7 @@ materialAdmin
 															+ employeeStatus
 															+ '/' + doj + '/'
 															+ roleid + '/'
-															+ employeeStatus;
+															+ employeeCode;
 													updateEmployee = updateEmployee
 															+ addition;
 
@@ -4205,8 +4247,15 @@ materialAdmin
 																						},
 																						function myError(
 																								response) {
-																							$('#loading-bar').remove();
-																							$('#loading-bar-spinner')
+																							swal(
+																									"Error",
+																									"Employee Code/loginid already exist",
+																									"error");
+																							$(
+																									'#loading-bar')
+																									.remove();
+																							$(
+																									'#loading-bar-spinner')
 																									.remove();
 																							console
 																									.log(response);
@@ -4215,8 +4264,16 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
-																		$('#loading-bar').remove();
-																		$('#loading-bar-spinner')
+
+																		swal(
+																				"Error",
+																				"Employee Code/loginid already exist",
+																				"error");
+																		$(
+																				'#loading-bar')
+																				.remove();
+																		$(
+																				'#loading-bar-spinner')
 																				.remove();
 																		console
 																				.log(response);
@@ -4274,8 +4331,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 
@@ -4314,8 +4370,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -4335,8 +4390,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$scope.addTask = function() {
@@ -4360,23 +4414,30 @@ materialAdmin
 											'authorization' : $window.sessionStorage
 													.getItem("AuthKey")
 										}
-									}).then(function mySucces(response) {
-								swal({
-									title : "Task Added Successfully",
-									closeOnConfirm : false,
-									closeOnCancel : false
-								});
-								$scope.taskName = '';
-								$scope.department = {};
-								$scope.customer = {};
-								console.log(response.data);
+									})
+									.then(
+											function mySucces(response) {
+												swal({
+													title : "Task Added Successfully",
+													closeOnConfirm : false,
+													closeOnCancel : false
+												});
+												$scope.taskName = '';
+												$scope.department = {};
+												$scope.customer = {};
+												console.log(response.data);
 
-							}, function myError(response) {
-								$('#loading-bar').remove();
-								$('#loading-bar-spinner')
-										.remove();
-								console.log(response);
-							});
+											},
+											function myError(response) {
+												swal(
+														'error',
+														'Combination of three field already exist .',
+														'error');
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
 						} else {
 							$('html, body')
 									.animate(
@@ -5160,8 +5221,7 @@ materialAdmin
 
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -5180,8 +5240,7 @@ materialAdmin
 
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -5200,8 +5259,7 @@ materialAdmin
 
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -5224,8 +5282,7 @@ materialAdmin
 
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					/*
@@ -5275,19 +5332,19 @@ materialAdmin
 									closeOnCancel : false
 								});
 								$scope.projectname = '';
-								$scope.customerproject = {};
-								$scope.projectstatus = {};
+								$scope.customerproject = '';
+								$scope.projectstatus = '';
 								$scope.customerprogramcode = '';
-								$scope.departmentid = {};
+								$scope.departmentid = '';
 								$scope.projectCode = '';
-								$scope.country = {};
-								$scope.customers = {};
-								$scope.cpc = {};
+								$scope.country = '';
+								$scope.customers = '';
+								$scope.cpc = '';
 
 							}, function myError(response) {
+								swal('error','Customer project code already exist','error');
 								$('#loading-bar').remove();
-								$('#loading-bar-spinner')
-										.remove();
+								$('#loading-bar-spinner').remove();
 								console.log(response);
 							});
 						} else {
@@ -5446,8 +5503,7 @@ materialAdmin
 
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.editprojects = function(item) {
@@ -6457,8 +6513,7 @@ materialAdmin
 
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$http(
@@ -6477,8 +6532,7 @@ materialAdmin
 
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$http(
@@ -6497,8 +6551,7 @@ materialAdmin
 
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$http(
@@ -6523,8 +6576,7 @@ materialAdmin
 
 										}, function myError(response) {
 											$('#loading-bar').remove();
-											$('#loading-bar-spinner')
-													.remove();
+											$('#loading-bar-spinner').remove();
 											console.log(response);
 										});
 
@@ -6551,8 +6603,7 @@ materialAdmin
 
 										}, function myError(response) {
 											$('#loading-bar').remove();
-											$('#loading-bar-spinner')
-													.remove();
+											$('#loading-bar-spinner').remove();
 											console.log(response);
 										});
 
@@ -6772,8 +6823,11 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
-																				$('#loading-bar').remove();
-																				$('#loading-bar-spinner')
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
 																						.remove();
 																				console
 																						.log(response);
@@ -6788,8 +6842,10 @@ materialAdmin
 														},
 														function myError(
 																response) {
-															$('#loading-bar').remove();
-															$('#loading-bar-spinner')
+															$('#loading-bar')
+																	.remove();
+															$(
+																	'#loading-bar-spinner')
 																	.remove();
 															console
 																	.log(response);
@@ -7016,8 +7072,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -7029,7 +7088,9 @@ materialAdmin
 													closeOnCancel : false
 												});
 
-											}, function myError(response) {
+											},
+											function myError(response) {
+												swal('error','Project code already exist .','error');
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -7187,8 +7248,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.edittaskDetails = function(item) {
@@ -7221,8 +7281,7 @@ materialAdmin
 							}
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$http(
@@ -7242,8 +7301,7 @@ materialAdmin
 							}
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 					}
@@ -7441,13 +7499,20 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
 																});
-											}, function myError(response) {
+											},
+											function myError(response) {
+												swal("error",
+														"combination of three already exist. ",
+														"error");
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -7653,8 +7718,11 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
-																				$('#loading-bar').remove();
-																				$('#loading-bar-spinner')
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
 																						.remove();
 																				console
 																						.log(response);
@@ -7667,8 +7735,10 @@ materialAdmin
 														},
 														function myError(
 																response) {
-															$('#loading-bar').remove();
-															$('#loading-bar-spinner')
+															$('#loading-bar')
+																	.remove();
+															$(
+																	'#loading-bar-spinner')
 																	.remove();
 															console
 																	.log(response);
@@ -7772,8 +7842,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -7870,8 +7943,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.deleteRole = function(item) {
@@ -8057,8 +8129,11 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
-																				$('#loading-bar').remove();
-																				$('#loading-bar-spinner')
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
 																						.remove();
 																				console
 																						.log(response);
@@ -8070,8 +8145,10 @@ materialAdmin
 														},
 														function myError(
 																response) {
-															$('#loading-bar').remove();
-															$('#loading-bar-spinner')
+															$('#loading-bar')
+																	.remove();
+															$(
+																	'#loading-bar-spinner')
 																	.remove();
 															console
 																	.log(response);
@@ -8265,8 +8342,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -8316,7 +8396,11 @@ materialAdmin
 												 * console .log(response); }); }
 												 */
 
-											}, function myError(response) {
+											},
+											function myError(response) {
+												swal("error",
+														"Role name already exist. ",
+														"error");
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -8364,8 +8448,7 @@ materialAdmin
 						$scope.rolls = response.data;
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$scope.addroll = function() {
@@ -8391,27 +8474,61 @@ materialAdmin
 											'authorization' : $window.sessionStorage
 													.getItem("AuthKey")
 										}
-									}).then(function mySucces(response) {
-								console.log(response.data);
-								$scope.rolls = response.data;
-								swal({
-									title : "Role Added Successfully",
+									})
+									.then(
+											function mySucces(response) {
+												console.log(response.data);
+												$scope.rolls = response.data;
+												swal({
+													title : "Role Added Successfully",
 
-									closeOnConfirm : false,
-									closeOnCancel : false
-								});
-								$scope.roleName = '';
-								$scope.parentroleId = {};
-							}, function myError(response) {
-								swal(
-										"Error",
-										"Role Name is already present)",
-										"error");
-								$('#loading-bar').remove();
-								$('#loading-bar-spinner')
-										.remove();
-								console.log(response);
-							});
+													closeOnConfirm : false,
+													closeOnCancel : false
+												});
+												$scope.roleName = '';
+												var getroll = $scope.webserviceshost
+														+ 'hr/role/all';
+
+												$http(
+														{
+															method : "GET",
+															url : getroll,
+															headers : {
+																'XSRF-TOKEN' : $window.sessionStorage
+																		.getItem("Access-Token"),
+																'authorization' : $window.sessionStorage
+																		.getItem("AuthKey")
+															}
+														})
+														.then(
+																function mySucces(
+																		response) {
+																	console
+																			.log(response.data);
+																	$scope.rolls = response.data;
+																},
+																function myError(
+																		response) {
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
+																			.remove();
+																	console
+																			.log(response);
+																});
+											},
+											function myError(response) {
+												swal(
+														"Error",
+														"Role Name is already present)",
+														"error");
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
 						} else {
 
 							$('html, body')
@@ -8570,8 +8687,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 
@@ -8616,8 +8732,7 @@ materialAdmin
 
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						var allManager = $scope.webserviceshost
@@ -8636,8 +8751,7 @@ materialAdmin
 							$scope.managersList = response.data;
 						}, function myError(response) {
 							$('#loading-bar').remove();
-							$('#loading-bar-spinner')
-									.remove();
+							$('#loading-bar-spinner').remove();
 							console.log(response);
 						});
 						$scope.resetupdateDepartment = function() {
@@ -8842,8 +8956,12 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
-																		$('#loading-bar').remove();
-																		$('#loading-bar-spinner')
+																		swal('error','department code already exist .','error');
+																		$(
+																				'#loading-bar')
+																				.remove();
+																		$(
+																				'#loading-bar-spinner')
 																				.remove();
 																		console
 																				.log(response);
@@ -8852,7 +8970,10 @@ materialAdmin
 													if (response == 200) {
 														console.log("success")
 													}
-												}, function myError(response) {
+												},
+												function myError(response) {
+													swal('error','department code already exist .','error');
+													
 													$('#loading-bar').remove();
 													$('#loading-bar-spinner')
 															.remove();
@@ -8917,8 +9038,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					$scope.statusVal = [ {
 						name : 'Active',
@@ -8953,8 +9074,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -8974,8 +9094,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -8995,8 +9114,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -9016,10 +9134,25 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
+					$scope.restuserdetail = function() {
+						$scope.firstName = '';
+						$scope.lastName = '';
+						$scope.emailId = '';
+						$scope.loginId = '';
+						$scope.loginPassword = '';
+						$scope.managerId = '';
+						$scope.address = '';
+						$scope.role = '';
+						$scope.designation = '';
+						$scope.employeeType = '';
+						$scope.userDepartmentId = '';
+						$scope.employeeStatus = '';
+						$scope.employeeCode = '';
+						$scope.dtPopup = '';
+					}
 
 					$scope.addnewUser = function() {
 						/*
@@ -9078,38 +9211,47 @@ materialAdmin
 											'authorization' : $window.sessionStorage
 													.getItem("AuthKey")
 										}
-									}).then(function mySucces(response) {
-								console.log(response.data);
-								$scope.rolls = response.data;
-								swal({
-									title : "Employee Added Successfully",
+									})
+									.then(
+											function mySucces(response) {
+												console.log(response.data);
+												$scope.rolls = response.data;
+												swal({
+													title : "Employee Added Successfully",
 
-									closeOnConfirm : false,
-									closeOnCancel : false
-								});
-								$scope.employeeId = '';
-								$scope.firstName = '';
-								$scope.lastName = '';
-								$scope.emailId = '';
-								$scope.loginId = '';
-								$scope.loginPassword = '';
-								$scope.managerId = '';
-								$scope.address = '';
-								$scope.role = '';
-								$scope.designation = '';
-								$scope.employeeType = {};
-								$scope.userDepartmentId = {};
-								$scope.dtPopup = '';
-								$scope.employeeCode = '';
-								$scope.employeeType = {};
-								$scope.employeeStatus = {};
-								$location.path('/headers/edituser');
-							}, function myError(response) {
-								$('#loading-bar').remove();
-								$('#loading-bar-spinner')
-										.remove();
-								console.log(response);
-							});
+													closeOnConfirm : false,
+													closeOnCancel : false
+												});
+												$scope.employeeId = '';
+												$scope.firstName = '';
+												$scope.lastName = '';
+												$scope.emailId = '';
+												$scope.loginId = '';
+												$scope.loginPassword = '';
+												$scope.managerId = '';
+												$scope.address = '';
+												$scope.role = '';
+												$scope.designation = '';
+												$scope.employeeType = {};
+												$scope.userDepartmentId = {};
+												$scope.dtPopup = '';
+												$scope.employeeCode = '';
+												$scope.employeeType = {};
+												$scope.employeeStatus = {};
+												$location
+														.path('/headers/edituser');
+											},
+											function myError(response) {
+
+												swal(
+														"Error",
+														"Employee Code/loginid already exist",
+														"error");
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
 						} else {
 							$('html, body')
 									.animate(
@@ -9160,8 +9302,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$http(
@@ -9184,8 +9325,7 @@ materialAdmin
 						}
 					}, function myError(response) {
 						$('#loading-bar').remove();
-						$('#loading-bar-spinner')
-								.remove();
+						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
 					$scope.clearDepartment = function() {
@@ -9257,8 +9397,11 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -9270,7 +9413,8 @@ materialAdmin
 												if (response == 200) {
 													console.log("success")
 												}
-											}, function myError(response) {
+											},
+											function myError(response) {
 												swal(
 														"Error",
 														"Department Code is already present)",
@@ -10544,8 +10688,12 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	$('#loading-bar').remove();
-																	$('#loading-bar-spinner')
+																	swal('error','costomer code already exist .','error');
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
 																			.remove();
 																	console
 																			.log(response);
@@ -10645,8 +10793,7 @@ materialAdmin
 
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 
@@ -10834,8 +10981,11 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
-																				$('#loading-bar').remove();
-																				$('#loading-bar-spinner')
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
 																						.remove();
 																				console
 																						.log(response);
@@ -10849,8 +10999,10 @@ materialAdmin
 														},
 														function myError(
 																response) {
-															$('#loading-bar').remove();
-															$('#loading-bar-spinner')
+															$('#loading-bar')
+																	.remove();
+															$(
+																	'#loading-bar-spinner')
 																	.remove();
 															console
 																	.log(response);
@@ -10916,33 +11068,36 @@ materialAdmin
 											'authorization' : $window.sessionStorage
 													.getItem("AuthKey")
 										}
-									}).then(function mySucces(response) {
-								console.log(response.data);
-								swal({
-									title : "Customer Created Successfully",
+									})
+									.then(
+											function mySucces(response) {
+												console.log(response.data);
+												swal({
+													title : "Customer Created Successfully",
 
-									closeOnConfirm : false,
-									closeOnCancel : false
-								});
-								$scope.customerName = '';
-								$scope.customerAddress = '';
-								$scope.customerZip = '';
-								$scope.customerCode = '';
-								$scope.country = {};
-								$scope.webserviceshost
-								if (response == 200) {
-									console.log("success")
-								}
-							}, function myError(response) {
-								swal(
-										"Error",
-										"Customer Code is already present)",
-										"error");
-								$('#loading-bar').remove();
-								$('#loading-bar-spinner')
-										.remove();
-								console.log(response);
-							});
+													closeOnConfirm : false,
+													closeOnCancel : false
+												});
+												$scope.customerName = '';
+												$scope.customerAddress = '';
+												$scope.customerZip = '';
+												$scope.customerCode = '';
+												$scope.country = {};
+												$scope.webserviceshost
+												if (response == 200) {
+													console.log("success")
+												}
+											},
+											function myError(response) {
+												swal(
+														"Error",
+														"Customer Code is already present)",
+														"error");
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
 						} else {
 
 							$('html, body')
@@ -11788,8 +11943,8 @@ materialAdmin
 					};
 
 					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
-							'dd.MM.yyyy', 'shortDate' ];
-					$scope.format = $scope.formats[1];
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
 
 					var employeeid = $window.sessionStorage
 							.getItem("EmployeeId");
@@ -11954,8 +12109,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 
@@ -12015,45 +12169,45 @@ materialAdmin
 														&& $scope.timeSheetDetails.endDateOfWeek) {
 													var weekStart = new Date(
 															$scope.timeSheetDetails.startDateOfWeek);
-													var weekEnd = new Date(
-															$scope.timeSheetDetails.endDateOfWeek);
-													var startDate = new Date(
-															$scope.timeSheetDetails.startDateOfWeek);
-													var count = 0;
-													/*
-													 * var totalDays= new
-													 * Date(weekStart.fullYear(),
-													 * weekStart.getMonth(), 0)
-													 * .getDate();
-													 */
-													for (var i = weekStart
-															.getDate('dd'); i <= weekEnd
-															.getDate('dd'); i++) {
-														$scope.weekDays[(i < 10 ? '0'
-																+ i
-																: i)
+
+													for (var i = 0; i <= 6; i++) {
+														var weekKey = new Date(
+																weekStart
+																		.getTime()
+																		+ i
+																		* 24
+																		* 60
+																		* 60
+																		* 1000); // weekKey.setDate(weekStart.getDate()+i);
+
+														var weekDate = weekKey
+																.getDate() < 10 ? '0'
+																+ weekKey
+																		.getDate()
+																: weekKey
+																		.getDate();
+														var weekMonth = weekKey
+																.getMonth() + 1 < 10 ? '0'
+																+ parseInt(weekKey
+																		.getMonth() + 1)
+																: weekKey
+																		.getMonth() + 1;
+														var weekYear = weekKey
+																.getFullYear();
+
+														$scope.weekDays[weekDate
 																+ '-'
-																+ ((weekStart
-																		.getMonth() + 1) < 10 ? '0'
-																		+ (weekStart
-																				.getMonth() + 1)
-																		: weekStart
-																				.getMonth() + 1)
+																+ weekMonth
 																+ '-'
-																+ weekStart
-																		.getFullYear()] = {
-															date : (i < 10 ? '0'
-																	+ i
-																	: i),
-															day : $scope.dayName[new Date(
-																	startDate
-																			.setDate(weekStart
-																					.getDate()
-																					+ count))
+																+ weekYear] = {
+															date : weekDate,
+															day : $scope.dayName[weekKey
 																	.getDay()]
 														};
 
-														count++;
+														console.log(weekDate,
+																weekMonth,
+																weekYear);
 													}
 
 													$
@@ -12072,6 +12226,9 @@ materialAdmin
 																						function(
 																								dateIndex,
 																								dateValue) {
+
+																							// console.log(dateIndex,
+																							// dateValue);
 																							var taskDetails = $filter(
 																									'filter')
 																									(
@@ -12084,6 +12241,7 @@ materialAdmin
 																							if (taskDetails.length > 0
 																									&& (taskObj.taskId == undefined
 																											|| taskObj.taskId == null || taskObj.taskId == '')) {
+																								// console.log(taskDetails);
 																								taskObj['customerId'] = taskDetails[0].customerId;
 																								taskObj['customerName'] = taskDetails[0].customerName;
 																								taskObj['customerProgramId'] = taskDetails[0].customerProgramId;
@@ -12117,8 +12275,8 @@ materialAdmin
 																				.push(taskObj);
 																		// console.log($scope.weekDaysHR);
 																	});
-
 												}
+
 											}
 										})
 						console.log($scope.THSEmployeeID, $scope.THSWStartDate,
@@ -12338,8 +12496,7 @@ materialAdmin
 											}
 										}, function myError(response) {
 											$('#loading-bar').remove();
-											$('#loading-bar-spinner')
-													.remove();
+											$('#loading-bar-spinner').remove();
 											console.log(response);
 										});
 
@@ -12540,8 +12697,7 @@ materialAdmin
 										}
 									}, function myError(response) {
 										$('#loading-bar').remove();
-										$('#loading-bar-spinner')
-												.remove();
+										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
 					$scope.approveTimeSheet = function(item) {
@@ -12735,8 +12891,11 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
-																				$('#loading-bar').remove();
-																				$('#loading-bar-spinner')
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
 																						.remove();
 																				console
 																						.log(response);
@@ -12748,8 +12907,10 @@ materialAdmin
 														},
 														function myError(
 																response) {
-															$('#loading-bar').remove();
-															$('#loading-bar-spinner')
+															$('#loading-bar')
+																	.remove();
+															$(
+																	'#loading-bar-spinner')
 																	.remove();
 															console
 																	.log(response);
@@ -12954,8 +13115,11 @@ materialAdmin
 																			},
 																			function myError(
 																					response) {
-																				$('#loading-bar').remove();
-																				$('#loading-bar-spinner')
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
 																						.remove();
 																				console
 																						.log(response);
@@ -12964,8 +13128,10 @@ materialAdmin
 														},
 														function myError(
 																response) {
-															$('#loading-bar').remove();
-															$('#loading-bar-spinner')
+															$('#loading-bar')
+																	.remove();
+															$(
+																	'#loading-bar-spinner')
 																	.remove();
 															console
 																	.log(response);
@@ -12982,202 +13148,125 @@ materialAdmin
 									}
 								});
 					}
-					$scope.showDetails = function(sequence) {
-						// $window.location.path='headers.timesheet';
-
-						var timesheetDetail = $scope.webserviceshost
-								+ 'hr/timesheet/detailsBySequence/' + sequence;
-
-						$http(
-								{
-									method : "GET",
-									url : timesheetDetail,
-									headers : {
-										'XSRF-TOKEN' : $window.sessionStorage
-												.getItem("Access-Token"),
-										'authorization' : $window.sessionStorage
-												.getItem("AuthKey")
-									}
-								})
-								.then(
-										function mySucces(response) {
-
-											if (response != 'undefiend'
-													&& response != "") {
-												/*
-												 * $scope.timesheetfullDetails =
-												 * response.data;
-												 * $scope.employeetimesheetid =
-												 * $scope.timesheetfullDetails.employeeId;
-												 * $scope.timesheetcomments =
-												 * $scope.timesheetfullDetails.comments;
-												 * $scope.timesheetweekstart =
-												 * $scope.timesheetfullDetails.startDateOfWeek;
-												 * $scope.timesheetweekend =
-												 * $scope.timesheetfullDetails.endDateOfWeek;
-												 * $scope.timesheettimesheets =
-												 * $scope.timesheetfullDetails.timesheets;
-												 * console.log(response);
-												 */
-												$scope.timeSheetDetails = response.data;
-												$scope.timesheetcomments = $scope.timeSheetDetails.comments;
-												$scope.weekDays = {};
-												$scope.tasks = [];
-												$scope.weekDaysHR = {
-													"dates" : {},
-													'totalHours' : 0
-												};
-												$scope.dayName = [ 'Sun',
-														'Mon', 'Tue', 'Wed',
-														'Thu', 'Fri', 'Sat' ];
-												if ($scope.timeSheetDetails
-														&& $scope.timeSheetDetails.startDateOfWeek
-														&& $scope.timeSheetDetails.endDateOfWeek) {
-													var weekStart = new Date(
-															$scope.timeSheetDetails.startDateOfWeek);
-													var weekEnd = new Date(
-															$scope.timeSheetDetails.endDateOfWeek);
-													var startDate = new Date(
-															$scope.timeSheetDetails.startDateOfWeek);
-													var count = 0;
-													/*
-													 * var totalDays= new
-													 * Date(weekStart.fullYear(),
-													 * weekStart.getMonth(), 0)
-													 * .getDate();
-													 */
-													for (var i = weekStart
-															.getDate('dd'); i <= weekEnd
-															.getDate('dd'); i++) {
-														$scope.weekDays[(i < 10 ? '0'
-																+ i
-																: i)
-																+ '-'
-																+ ((weekStart
-																		.getMonth() + 1) < 10 ? '0'
-																		+ (weekStart
-																				.getMonth() + 1)
-																		: weekStart
-																				.getMonth() + 1)
-																+ '-'
-																+ weekStart
-																		.getFullYear()] = {
-															date : (i < 10 ? '0'
-																	+ i
-																	: i),
-															day : $scope.dayName[new Date(
-																	startDate
-																			.setDate(weekStart
-																					.getDate()
-																					+ count))
-																	.getDay()]
-														};
-
-														count++;
-													}
-
-													$
-															.each(
-																	$scope.timeSheetDetails.timesheets,
-																	function(
-																			index,
-																			value) {
-																		var taskObj = {
-																			"dates" : {},
-																			'totalHours' : 0
-																		};
-																		$
-																				.each(
-																						$scope.weekDays,
-																						function(
-																								dateIndex,
-																								dateValue) {
-																							var taskDetails = $filter(
-																									'filter')
-																									(
-																											value,
-																											{
-																												'timesheetDate' : dateIndex
-																											},
-																											true);
-
-																							if (taskDetails.length > 0
-																									&& (taskObj.taskId == undefined
-																											|| taskObj.taskId == null || taskObj.taskId == '')) {
-																								taskObj['customerId'] = taskDetails[0].customerId;
-																								taskObj['customerName'] = taskDetails[0].customerName;
-																								taskObj['customerProgramId'] = taskDetails[0].customerProgramId;
-																								taskObj['customerProgramCode'] = taskDetails[0].customerProgramCode;
-																								taskObj['customerProgramType'] = taskDetails[0].customerProgramType;
-																								taskObj['departmentId'] = taskDetails[0].departmentId;
-																								taskObj['projectId'] = taskDetails[0].projectId;
-																								taskObj['projectName'] = taskDetails[0].projectName;
-																								taskObj['projectType'] = taskDetails[0].projectType;
-																								taskObj['taskId'] = taskDetails[0].taskId;
-																								taskObj['taskName'] = taskDetails[0].taskName;
-																							}
-
-																							taskObj.totalHours = parseInt(taskObj.totalHours)
-																									+ (taskDetails[0] ? parseInt(taskDetails[0].hours)
-																											: 0);
-																							taskObj.dates[dateIndex] = taskDetails[0] ? taskDetails[0].hours
-																									: '';
-																							$scope.weekDaysHR.dates[dateIndex] = ($scope.weekDaysHR.dates[dateIndex] == undefined
-																									|| $scope.weekDaysHR.dates[dateIndex] == ''
-																									|| $scope.weekDaysHR.dates[dateIndex] == null ? 0
-																									: parseInt($scope.weekDaysHR.dates[dateIndex]))
-																									+ (taskObj.dates[dateIndex] == undefined
-																											|| taskObj.dates[dateIndex] == ''
-																											|| taskObj.dates[dateIndex] == null ? 0
-																											: parseInt(taskObj.dates[dateIndex]));
-																						});
-																		$scope.weekDaysHR.totalHours = parseInt($scope.weekDaysHR.totalHours)
-																				+ parseInt(taskObj.totalHours);
-																		$scope.tasks
-																				.push(taskObj);
-																		// console.log($scope.weekDaysHR);
-																	});
-
-												}
-											}
-										})
-						console.log($scope.THSEmployeeID, $scope.THSWStartDate,
-								$scope.THSWEndDate);
-
-						// var modalInstance = $uibModal.open({
-						// templateUrl : 'views/timesheetDetails.html',
-						// controller : 'timesheethistoryDetails',
-						// scope: $scope,
-						// keyboard : false,
-						// resolve : {
-						// userData : function() {
-						// var x = {
-						// 'employeeid' : employeeid,
-						// 'startDate' : argStart,
-						// 'endDate' : argEnd
-						// }
-						// return x;
-						// }
-						// }
-						// });
-
-						/*
-						 * return { restrict: 'E', link: function(scope,
-						 * element, attrs) { // some ode }, templateUrl:
-						 * function(elem,attrs) { return attrs.templateUrl ||
-						 * 'view/timesheet.html' } }
-						 */
-						/*
-						 * var modalInstance = $uibModal.open({ templateUrl :
-						 * 'views/timesheetDetails.html', controller :
-						 * 'timesheethistoryDetails', backdrop : 'static',
-						 * keyboard : false, resolve : { userData : function() {
-						 * var x = { 'employeeid' : employeeid, 'startDate' :
-						 * argStart, 'endDate' : argEnd } return x; } } });
-						 * modalInstance.result.then(function(selectedItem) {
-						 * $scope.selected = selectedItem; })
-						 */
-					}
+					/*
+					 * $scope.showDetails = function(sequence) { //
+					 * $window.location.path='headers.timesheet';
+					 * 
+					 * var timesheetDetail = $scope.webserviceshost +
+					 * 'hr/timesheet/detailsBySequence/' + sequence;
+					 * 
+					 * $http( { method : "GET", url : timesheetDetail, headers : {
+					 * 'XSRF-TOKEN' : $window.sessionStorage
+					 * .getItem("Access-Token"), 'authorization' :
+					 * $window.sessionStorage .getItem("AuthKey") } }) .then(
+					 * function mySucces(response) {
+					 * 
+					 * if (response != 'undefiend' && response != "") {
+					 * 
+					 * $scope.timesheetfullDetails = response.data;
+					 * $scope.employeetimesheetid =
+					 * $scope.timesheetfullDetails.employeeId;
+					 * $scope.timesheetcomments =
+					 * $scope.timesheetfullDetails.comments;
+					 * $scope.timesheetweekstart =
+					 * $scope.timesheetfullDetails.startDateOfWeek;
+					 * $scope.timesheetweekend =
+					 * $scope.timesheetfullDetails.endDateOfWeek;
+					 * $scope.timesheettimesheets =
+					 * $scope.timesheetfullDetails.timesheets;
+					 * console.log(response);
+					 * 
+					 * $scope.timeSheetDetails = response.data;
+					 * $scope.timesheetcomments =
+					 * $scope.timeSheetDetails.comments; $scope.weekDays = {};
+					 * $scope.tasks = []; $scope.weekDaysHR = { "dates" : {},
+					 * 'totalHours' : 0 }; $scope.dayName = [ 'Sun', 'Mon',
+					 * 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]; if
+					 * ($scope.timeSheetDetails &&
+					 * $scope.timeSheetDetails.startDateOfWeek &&
+					 * $scope.timeSheetDetails.endDateOfWeek) { var weekStart =
+					 * new Date( $scope.timeSheetDetails.startDateOfWeek); var
+					 * weekEnd = new Date(
+					 * $scope.timeSheetDetails.endDateOfWeek); var startDate =
+					 * new Date( $scope.timeSheetDetails.startDateOfWeek); var
+					 * count = 0;
+					 * 
+					 * var totalDays= new Date(weekStart.fullYear(),
+					 * weekStart.getMonth(), 0) .getDate();
+					 * 
+					 * for (var i = weekStart .getDate('dd'); i <= weekEnd
+					 * .getDate('dd'); i++) { $scope.weekDays[(i < 10 ? '0' + i :
+					 * i) + '-' + ((weekStart .getMonth() + 1) < 10 ? '0' +
+					 * (weekStart .getMonth() + 1) : weekStart .getMonth() + 1) +
+					 * '-' + weekStart .getFullYear()] = { date : (i < 10 ? '0' +
+					 * i : i), day : $scope.dayName[new Date( startDate
+					 * .setDate(weekStart .getDate() + count)) .getDay()] };
+					 * 
+					 * count++; } $ .each( $scope.timeSheetDetails.timesheets,
+					 * function( index, value) { var taskObj = { "dates" : {},
+					 * 'totalHours' : 0 }; $ .each( $scope.weekDays, function(
+					 * dateIndex, dateValue) { var taskDetails = $filter(
+					 * 'filter') ( value, { 'timesheetDate' : dateIndex },
+					 * true);
+					 * 
+					 * if (taskDetails.length > 0 && (taskObj.taskId ==
+					 * undefined || taskObj.taskId == null || taskObj.taskId ==
+					 * '')) { taskObj['customerId'] = taskDetails[0].customerId;
+					 * taskObj['customerName'] = taskDetails[0].customerName;
+					 * taskObj['customerProgramId'] =
+					 * taskDetails[0].customerProgramId;
+					 * taskObj['customerProgramCode'] =
+					 * taskDetails[0].customerProgramCode;
+					 * taskObj['customerProgramType'] =
+					 * taskDetails[0].customerProgramType;
+					 * taskObj['departmentId'] = taskDetails[0].departmentId;
+					 * taskObj['projectId'] = taskDetails[0].projectId;
+					 * taskObj['projectName'] = taskDetails[0].projectName;
+					 * taskObj['projectType'] = taskDetails[0].projectType;
+					 * taskObj['taskId'] = taskDetails[0].taskId;
+					 * taskObj['taskName'] = taskDetails[0].taskName; }
+					 * 
+					 * taskObj.totalHours = parseInt(taskObj.totalHours) +
+					 * (taskDetails[0] ? parseInt(taskDetails[0].hours) : 0);
+					 * taskObj.dates[dateIndex] = taskDetails[0] ?
+					 * taskDetails[0].hours : '';
+					 * $scope.weekDaysHR.dates[dateIndex] =
+					 * ($scope.weekDaysHR.dates[dateIndex] == undefined ||
+					 * $scope.weekDaysHR.dates[dateIndex] == '' ||
+					 * $scope.weekDaysHR.dates[dateIndex] == null ? 0 :
+					 * parseInt($scope.weekDaysHR.dates[dateIndex])) +
+					 * (taskObj.dates[dateIndex] == undefined ||
+					 * taskObj.dates[dateIndex] == '' ||
+					 * taskObj.dates[dateIndex] == null ? 0 :
+					 * parseInt(taskObj.dates[dateIndex])); });
+					 * $scope.weekDaysHR.totalHours =
+					 * parseInt($scope.weekDaysHR.totalHours) +
+					 * parseInt(taskObj.totalHours); $scope.tasks
+					 * .push(taskObj); // console.log($scope.weekDaysHR); }); } } })
+					 * console.log($scope.THSEmployeeID, $scope.THSWStartDate,
+					 * $scope.THSWEndDate); // var modalInstance =
+					 * $uibModal.open({ // templateUrl :
+					 * 'views/timesheetDetails.html', // controller :
+					 * 'timesheethistoryDetails', // scope: $scope, // keyboard :
+					 * false, // resolve : { // userData : function() { // var x = { //
+					 * 'employeeid' : employeeid, // 'startDate' : argStart, //
+					 * 'endDate' : argEnd // } // return x; // } // } // });
+					 * 
+					 * 
+					 * return { restrict: 'E', link: function(scope, element,
+					 * attrs) { // some ode }, templateUrl: function(elem,attrs) {
+					 * return attrs.templateUrl || 'view/timesheet.html' } }
+					 * 
+					 * 
+					 * var modalInstance = $uibModal.open({ templateUrl :
+					 * 'views/timesheetDetails.html', controller :
+					 * 'timesheethistoryDetails', backdrop : 'static', keyboard :
+					 * false, resolve : { userData : function() { var x = {
+					 * 'employeeid' : employeeid, 'startDate' : argStart,
+					 * 'endDate' : argEnd } return x; } } });
+					 * modalInstance.result.then(function(selectedItem) {
+					 * $scope.selected = selectedItem; }) }
+					 */
 				})
 		.controller(
 				'timesheethistoryDetails',

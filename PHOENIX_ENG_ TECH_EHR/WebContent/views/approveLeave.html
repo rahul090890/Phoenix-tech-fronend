@@ -88,8 +88,8 @@
 									<td>{{item.employee.employeeId}}</td>
 									<td>{{item.employee.firstName}}</td>
 									<td>{{item.employee.lastName}}</td>
-									<td>{{item.fromDate}}</td>
-									<td>{{item.toDate}}</td>
+									<td>{{item.fromDate| date : 'dd-MMM-yyyy'}}</td>
+									<td>{{item.toDate  | date : 'dd-MMM-yyyy'}}</td>
 									<td>{{item.noOfDays}}</td>
 									<td>{{item.leaveStatus}}</td>
 									<td>{{item.comments}}</td>
