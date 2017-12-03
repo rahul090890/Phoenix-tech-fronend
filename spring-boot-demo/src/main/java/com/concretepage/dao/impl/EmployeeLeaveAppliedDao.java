@@ -25,7 +25,7 @@ import com.concretepage.utils.DateUtils;
 
 @Transactional
 @Repository
-public class EmployeeLeaveAppliedDao implements IEmployeeLeaveAppliedDao {
+public  class EmployeeLeaveAppliedDao implements IEmployeeLeaveAppliedDao {
 
 	@PersistenceContext	
 	private EntityManager entityManager;
@@ -94,6 +94,31 @@ public class EmployeeLeaveAppliedDao implements IEmployeeLeaveAppliedDao {
 
 		log.info("Retriving the timesheets for the year " + year );
 		return entityManager.createQuery(criteriaQuery).getResultList();
+	}
+
+	@Override
+	public List<EmployeeLeave> isLeaveAlreadyApplied(int employeeId, String leaveDate) {
+		
+		String hql = "from EmployeeLeave l where " + 
+						"( "+
+						"(STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(l.fromDate, '%Y-%m-%d') and  STR_TO_DATE(l.toDate, '%Y-%m-%d')) OR " +
+						"(STR_TO_DATE(?,'%Y-%m-%d') BETWEEN STR_TO_DATE(l.fromDate, '%Y-%m-%d') and  STR_TO_DATE(l.toDate, '%Y-%m-%d')) "+
+						") AND " +
+						"l.employee.employeeId = ? and l.leaveStatus in (?,?)";
+
+				
+		Query query = entityManager.createQuery(hql);
+		query.setParameter(1, leaveDate);
+		query.setParameter(2, leaveDate);
+		query.setParameter(3, employeeId);
+		query.setParameter(4, LEAVESTATUS.PENDING_APPROVAL.name());
+		query.setParameter(5, LEAVESTATUS.APPROVED.name());
+		List<EmployeeLeave> leaves = (List<EmployeeLeave>) query.getResultList();
+		log.info("Size of the already applied leaves " + leaves.size());
+		if(leaves.size() > 0) {
+			log.info("Already applied leave range is " + leaves.get(0).toString());
+		}
+		return leaves;
 	}
 
 }

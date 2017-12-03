@@ -18,4 +18,6 @@ public interface IEmployeeLeaveAppliedDao {
 	
 	List<EmployeeLeave> getAllEmployeeLeaveApplied(int year, String employeeCode);
 	
+	public List<EmployeeLeave> isLeaveAlreadyApplied(int employeeId, String leaveFromDate);
+	
 }

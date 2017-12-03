@@ -63,6 +63,13 @@ public class LeaveService implements ILeaveService {
 		if (!hasEmployeeEnoughBalance(leave)) {
 			throw new HRException("Employee does not have enough Leave Balance");
 		}
+		// Check if the leaves are already applied for new leave
+		List<String> datesBetween = DateUtils.getDatesBetween(leave.getFromDate(), leave.getToDate());
+		for(String leaveDate : datesBetween) {
+			if(leaveDao.isLeaveAlreadyApplied(leave.getEmployee().getEmployeeId(), leaveDate).size() > 0) {
+				throw new HRException("Leave already applied for the date " + leaveDate);
+			}
+		}
 		// though # days are set from request, calculate to be sure
 		// leave.setNoOfDays(DateUtils.daysBetweenDates(fromDate, toDate));
 		try {
@@ -116,8 +123,8 @@ public class LeaveService implements ILeaveService {
 		} else {
 			throw new HRException("Leave is already is approved, can not be rejected");
 		}
-		emailSender.prepareAndSend(leave.getEmployee().getEmailId(), "LeaveApplied",
-				prepareDynamicFieldsForLeaveEmails(leave), "leaveRejected");
+		/*emailSender.prepareAndSend(leave.getEmployee().getEmailId(), "LeaveApplied",
+				prepareDynamicFieldsForLeaveEmails(leave), "leaveRejected");*/
 		leave.setComments(comments);
 		return leaveDao.updateLeaveStatus(leave, LEAVESTATUS.REJECTED.name());
 	}
@@ -151,14 +158,15 @@ public class LeaveService implements ILeaveService {
 	}
 
 	private Boolean hasEmployeeEnoughBalance(EmployeeLeave employeeLeave) {
-		Boolean hasEmployeeBalance = true;
+		Boolean hasEmployeeBalance = false;
 		Date leaveToDate = DateUtils.String_YYYY_MM_DD_ToDate(employeeLeave.getToDate());
 		List<EmployeeLeaveBalance> leaveBalance = leaveBalanceDao
-				.getLeaveBalance(employeeLeave.getEmployee().getEmployeeId(), leaveToDate.getYear());
+				.getLeaveBalance(employeeLeave.getEmployee().getEmployeeId(), DateUtils.getCurrentYear());
 		for (EmployeeLeaveBalance balance : leaveBalance) {
+			log.info("Employee leave balance is " + balance.getEligible() + " for the type " + balance.getLeaveType() + "for the year " + balance.getAnnualYear());
 			if (balance.getLeaveType().equals(employeeLeave.getLeaveType())) {
-				if (balance.getEligible() < employeeLeave.getNoOfDays()) {
-					hasEmployeeBalance = false;
+				if (balance.getEligible() >= employeeLeave.getNoOfDays()) {
+					hasEmployeeBalance = true;
 				}
 			}
 		}

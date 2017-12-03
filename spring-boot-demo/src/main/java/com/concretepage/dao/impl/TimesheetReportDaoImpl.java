@@ -1,6 +1,7 @@
 package com.concretepage.dao.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Repository;
 import com.concretepage.dao.ITimesheetReportDao;
 import com.concretepage.entity.TimesheetReport;
 import com.concretepage.exception.HRException;
+import com.concretepage.utils.DateUtils;
 
 @Transactional
 @Repository
@@ -30,13 +32,16 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportForEmployee(String startDate, String endDate, String employeeCode,
+	public List<TimesheetReport> getTimesheetReportForEmployee(String startDateStr, String endDateStr, String employeeCode,
 			String firstName, String lastName) throws HRException {
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TimesheetReport> criteriaQuery = cBuilder.createQuery(TimesheetReport.class);
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
-
+		
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);
@@ -67,13 +72,16 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	}
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportsForDepartment(String startDate, String endDate,
+	public List<TimesheetReport> getTimesheetReportsForDepartment(String startDateStr, String endDateStr,
 			String departmentCode, String departmentName) {
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TimesheetReport> criteriaQuery = cBuilder.createQuery(TimesheetReport.class);
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
-
+		
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);
@@ -102,7 +110,7 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	}
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportsForProject(String startDate, String endDate, String projectCode,
+	public List<TimesheetReport> getTimesheetReportsForProject(String startDateStr, String endDateStr, String projectCode,
 			String projectName, String projectType) {
 
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
@@ -110,6 +118,9 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
 
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);
@@ -139,13 +150,16 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	}
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportsForCustomer(String startDate, String endDate, String customerCode,
+	public List<TimesheetReport> getTimesheetReportsForCustomer(String startDateStr, String endDateStr, String customerCode,
 			String customerName) {
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TimesheetReport> criteriaQuery = cBuilder.createQuery(TimesheetReport.class);
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
 
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);
@@ -171,13 +185,16 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	}
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportsForCustomerProgram(String startDate, String endDate,
+	public List<TimesheetReport> getTimesheetReportsForCustomerProgram(String startDateStr, String endDateStr,
 			String customerProgramCode, String programType) {
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TimesheetReport> criteriaQuery = cBuilder.createQuery(TimesheetReport.class);
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
 
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);
@@ -203,13 +220,16 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	}
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportsForTask(String startDate, String endDate, String taskName) {
+	public List<TimesheetReport> getTimesheetReportsForTask(String startDateStr, String endDateStr, String taskName) {
 
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<TimesheetReport> criteriaQuery = cBuilder.createQuery(TimesheetReport.class);
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
 
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);
@@ -231,7 +251,7 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 	}
 
 	@Override
-	public List<TimesheetReport> getTimesheetReportsForStatus(String startDate, String endDate,
+	public List<TimesheetReport> getTimesheetReportsForStatus(String startDateStr, String endDateStr,
 			String timesheetStatus) {
 
 		CriteriaBuilder cBuilder = entityManager.getCriteriaBuilder();
@@ -239,6 +259,9 @@ public class TimesheetReportDaoImpl implements ITimesheetReportDao {
 		Root<TimesheetReport> root = criteriaQuery.from(TimesheetReport.class);
 		criteriaQuery.select(root);
 
+		Date startDate = DateUtils.string_DD_MM_YYYY_ToDate(startDateStr);
+		Date endDate = DateUtils.string_DD_MM_YYYY_ToDate(endDateStr);
+		
 		Predicate fromDate = cBuilder.greaterThanOrEqualTo(root.get("reportId").get("timesheetDate"), startDate);
 		Predicate toDate = cBuilder.lessThanOrEqualTo(root.get("reportId").get("timesheetDate"), endDate);
 		Predicate dates = cBuilder.and(fromDate, toDate);

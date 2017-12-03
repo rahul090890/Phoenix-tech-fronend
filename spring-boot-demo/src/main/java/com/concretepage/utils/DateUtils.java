@@ -2,14 +2,19 @@ package com.concretepage.utils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 public class DateUtils {
 	
 	public final static String  DATE_FORMAT = "yyyy-MM-dd";
+	public final static String  REPORT_DATE_FORMAT = "dd-MM-yyyy";
 	public final static SimpleDateFormat sdf =
 	          new SimpleDateFormat(DATE_FORMAT);
+	public final static SimpleDateFormat report_sdf =
+	          new SimpleDateFormat(REPORT_DATE_FORMAT);
 	
 	public static int getCurrentYear() {
 		return Calendar.getInstance().get(Calendar.YEAR);
@@ -45,6 +50,20 @@ public class DateUtils {
 		}
 	}
 	
+	public static Date string_DD_MM_YYYY_ToDate(String dateString) {
+		try {
+			return report_sdf.parse(dateString);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String reportDateAsString(Date date) {
+		return report_sdf.format(date);
+	}
+	
 	public static String startDateOfCurrentMonthAsString() {
 		return dateAsString(startDateOfCurrentMonth());
 	}
@@ -70,6 +89,19 @@ public class DateUtils {
 		Date start = cal.getTime();
 		
 		return dateAsString(start);
+	}
+	
+	public static List<String> getDatesBetween(String fromDate, String toDate) {
+		List<String> dates = new ArrayList<String>();
+		dates.add(fromDate);
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(String_YYYY_MM_DD_ToDate(fromDate));
+		while (cal.getTime().before(String_YYYY_MM_DD_ToDate(toDate))) {
+		    cal.add(Calendar.DATE, 1);
+		    dates.add(dateAsString(cal.getTime()));
+		}
+		dates.add(toDate);
+		return dates;
 	}
 	
 	public static void main(String[] arg) {

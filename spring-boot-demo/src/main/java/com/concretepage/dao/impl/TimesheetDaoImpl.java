@@ -61,26 +61,29 @@ public class TimesheetDaoImpl implements ITimesheetDao {
 		return (List<Timesheet>)query.getResultList();
 	}
 	@Override
+	//only approve timesheet, which are on pending status
+	//there could be many rejected timesheets,we do not touch them, they will remain rejected for ever.
 	public void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate) {
-		String hql = "update Timesheet t set t.timesheetStatus = ? where t.employeeId = ? and t.weekStartDate = ? and t.weekEndDate = ? ";
+		String hql = "update Timesheet t set t.timesheetStatus = ? where t.employeeId = ? and t.weekStartDate = ? and t.weekEndDate = ? and t.timesheetStatus = ?	";
 		Query query = entityManager.createNativeQuery(hql);
 		query.setParameter(1, TimesheetStatus.APPROVED.name());
 		query.setParameter(2, employeeId);
 		query.setParameter(3, weekStartDate);
 		query.setParameter(4, weekEndDate);
+		query.setParameter(5, TimesheetStatus.PENDING.name());
 		
 		query.executeUpdate();
 		
 	}
 	@Override
 	public void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate) {
-		String hql = "update Timesheet t set t.timesheetStatus = ? where t.employeeId = ? and t.weekStartDate = ? and t.weekEndDate = ? ";
+		String hql = "update Timesheet t set t.timesheetStatus = ? where t.employeeId = ? and t.weekStartDate = ? and t.weekEndDate = ? and t.timesheetStatus = ? ";
 		Query query = entityManager.createNativeQuery(hql);
 		query.setParameter(1, TimesheetStatus.REJECTED.name());
 		query.setParameter(2, employeeId);
 		query.setParameter(3, weekStartDate);
 		query.setParameter(4, weekEndDate);
-		
+		query.setParameter(5, TimesheetStatus.PENDING.name());
 		query.executeUpdate();
 		
 	}

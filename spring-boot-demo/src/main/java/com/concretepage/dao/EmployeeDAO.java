@@ -81,8 +81,9 @@ public class EmployeeDAO implements IEmployeeDAO {
 
 	@Override
 	public void resetPassword(int employeeId , String newPassword) {
-		Query query = entityManager.createQuery("Update Employee e set e.loginPassword =" + newPassword + "  where e.employeeId = ?"  );
-		query.setParameter(1, employeeId);
+		Query query = entityManager.createQuery("Update Employee e set e.loginPassword = ?  where e.employeeId = ?"  );
+		query.setParameter(1, newPassword);
+		query.setParameter(2, employeeId);
 		query.executeUpdate();
 	}
 

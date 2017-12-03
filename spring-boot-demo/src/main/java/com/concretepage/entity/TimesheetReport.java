@@ -1,6 +1,7 @@
 package com.concretepage.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -8,6 +9,8 @@ import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.concretepage.utils.DateUtils;
 
 @Entity
 @Table(name = "timesheet_reports")
@@ -338,7 +341,7 @@ public class TimesheetReport implements Serializable{
 	}
 	
 	public String getTimesheetDate() {
-		return this.reportId.getTimesheetDate();
+		return DateUtils.dateAsString(this.reportId.getTimesheetDate());
 	}
 
 	public void setTimesheetDate(String timesheetDate) {
@@ -362,7 +365,7 @@ class TimesheetReportId implements Serializable {
 	private Integer employeeId;
 	
 	@Column(name = "timesheetDate")
-	private String timesheetDate;
+	private Date timesheetDate;
 	
 	@Column(name = "taskId")
 	private Integer taskId;
@@ -375,11 +378,11 @@ class TimesheetReportId implements Serializable {
 		this.employeeId = employeeId;
 	}
 
-	public String getTimesheetDate() {
+	public Date getTimesheetDate() {
 		return timesheetDate;
 	}
 
-	public void setTimesheetDate(String timesheetDate) {
+	public void setTimesheetDate(Date timesheetDate) {
 		this.timesheetDate = timesheetDate;
 	}
 
@@ -390,8 +393,6 @@ class TimesheetReportId implements Serializable {
 	public void setTaskId(Integer taskId) {
 		this.taskId = taskId;
 	}
-	
-	
 
 	@Override
 	public int hashCode() {
@@ -430,5 +431,8 @@ class TimesheetReportId implements Serializable {
 		return true;
 	}
 	
+	
+
+
 	
 }
