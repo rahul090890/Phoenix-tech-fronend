@@ -103,8 +103,10 @@ materialAdmin
 							field : 'lastName',
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							/* cellFilter: 'date:\'dd-MMM-yyyy\'' , */
 							visible : true,
+							
 							width : 150
 						}, {
 							field : 'employeeId',
@@ -112,12 +114,18 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'weekStartDate',
+							cellFilter: 'date:\'dd-MMM-yyyy\'',
+							/* cellFilter: 'date:\'dd-MMM-yyyy\'' , */
 							visible : false,
+						
 							width : 150
 
 						}, {
 							field : 'weekEndDate',
+							cellFilter: 'date:\'dd-MMM-yyyy\'',
+							/* cellFilter: 'date:\'dd-MMM-yyyy\'' , */
 							visible : false,
+							
 							width : 150
 						}, {
 							field : 'employeeCode',
@@ -465,7 +473,7 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
@@ -473,12 +481,12 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',
+							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',
+							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 						}, {
@@ -816,7 +824,7 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
@@ -824,12 +832,12 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',
+							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',
+							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 						}, {
@@ -1174,7 +1182,7 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
@@ -1182,12 +1190,12 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',
+							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',
+							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 						}, {
@@ -1536,7 +1544,7 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
@@ -1544,12 +1552,12 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',
+							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',
+							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 						}, {
@@ -1889,7 +1897,7 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
@@ -1897,12 +1905,12 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',
+							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',
+							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : false,
 							width : 150
 						}, {
@@ -2229,7 +2237,7 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'timesheetDate',
+							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
@@ -2237,12 +2245,12 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',
+							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',
+							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
 							visible : true,
 							width : 150
 						}, {
