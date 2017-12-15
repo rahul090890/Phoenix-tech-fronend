@@ -49,7 +49,7 @@ public class EmployeeLeave implements Serializable{
 	private Integer toHours;
 	
 	@Column(name = "noOfDays")
-	private int noOfDays;
+	private Float noOfDays;
 	
 	@Column(name = "appliedDate")
 	private Date appliedDate;
@@ -122,11 +122,11 @@ public class EmployeeLeave implements Serializable{
 		this.toHours = toHours;
 	}
 
-	public int getNoOfDays() {
+	public Float getNoOfDays() {
 		return noOfDays;
 	}
 
-	public void setNoOfDays(int noOfDays) {
+	public void setNoOfDays(Float noOfDays) {
 		this.noOfDays = noOfDays;
 	}
 

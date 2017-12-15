@@ -18,6 +18,7 @@ import com.concretepage.entity.LeaveMaster;
 import com.concretepage.entity.Role;
 import com.concretepage.exception.HRException;
 import com.concretepage.utils.DateUtils;
+import com.concretepage.utils.HRUtils;
 
 @Service
 public class EmployeeService implements IEmployeeService {
@@ -72,13 +73,13 @@ public class EmployeeService implements IEmployeeService {
 		}
 		for(LeaveMaster l :  leaveMasters) {
 			log.info("Adding leave balance for the employee " + employee.getEmployeeCode() + l.toString() );
-			leaveBalanceDao.insertLeaveBalance(employee.getEmployeeId(), DateUtils.getCurrentYear(), l.getLeaveType(), 0, 
+			leaveBalanceDao.insertLeaveBalance(employee.getEmployeeId(), DateUtils.getCurrentYear(), l.getLeaveType(), 0.0F, 
 					calculateProratedLeaveEligibility(employee.getDateOfJoin(),l.getAnnualEligibility())
 					);
 		}
 	}
 	
-	private Integer calculateProratedLeaveEligibility(String doj, Integer annualEligibility) {
+	private Float calculateProratedLeaveEligibility(String doj, Float annualEligibility) {
 		Calendar lastDayOftheYear = Calendar.getInstance();
 		//lastDayOftheYear.set(DateUtils.getCurrentYear(),12,30,0,0);
 		lastDayOftheYear.set(Calendar.YEAR,DateUtils.getCurrentYear());
@@ -90,7 +91,7 @@ public class EmployeeService implements IEmployeeService {
 		System.out.println(lastDayOftheYear.toString());
 		
 		int remainingDays = (int) TimeUnit.DAYS.convert((lastDayOftheYear.getTimeInMillis() - dateOfJoin.getTime()),TimeUnit.MILLISECONDS);
-		return (int)Math.round((annualEligibility)*remainingDays)/365;
+		return HRUtils.roundToSingleDecimal(((annualEligibility)*remainingDays)/365);
 		
 	}
 

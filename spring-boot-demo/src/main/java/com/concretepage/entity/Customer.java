@@ -44,6 +44,9 @@ public class Customer implements Serializable {
 	@Column(name="customerCode")
 	private String customerCode;
 	
+	@Column(name="status")
+	private String status;
+	
 
 	public String getCustomerCode() {
 		return customerCode;
@@ -93,11 +96,22 @@ public class Customer implements Serializable {
 		this.zipCode = zipCode;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", address=" + address
-				+ ", country=" + country + ", zipCode=" + zipCode + "]";
+				+ ", country=" + country + ", zipCode=" + zipCode + ", customerCode=" + customerCode + ", status="
+				+ status + "]";
 	}
+
+	
 
 	
 }

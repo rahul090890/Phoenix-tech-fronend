@@ -21,7 +21,7 @@ public class EmployeeLeaveBalanceDao implements IEmployeeLeaveBalanceDao {
 	
 	
 	@Override
-	public int incrementLeaveBalance(Integer employeeId, Integer year, String leaveType, Integer noOfDayPendingApproval, Integer noofDayEligible) {
+	public int incrementLeaveBalance(Integer employeeId, Integer year, String leaveType, Float noOfDayPendingApproval, Float noofDayEligible) {
 		String hql = "update EmployeeLeaveBalance b set b.pendingApproval = IFNULL(b.pendingApproval,0) + ? , b.eligible = eligible + ?  where b.employeeId = ? and b.annualYear = ? and b.leaveType = ?";
 		Query q = entityManager.createQuery(hql);
 		q.setParameter(1, noOfDayPendingApproval);
@@ -35,7 +35,7 @@ public class EmployeeLeaveBalanceDao implements IEmployeeLeaveBalanceDao {
 	
 	@Override
 	public int incrementPendingApprovalLeaveBalance(Integer employeeId, Integer year,
-			String leaveType, Integer noOfDay) {
+			String leaveType, Float noOfDay) {
 		
 		String hql = "update EmployeeLeaveBalance b set b.pendingApproval = b.pendingApproval + ? where b.employeeId = ? and b.annualYear = ? and b.leaveType = ?";
 		Query q = entityManager.createQuery(hql);
@@ -48,7 +48,7 @@ public class EmployeeLeaveBalanceDao implements IEmployeeLeaveBalanceDao {
 	}
 
 	@Override
-	public int decreaseEligibleLeaveBalance(Integer employeeId, Integer year, String leaveType, Integer noOfDay) {
+	public int decreaseEligibleLeaveBalance(Integer employeeId, Integer year, String leaveType, Float noOfDay) {
 		String hql = "update EmployeeLeaveBalance b set b.pendingApproval = b.pendingApproval - ? , b.eligible = eligible - ?  where b.employeeId = ? and b.annualYear = ? and b.leaveType = ?";
 		Query q = entityManager.createQuery(hql);
 		q.setParameter(1, noOfDay);
@@ -71,7 +71,7 @@ public class EmployeeLeaveBalanceDao implements IEmployeeLeaveBalanceDao {
 	}
 
 	@Override
-	public int insertLeaveBalance(Integer employeeId, Integer year, String leaveType, Integer noOfDayPending, Integer noOfDayEligible) {
+	public int insertLeaveBalance(Integer employeeId, Integer year, String leaveType, Float noOfDayPending, Float noOfDayEligible) {
 	
 		/*String hql = "insert into EmployeeLeaveBalance (employeeId,annualYear,leaveType,pendingApproval,eligible) values (?,?,?,?,?)";
 		Query q = entityManager.createQuery(hql);
@@ -95,7 +95,7 @@ public class EmployeeLeaveBalanceDao implements IEmployeeLeaveBalanceDao {
 	}
 	
 	@Override
-	public int incrementLeaveBalanceForAllEmployees( Integer year, String leaveType, Integer noofDayEligible) {
+	public int incrementLeaveBalanceForAllEmployees( Integer year, String leaveType, Float noofDayEligible) {
 		String hql = "update EmployeeLeaveBalance b set b.eligible = eligible + ?  where  b.annualYear = ? and b.leaveType = ?";
 		Query q = entityManager.createQuery(hql);
 		q.setParameter(1, noofDayEligible);

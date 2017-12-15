@@ -67,3 +67,24 @@ group by t.employeeId, t.weekStartDate,t.timesheetstatus order by t.weekStartDat
 
 --Rest Request
 By Employee - http://localhost:8080/hr/timesheetReport/byEmployee?startDate=2017-09-04&endDate=2017-09-10&employeeCode=1009-15&firstName=Kiran&lastName=Vagga
+
+alter table Department add column (status char(1) default 'Y');
+alter table Project add column (status char(1) default 'Y');
+alter table Task add column (status char(1) default 'Y');
+alter table Role add column (status char(1) default 'Y');
+alter table Customer add column (status char(1) default 'Y');
+alter table CustomerProgramCode add column (status char(1) default 'Y');
+
+--Update all the values to Y 
+update Department set status = 'Y';
+update Project set status = 'Y';
+update Task set status = 'Y';
+update Role set status = 'Y';
+update Customer set status = 'Y';
+update CustomerProgramCode set status = 'Y';
+
+alter table EmployeeLeaveApplied modify noOfDays float(1);
+alter table EmployeeLeaveBalance modify pendingApproval float(1);
+alter table EmployeeLeaveBalance modify eligible float(1);
+alter table LeaveMaster modify annualEligibility float(1);
+

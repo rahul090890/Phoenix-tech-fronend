@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.concretepage.dao.IDepartmentDAO;
 import com.concretepage.entity.Department;
 import com.concretepage.entity.Employee;
+import com.concretepage.entity.Status;
 import com.concretepage.exception.HRException;
 
 @Transactional
@@ -33,7 +34,7 @@ public class DepartmentDAOImpl implements IDepartmentDAO {
 		 criteria.orderBy(cb.asc(root.get("departmentId")));
 		 return entityManager.createQuery(criteria).getResultList(); **/
 		
-		String hql = "from Department d where d.parentDepartment.departmentId is not null order by departmentCode, departmentName";
+		String hql = "from Department d where d.parentDepartment.departmentId is not null and d.status = " + Status.Active.name() + " order by departmentCode, departmentName";
 		Query query = entityManager.createQuery(hql);
 		List<Department> departments = (List<Department>) query.getResultList();
 		return departments;
@@ -70,8 +71,9 @@ public class DepartmentDAOImpl implements IDepartmentDAO {
 
 	@Override
 	public void delete(Department department) {
-		department = entityManager.find(Department.class, department.getDepartmentId());		
-		entityManager.remove(department);
+		department = entityManager.find(Department.class, department.getDepartmentId());
+		department.setStatus(Status.Inactive.name());
+		entityManager.persist(department);
 		
 	}
 

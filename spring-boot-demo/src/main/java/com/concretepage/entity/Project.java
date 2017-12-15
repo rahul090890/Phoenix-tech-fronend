@@ -58,7 +58,8 @@ public class Project {
 	@Column(name = "projectCode")
 	private String projectCode;
 	
-	
+	@Column(name="status")
+	private String status;
 
 	public Project() {}
 
@@ -160,10 +161,23 @@ public class Project {
 		this.projectCode = projectCode;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	
+	
+
 	@Override
 	public String toString() {
-		return "Project [projectid=" + projectid + ", projectName=" + projectName + ", projectType=" + projectType
-				+ ", projectStatus=" + projectStatus + ", location=" + location + "]";
+		return "Project [projectid=" + projectid + ", projectName=" + projectName + ", customer=" + customer
+				+ ", customerProgram=" + customerProgram + ", department=" + department + ", projectType=" + projectType
+				+ ", projectStatus=" + projectStatus + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime
+				+ ", location=" + location + ", customerProjectCode=" + customerProjectCode + ", projectCode="
+				+ projectCode + ", status=" + status + "]";
 	}
 
 	@Override

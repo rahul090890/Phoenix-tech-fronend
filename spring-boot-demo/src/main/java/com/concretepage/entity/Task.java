@@ -56,6 +56,9 @@ public class Task implements Serializable {
 	@Column(name = "updatedTime")
 	private Date   updatedTime;
 	
+	@Column(name="status")
+	private String status;
+	
 	public Task() {}
 
 	public int getTaskId() {
@@ -106,10 +109,22 @@ public class Task implements Serializable {
 		this.updatedTime = updatedTime;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "Task [taskId=" + taskId + ", taskName=" + taskName + "]";
-	} 
+		return "Task [taskId=" + taskId + ", taskName=" + taskName + ", department=" + department + ", customer="
+				+ customer + ", createdTime=" + createdTime + ", updatedTime=" + updatedTime + ", status=" + status
+				+ "]";
+	}
+
+	
 	
 	
 

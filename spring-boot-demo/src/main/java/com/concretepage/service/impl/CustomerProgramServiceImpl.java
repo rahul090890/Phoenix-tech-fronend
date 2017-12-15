@@ -48,4 +48,10 @@ public class CustomerProgramServiceImpl implements ICustomerProgramService {
 		return customerProgramdao.findCustomerProgramById(customerProgramId);
 	}
 
+	@Override
+	public void delete(Integer customerProgramId) {
+		customerProgramdao.delete(customerProgramId);
+		
+	}
+
 }

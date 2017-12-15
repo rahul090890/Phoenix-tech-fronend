@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -104,6 +105,14 @@ public class CustomerProgramController {
 		service.updateCustomerProgram(program);
 		log.info("Creating the customer program " + program.toString() +" with customer id " + customerId );
 		return new ResponseEntity<Void>(HttpStatus.CREATED);
+	}
+	
+	@Transactional(propagation=Propagation.REQUIRED)
+	@PostMapping("/delete/{customerProgramId}")
+	public ResponseEntity<Void> delete(
+			@PathVariable("customerProgramId") String customerProgramId) {
+		service.delete(Integer.parseInt(customerProgramId));
+		return new ResponseEntity<Void>(HttpStatus.GONE);
 	}
 
 

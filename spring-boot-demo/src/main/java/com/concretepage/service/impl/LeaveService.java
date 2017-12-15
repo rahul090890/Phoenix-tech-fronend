@@ -80,7 +80,7 @@ public class LeaveService implements ILeaveService {
 		}
 		leaveDao.applyLeave(leave);
 		leaveBalanceDao.incrementLeaveBalance(leave.getEmployee().getEmployeeId(), DateUtils.getCurrentYear(),
-				leave.getLeaveType(), leave.getNoOfDays(), 0);
+				leave.getLeaveType(), leave.getNoOfDays(), 0.0F);
 		return leave;
 	}
 
@@ -99,7 +99,7 @@ public class LeaveService implements ILeaveService {
 			// rejected to approval - only decrease eligibility
 		} else if (leave.getLeaveStatus().equals(LEAVESTATUS.REJECTED.name())) {
 			leaveBalanceDao.incrementLeaveBalance(leave.getEmployee().getEmployeeId(), DateUtils.getCurrentYear(),
-					leave.getLeaveType(), 0, -leave.getNoOfDays());
+					leave.getLeaveType(), 0.0F, -leave.getNoOfDays());
 		}
 		try {
 			emailSender.prepareAndSend(leave.getEmployee().getEmailId(), "LeaveApplied",
@@ -119,7 +119,7 @@ public class LeaveService implements ILeaveService {
 		// pending approval to reject -- decrease pending approval
 		if (leave.getLeaveStatus().equals(LEAVESTATUS.PENDING_APPROVAL.name())) {
 			leaveBalanceDao.incrementLeaveBalance(leave.getEmployee().getEmployeeId(), DateUtils.getCurrentYear(),
-					leave.getLeaveType(), -leave.getNoOfDays(), 0);
+					leave.getLeaveType(), -leave.getNoOfDays(), 0.0F);
 		} else {
 			throw new HRException("Leave is already is approved, can not be rejected");
 		}
@@ -175,7 +175,7 @@ public class LeaveService implements ILeaveService {
 	}
 
 	@Override
-	public void incrementLeaveBalanceForAllEmployees(Integer year, String leaveType, Integer noofDayEligible) {
+	public void incrementLeaveBalanceForAllEmployees(Integer year, String leaveType, Float noofDayEligible) {
 		leaveBalanceDao.incrementLeaveBalanceForAllEmployees(year, leaveType, noofDayEligible);
 
 	}

@@ -36,10 +36,10 @@ public class EmployeeLeaveBalance implements Serializable{
 	private String leaveType;
 	
 	@Column(name = "pendingApproval")
-	private Integer pendingApproval;
+	private Float pendingApproval;
 	
 	@Column(name = "eligible")
-	private Integer eligible;
+	private Float eligible;
 	
 	@Column(name = "updatedTime")
 	private Date updatedTime;
@@ -100,19 +100,19 @@ public class EmployeeLeaveBalance implements Serializable{
 	}
 
 	
-	public Integer getPendingApproval() {
+	public Float getPendingApproval() {
 		return pendingApproval;
 	}
 
-	public void setPendingApproval(Integer pendingApproval) {
+	public void setPendingApproval(Float pendingApproval) {
 		this.pendingApproval = pendingApproval;
 	}
 
-	public Integer getEligible() {
+	public Float getEligible() {
 		return eligible;
 	}
 
-	public void setEligible(Integer eligible) {
+	public void setEligible(Float eligible) {
 		this.eligible = eligible;
 	}
 

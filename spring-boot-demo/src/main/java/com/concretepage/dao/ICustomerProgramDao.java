@@ -15,5 +15,7 @@ public interface ICustomerProgramDao {
 	
 	CustomerProgram findCustomerProgramById(Integer customerProgramId) throws  HRException;
 	
+	void delete(final int customerProgramId);
+	
 	
 }

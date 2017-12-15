@@ -96,7 +96,7 @@ public class EmployeeLeaveController {
 		leave.setLeaveType(leaveType);
 		leave.setFromDate(fromDate);
 		leave.setToDate(toDate);
-		leave.setNoOfDays(Integer.parseInt(noOfDays));
+		leave.setNoOfDays(Float.parseFloat(noOfDays));
 		leave.setFromHours(0);
 		leave.setToHours(0);
 		leave.setComments(comments);
@@ -124,7 +124,7 @@ public class EmployeeLeaveController {
 			@PathVariable("year") String year, 
 			@PathVariable("noOfDays") String noOfDays
 			) throws HRException {
-		leaveService.incrementLeaveBalanceForAllEmployees(Integer.parseInt(year),leaveType,Integer.parseInt(noOfDays));
+		leaveService.incrementLeaveBalanceForAllEmployees(Integer.parseInt(year),leaveType,Float.parseFloat(noOfDays));
 		
 		return new ResponseEntity<Void>( HttpStatus.OK);
 	}

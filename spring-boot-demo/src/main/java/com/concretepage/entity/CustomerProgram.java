@@ -46,11 +46,9 @@ public class CustomerProgram implements Serializable {
 	@Column(name = "programType")
 	private String customerProgramType;
 	
-	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinTable(name = "CustomerProgramProject" ,  joinColumns = { @JoinColumn(name = "customerProgramId") }, 
-	           inverseJoinColumns = { @JoinColumn(name = "projectId") })
-	private Set<Project> projects;
-	*/
+	@Column(name="status")
+	private String status;
+	
 	public Integer getCustomerProgramId() {
 		return customerProgramId;
 	}
@@ -83,21 +81,22 @@ public class CustomerProgram implements Serializable {
 		this.customerProgramType = customerProgramType;
 	}
 
-	/*	
-	public Set<Project> getProjects() {
-		return projects;
+	public String getStatus() {
+		return status;
 	}
 
-	public void setProjects(Set<Project> projects) {
-		this.projects = projects;
+	public void setStatus(String status) {
+		this.status = status;
 	}
-	*/
 
 	@Override
 	public String toString() {
 		return "CustomerProgram [customerProgramId=" + customerProgramId + ", customer=" + customer
-				+ ", customerProgramCode=" + customerProgramCode + ", customerProgramType=" + customerProgramType + "]";
+				+ ", customerProgramCode=" + customerProgramCode + ", customerProgramType=" + customerProgramType
+				+ ", status=" + status + "]";
 	}
+
+	
 	
 	
 	

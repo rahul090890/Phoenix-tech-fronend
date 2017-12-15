@@ -48,6 +48,9 @@ public class Role implements Serializable {
 	@Column(name = "updatedTime")
 	private Date   updatedTime;
 	
+	@Column(name="status")
+	private String status;
+	
 	public Role() {}
 
 	public int getRoleid() {
@@ -91,10 +94,20 @@ public class Role implements Serializable {
 		this.updatedTime = updatedTime;
 	}
 
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
-		return "Role [roleid=" + roleid + ", roleName=" + roleName + "]";
+		return "Role [roleid=" + roleid + ", roleName=" + roleName + ", parentRole=" + parentRole + ", createdTime="
+				+ createdTime + ", updatedTime=" + updatedTime + ", status=" + status + "]";
 	}
+
 	
 	
 	

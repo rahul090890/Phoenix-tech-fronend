@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.concretepage.dao.IProjectDAO;
 import com.concretepage.entity.Project;
+import com.concretepage.entity.Status;
 
 @Transactional
 @Repository
@@ -24,7 +25,7 @@ public class ProjectDAOImpl implements IProjectDAO {
 
 	@Override
 	public List<Project> getProjects() {
-		String hql = "FROM Project as prg Order by prg.projectName";
+		String hql = "FROM Project as prg where prg.status = " + Status.Active.name() + " Order by prg.projectName";
 		return entityManager.createQuery(hql).getResultList();	
 		/*CriteriaBuilder cb = entityManager.getCriteriaBuilder();
 		 CriteriaQuery<Project> criteria = cb.createQuery(Project.class);
@@ -43,6 +44,7 @@ public class ProjectDAOImpl implements IProjectDAO {
 		Root<Project> root = criteria.from(Project.class);
 		criteria.select(root);
 		criteria.where(cb.like(root.get("projectName"), projectName));
+		criteria.where(cb.equal(root.get("status"), Status.Active.name()));
 		return entityManager.createQuery(criteria).getResultList();
 	}
 
@@ -72,7 +74,7 @@ public class ProjectDAOImpl implements IProjectDAO {
 
 	@Override
 	public void delete(Integer projectId) {
-		String hql = "delete from Project where projectId = ?";
+		String hql = "update Project p set p.status = " + Status.Inactive.name() + " where p.projectid = ? ";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, projectId);
 		query.executeUpdate();
@@ -87,7 +89,7 @@ public class ProjectDAOImpl implements IProjectDAO {
 	@Override
 	public List<Project> findProjectForCustomerAndDepartment(Integer customerId,
 			Integer departmentId) {
-		String hql = "from Project t where t.customer.customerId = ? and t.department.departmentId = ? order by t.projectName";
+		String hql = "from Project t where t.customer.customerId = ? and t.department.departmentId = ?  and t.status = "+  Status.Active.name() + "order by t.projectName";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, customerId);
 		query.setParameter(2, departmentId);

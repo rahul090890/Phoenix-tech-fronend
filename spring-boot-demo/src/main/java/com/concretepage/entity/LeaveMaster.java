@@ -35,7 +35,7 @@ public class LeaveMaster implements Serializable {
 	private String leaveType;
 	
 	@Column(name = "annualEligibility")
-	private Integer annualEligibility;
+	private Float annualEligibility;
 
 	public Integer getLeaveMasterId() {
 		return leaveMasterId;
@@ -69,11 +69,11 @@ public class LeaveMaster implements Serializable {
 		this.leaveType = leaveType;
 	}
 
-	public Integer getAnnualEligibility() {
+	public Float getAnnualEligibility() {
 		return annualEligibility;
 	}
 
-	public void setAnnualEligibility(Integer annualEligibility) {
+	public void setAnnualEligibility(Float annualEligibility) {
 		this.annualEligibility = annualEligibility;
 	}
 

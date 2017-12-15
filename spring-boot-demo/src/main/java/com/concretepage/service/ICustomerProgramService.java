@@ -12,5 +12,6 @@ public interface ICustomerProgramService {
 	List<CustomerProgram> getAllCustomerPrograms();
 	void updateCustomerProgram(CustomerProgram customerProgram);
 	CustomerProgram getCustomerProgramById(Integer customerProgramId) throws  HRException;
+	void delete(Integer customerProgramId);
 
 }

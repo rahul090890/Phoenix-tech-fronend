@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 import com.concretepage.dao.IRoleDAO;
 import com.concretepage.entity.Department;
 import com.concretepage.entity.Role;
+import com.concretepage.entity.Status;
 @Transactional
 @Repository
 public class RoleDAOImpl implements IRoleDAO{
@@ -28,6 +29,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		 CriteriaQuery<Role> criteria = cb.createQuery(Role.class);
 		 Root<Role> root = criteria.from(Role.class);
 		 criteria.select(root);
+		 criteria.where(cb.equal(root.get("status"), Status.Active.name()));
 		 criteria.orderBy(cb.asc(root.get("roleid")));
 		 return entityManager.createQuery(criteria).getResultList();
 	}
@@ -52,7 +54,8 @@ public class RoleDAOImpl implements IRoleDAO{
 	@Override
 	public void delete(Role role) {
 		role = entityManager.find(Role.class, role.getRoleid());
-		entityManager.remove(role);
+		role.setStatus(Status.Inactive.name());
+		entityManager.persist(role);
 		
 	}
 

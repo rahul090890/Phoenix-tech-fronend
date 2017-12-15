@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.concretepage.dao.ICustomerDAO;
 import com.concretepage.entity.Customer;
+import com.concretepage.entity.Status;
 import com.concretepage.exception.HRException;
 
 @Transactional
@@ -30,6 +31,7 @@ public class CustomerDAOImpl implements ICustomerDAO {
 		CriteriaQuery<Customer> criteria = cb.createQuery(Customer.class);
 		Root<Customer> root = criteria.from(Customer.class);
 		criteria.select(root);
+		criteria.where(cb.equal(root.get("status"), Status.Active.name()));
 		criteria.orderBy(cb.asc(root.get("customerId")));
 		return entityManager.createQuery(criteria).getResultList();
 	}
@@ -40,23 +42,14 @@ public class CustomerDAOImpl implements ICustomerDAO {
 		CriteriaQuery<Customer> criteria = cb.createQuery(Customer.class);
 		Root<Customer> root = criteria.from(Customer.class);
 		criteria.select(root);
+		criteria.where(cb.equal(root.get("status"), Status.Active.name()));
 		criteria.where(cb.like(root.get("customerName"), "%" + customerName + "%"));
 		return entityManager.createQuery(criteria).getResultList();
 	}
 
 	@Override
 	public void update(Customer customer) {
-		/*Customer persistantObject = entityManager.find(Customer.class, customer.getCustomerId());
-		//entityManager.getTransaction().begin();
-		persistantObject.setCustomerName(customer.getCustomerName());
-		persistantObject.setAddress(customer.getAddress());
-		persistantObject.setCountry(customer.getCountry());
-		persistantObject.setZipCode(customer.getZipCode());
-		entityManager.persist(persistantObject);
-		//entityManager.getTransaction().commit();
-		 * 
-		 */
-		System.out.println("Updating the customer " + customer.toString());
+		
 		entityManager.merge(customer);
 	}
 
@@ -70,17 +63,18 @@ public class CustomerDAOImpl implements ICustomerDAO {
 	@Override
 	public void delete(Customer customer) {
 		customer = entityManager.find(Customer.class, customer.getCustomerId());
-		entityManager.remove(customer);
+		customer.setStatus(Status.Inactive.name());
+		entityManager.persist(customer);
 	}
 
 	@Override
 	public Customer findByCustomerId(Integer customerId) throws HRException {
-		String hql = " FROM Customer as c where c.customerId = :customerId ";
+		String hql = " FROM Customer as c where c.customerId = :customerId and c.status = " + Status.Active.name();
 		Query query1 = entityManager.createQuery(hql);
 		query1.setParameter("customerId", customerId);
 		List<Customer> customers = (List<Customer>)query1.getResultList();
 		if(null == customers || customers.size() == 0) {
-			throw new HRException("Customer Id does not exits " + customerId);
+			throw new HRException("Customer Id does not exits or InActive" + customerId);
 		}
 		return (Customer)(customers.get(0));
 		

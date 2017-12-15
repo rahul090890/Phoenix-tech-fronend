@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.concretepage.dao.ITaskDAO;
 import com.concretepage.entity.Customer;
 import com.concretepage.entity.Department;
+import com.concretepage.entity.Status;
 import com.concretepage.entity.Task;
 @Transactional
 @Repository
@@ -28,7 +29,7 @@ public class TaskDAOImpl implements ITaskDAO {
 		 criteria.select(root);
 		 criteria.orderBy(cb.asc(root.get("taskId")));
 		 **/
-		String hql = "from Task as t order by t.taskName";
+		String hql = "from Task as t where t.status = " + Status.Active.name() + "order by t.taskName";
 		return (List<Task>) entityManager.createQuery(hql).getResultList();
 	}
 
@@ -53,13 +54,14 @@ public class TaskDAOImpl implements ITaskDAO {
 	@Override
 	public void delete(Task task) {
 		task = entityManager.find(Task.class, task.getTaskId()); 
-		entityManager.remove(task);
+		task.setStatus(Status.Inactive.name());
+		entityManager.persist(task);
 		
 	}
 
 	@Override
 	public List<Task> findTasksForCustomerAndDepartment(Integer customerId, Integer departmentId) {
-		String hql = "from Task t where t.customer.customerId = ? and t.department.departmentId = ? order by t.taskName";
+		String hql = "from Task t where t.customer.customerId = ? and t.department.departmentId = ? and t.status = " + Status.Active.name() + "order by t.taskName";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, customerId);
 		query.setParameter(2, departmentId);
