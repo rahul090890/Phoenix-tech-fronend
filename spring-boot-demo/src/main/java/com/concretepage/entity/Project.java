@@ -59,7 +59,7 @@ public class Project {
 	private String projectCode;
 	
 	@Column(name="status")
-	private String status;
+	private String status = Status.Active.toString();
 
 	public Project() {}
 

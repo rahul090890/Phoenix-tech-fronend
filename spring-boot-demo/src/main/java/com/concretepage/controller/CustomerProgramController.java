@@ -112,7 +112,7 @@ public class CustomerProgramController {
 	public ResponseEntity<Void> delete(
 			@PathVariable("customerProgramId") String customerProgramId) {
 		service.delete(Integer.parseInt(customerProgramId));
-		return new ResponseEntity<Void>(HttpStatus.GONE);
+		return new ResponseEntity<Void>(HttpStatus.OK);
 	}
 
 

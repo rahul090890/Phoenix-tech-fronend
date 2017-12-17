@@ -15,7 +15,7 @@ public interface ITimesheetService {
 	
 	List<TimesheetSummary> getTimesheetSummary(Integer employeeId, String startDate, String endDate);
 	
-	TimesheetDTO getTimesheetDetails(Integer employeeId, String weekStartDate, String weekEndDate);
+	TimesheetDTO getTimesheetDetails(Integer employeeId, String weekStartDate, String weekEndDate) throws HRException;
 	
 	List<TimesheetSummary> getTimesheetsForApproval(Integer managerId);
 	
@@ -23,7 +23,7 @@ public interface ITimesheetService {
 	
 	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
 	
-	TimesheetDTO getTimesheetDetails(long timesheetSequence);
+	TimesheetDTO getTimesheetDetails(long timesheetSequence) throws HRException;
 	
 	List<TimesheetSummary> getTimesheetsLessByHours(String startDate, String endate, int lessByHours, String departmentCode, String employeeType);
 

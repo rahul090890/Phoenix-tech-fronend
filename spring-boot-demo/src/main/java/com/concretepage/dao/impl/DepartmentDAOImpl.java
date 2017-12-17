@@ -34,7 +34,7 @@ public class DepartmentDAOImpl implements IDepartmentDAO {
 		 criteria.orderBy(cb.asc(root.get("departmentId")));
 		 return entityManager.createQuery(criteria).getResultList(); **/
 		
-		String hql = "from Department d where d.parentDepartment.departmentId is not null and d.status = " + Status.Active.name() + " order by departmentCode, departmentName";
+		String hql = "from Department d where d.parentDepartment.departmentId is not null and d.status = '" + Status.Active.toString() + "' order by departmentCode, departmentName";
 		Query query = entityManager.createQuery(hql);
 		List<Department> departments = (List<Department>) query.getResultList();
 		return departments;
@@ -72,7 +72,7 @@ public class DepartmentDAOImpl implements IDepartmentDAO {
 	@Override
 	public void delete(Department department) {
 		department = entityManager.find(Department.class, department.getDepartmentId());
-		department.setStatus(Status.Inactive.name());
+		department.setStatus(Status.Inactive.toString());
 		entityManager.persist(department);
 		
 	}

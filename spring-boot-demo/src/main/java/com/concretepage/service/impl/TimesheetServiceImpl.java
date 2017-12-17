@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import javax.transaction.HeuristicRollbackException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +18,11 @@ import com.concretepage.dao.ITimesheetDao;
 import com.concretepage.dao.ITimesheetSummaryDao;
 import com.concretepage.dto.TimesheetDTO;
 import com.concretepage.dto.TimesheetEntryDTO;
+import com.concretepage.entity.Employee;
 import com.concretepage.entity.Timesheet;
 import com.concretepage.entity.TimesheetSummary;
 import com.concretepage.exception.HRException;
 import com.concretepage.service.ITimesheetService;
-import com.concretepage.utils.DateUtils;
 
 @Service
 public class TimesheetServiceImpl implements ITimesheetService {
@@ -63,9 +65,9 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
 
 	@Override
-	public TimesheetDTO getTimesheetDetails(Integer employeeId, String weekStartDate, String weekEndDate) {
+	public TimesheetDTO getTimesheetDetails(Integer employeeId, String weekStartDate, String weekEndDate) throws HRException {
 		List<Timesheet> timesheets = timesheetDao.getTimesheetsForAWeek(employeeId, weekStartDate, weekEndDate);
-		log.info("The number of the timesheets retrived for employee " + employeeId + " for the week starting " + weekStartDate + " are " + timesheets.size());
+		log.info("The number of the timesheets retrived for employee " + employeeId + " for the week starting " + weekStartDate + " are " + timesheets.size());	
 		return createTimesheetDTO(timesheets);
 	}
 
@@ -97,7 +99,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
 	
 
-	private TimesheetDTO createTimesheetDTO(List<Timesheet> listOftimesheets) {
+	private TimesheetDTO createTimesheetDTO(List<Timesheet> listOftimesheets) throws HRException {
 
 		TimesheetDTO dto = new TimesheetDTO();
 		// this created to sort the TimesheetEntryDTO as per the date String for
@@ -139,7 +141,9 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		
 		Timesheet temp = listOftimesheets.get(0);
 		dto.setEmployeeId(temp.getEmployeeId() + "");
-		dto.setEmployeeDesignation(temp.getEmployeeDesination());
+		Employee emp = employeeDao.findEmployeeById(temp.getEmployeeId());
+		dto.setEmployeeName(emp.getFirstName() + "," + emp.getLastName());
+		dto.setEmployeeDesignation(emp.getDesignation());
 		dto.setManagerId(temp.getManagerId() + "");
 		dto.setManagerName(temp.getManagerName());
 		dto.setManagerEmailId(temp.getManagerEmail());
@@ -178,7 +182,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
 
 	@Override
-	public TimesheetDTO getTimesheetDetails(long timesheetSequence) {
+	public TimesheetDTO getTimesheetDetails(long timesheetSequence) throws HRException {
 		return createTimesheetDTO(timesheetDao.getTimesheetsBySequence(timesheetSequence));
 	}
 

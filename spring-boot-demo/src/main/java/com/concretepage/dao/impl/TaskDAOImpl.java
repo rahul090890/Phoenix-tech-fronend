@@ -29,7 +29,7 @@ public class TaskDAOImpl implements ITaskDAO {
 		 criteria.select(root);
 		 criteria.orderBy(cb.asc(root.get("taskId")));
 		 **/
-		String hql = "from Task as t where t.status = " + Status.Active.name() + "order by t.taskName";
+		String hql = "from Task as t where t.status = '" + Status.Active.toString() + "' order by t.taskName";
 		return (List<Task>) entityManager.createQuery(hql).getResultList();
 	}
 
@@ -54,14 +54,14 @@ public class TaskDAOImpl implements ITaskDAO {
 	@Override
 	public void delete(Task task) {
 		task = entityManager.find(Task.class, task.getTaskId()); 
-		task.setStatus(Status.Inactive.name());
+		task.setStatus(Status.Inactive.toString());
 		entityManager.persist(task);
 		
 	}
 
 	@Override
 	public List<Task> findTasksForCustomerAndDepartment(Integer customerId, Integer departmentId) {
-		String hql = "from Task t where t.customer.customerId = ? and t.department.departmentId = ? and t.status = " + Status.Active.name() + "order by t.taskName";
+		String hql = "from Task t where t.customer.customerId = ? and t.department.departmentId = ? and t.status = '" + Status.Active.toString() + "' order by t.taskName";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, customerId);
 		query.setParameter(2, departmentId);

@@ -149,7 +149,7 @@ public class TimesheetController {
 			@PathVariable("employeeId") String employeeId,
 			@PathVariable("weekstartDate") String weekstartDate,
 			@PathVariable("weekendDate") String weekendDate
-			) {
+			) throws HRException {
 		TimesheetDTO dto = timesheetService.getTimesheetDetails(Integer.parseInt(employeeId), weekstartDate, weekendDate);
 		return new ResponseEntity<TimesheetDTO>(dto,HttpStatus.OK);
 		
@@ -158,7 +158,7 @@ public class TimesheetController {
 	@GetMapping("detailsBySequence/{timesheetSequence}")
 	public ResponseEntity<TimesheetDTO> getTimesheetDetails(
 			@PathVariable("timesheetSequence") String timesheetSequence
-			) {
+			) throws HRException {
 		TimesheetDTO dto = timesheetService.getTimesheetDetails(Long.parseLong(timesheetSequence));
 		return new ResponseEntity<TimesheetDTO>(dto,HttpStatus.OK);
 		
@@ -216,7 +216,8 @@ public class TimesheetController {
 				timesheet.setTaskid(taskId);
 				timesheet.setTimesheetdate(entryDTO.getTimesheetDate());
 				timesheet.setEmployeeId(employee.getEmployeeId());
-				timesheet.setEmployeeDesination(employee.getDepartmentName());
+				timesheet.setEmployeeDesination(employee.getDesignation());
+				
 				if(null != employee.getManager()) {
 					timesheet.setManagerId(employee.getManager().getEmployeeId());
 					timesheet.setManagerName(

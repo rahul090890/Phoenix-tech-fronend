@@ -1411,6 +1411,7 @@ textarea {
 a {
   color: #2196f3;
   text-decoration: none;
+  cursor: pointer;
 }
 
 a:hover,

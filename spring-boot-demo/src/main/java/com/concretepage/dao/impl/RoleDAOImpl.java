@@ -29,7 +29,7 @@ public class RoleDAOImpl implements IRoleDAO{
 		 CriteriaQuery<Role> criteria = cb.createQuery(Role.class);
 		 Root<Role> root = criteria.from(Role.class);
 		 criteria.select(root);
-		 criteria.where(cb.equal(root.get("status"), Status.Active.name()));
+		 criteria.where(cb.equal(root.get("status"), Status.Active.toString()));
 		 criteria.orderBy(cb.asc(root.get("roleid")));
 		 return entityManager.createQuery(criteria).getResultList();
 	}
@@ -54,7 +54,7 @@ public class RoleDAOImpl implements IRoleDAO{
 	@Override
 	public void delete(Role role) {
 		role = entityManager.find(Role.class, role.getRoleid());
-		role.setStatus(Status.Inactive.name());
+		role.setStatus(Status.Inactive.toString());
 		entityManager.persist(role);
 		
 	}

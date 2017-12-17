@@ -57,7 +57,7 @@ public class Task implements Serializable {
 	private Date   updatedTime;
 	
 	@Column(name="status")
-	private String status;
+	private String status = Status.Active.toString();
 	
 	public Task() {}
 

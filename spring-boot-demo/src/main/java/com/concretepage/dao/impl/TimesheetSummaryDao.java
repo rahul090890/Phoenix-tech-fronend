@@ -33,7 +33,7 @@ public class TimesheetSummaryDao implements ITimesheetSummaryDao {
 
 	@Override
 	public List<TimesheetSummary> getTimesheetSummary(Integer employeeId, String startDate, String endDate) {
-		String hql = "from TimesheetSummary as s where s.id.employeeId = ? and str_to_date(s.id.weekStartDate, '%Y-%m-%d') >= str_to_date( ? ,'%Y-%m-%d')  and str_to_date(s.id.weekStartDate, '%Y-%m-%d') < str_to_date( ? ,'%Y-%m-%d') ";
+		String hql = "from TimesheetSummary as s where s.id.employeeId = ? and str_to_date(s.id.weekStartDate, '%Y-%m-%d') >= str_to_date( ? ,'%Y-%m-%d')  and str_to_date(s.id.weekStartDate, '%Y-%m-%d') < str_to_date( ? ,'%Y-%m-%d') order by s.id.weekStartDate, s.id.employeeId ";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, employeeId);
 		query.setParameter(2, startDate);
@@ -44,7 +44,7 @@ public class TimesheetSummaryDao implements ITimesheetSummaryDao {
 
 	@Override
 	public List<TimesheetSummary> getPendingTimesheetSummary(List<Integer> employeeIds) {
-		String hql = "from TimesheetSummary as s where s.id.employeeId IN :employeeList and  s.id.timesheetStatus = :timesheetStatus order by s.id.employeeId ";
+		String hql = "from TimesheetSummary as s where s.id.employeeId IN :employeeList and  s.id.timesheetStatus = :timesheetStatus order by s.id.weekStartDate, s.id.employeeId  ";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter("employeeList", employeeIds);
 		query.setParameter("timesheetStatus", TimesheetStatus.PENDING.name());

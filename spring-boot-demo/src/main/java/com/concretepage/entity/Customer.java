@@ -45,7 +45,7 @@ public class Customer implements Serializable {
 	private String customerCode;
 	
 	@Column(name="status")
-	private String status;
+	private String status = Status.Active.toString();
 	
 
 	public String getCustomerCode() {

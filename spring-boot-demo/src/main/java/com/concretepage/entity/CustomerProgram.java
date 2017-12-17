@@ -47,7 +47,7 @@ public class CustomerProgram implements Serializable {
 	private String customerProgramType;
 	
 	@Column(name="status")
-	private String status;
+	private String status = Status.Active.toString();
 	
 	public Integer getCustomerProgramId() {
 		return customerProgramId;

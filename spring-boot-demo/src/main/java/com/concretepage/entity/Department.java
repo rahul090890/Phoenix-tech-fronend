@@ -58,7 +58,7 @@ public class Department implements Serializable{
 	private String departmentCode;
 	
 	@Column(name="status")
-	private String status;
+	private String status = Status.Active.toString();
 	
 	
 	public String getDepartmentCode() {

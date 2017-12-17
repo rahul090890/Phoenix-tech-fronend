@@ -29,7 +29,7 @@ public class CustomerProgramDaoImpl implements ICustomerProgramDao {
 
 	@Override
 	public List<CustomerProgram> fetchAllCustomerPrograms() {
-		String hql = "FROM CustomerProgram as prg where prg.status = " + Status.Active.name() + " ORDER BY prg.customerProgramId";
+		String hql = "FROM CustomerProgram as prg where prg.status = '" + Status.Active.toString() + "' ORDER BY prg.customerProgramId";
 		return (List<CustomerProgram>) entityManager.createQuery(hql).getResultList();	
 	}
 
@@ -49,7 +49,7 @@ public class CustomerProgramDaoImpl implements ICustomerProgramDao {
 
 	@Override
 	public CustomerProgram findCustomerProgramById(Integer customerProgramId) throws  HRException {
-		String hql = "FROM CustomerProgram as prg where prg.customerProgramId = ? and prg.status = " + Status.Active.name() + " ORDER BY prg.customerProgramId";
+		String hql = "FROM CustomerProgram as prg where prg.customerProgramId = ? and prg.status = '" + Status.Active.toString() + "'  ORDER BY prg.customerProgramId";
 		Query query = entityManager.createQuery(hql);
 		query.setParameter(1, customerProgramId);
 		List<CustomerProgram> customerPrograms = query.getResultList();
@@ -61,7 +61,7 @@ public class CustomerProgramDaoImpl implements ICustomerProgramDao {
 
 	@Override
 	public void delete(int customerProgramId) {
-		String hql = "update CustomerProgram p set p.status = " + Status.Inactive.name();
+		String hql = "update CustomerProgram p set p.status = '" + Status.Inactive.toString() + "' where p.customerProgramId = " + customerProgramId;
 		Query query = entityManager.createQuery(hql);
 		query.executeUpdate();
 		

@@ -13,4 +13,8 @@ public enum Status {
 		return this.statusValue;
 	}
 	
+	public static void main(String[] args) {
+		System.out.println(Status.Active.statusValue);
+	}
+	
 }

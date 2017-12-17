@@ -90,7 +90,7 @@ public class DepartmentController {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	@DeleteMapping("delete/{departmentId}")
+	@PostMapping("delete/{departmentId}")
 	public ResponseEntity<Void> delete (@PathVariable("departmentId") String departmentId) {
 		
 		Department department = new Department();

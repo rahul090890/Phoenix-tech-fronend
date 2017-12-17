@@ -147,7 +147,7 @@
 									aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">TimeSheet Details</h4>
+								<h4 class="modal-title" id="myModalLabel">Time Sheet Details</h4>
 							</div>
 							<div class="modal-body"
 								style="max-height: 500px; overflow-y: auto">
@@ -155,14 +155,16 @@
 									<table class="table table-hover">
 										<thead>
 											<tr class="bg-info">
-												<th>Employee ID</th>
+												<th>Employee Name</th>
+												<th>Designation</th>
 												<th>Start Date</th>
 												<th>End Date</th>
 											</tr>
 										</thead>
 										<tbody>
 											<tr>
-												<th>{{timeSheetDetails.employeeId}}</th>
+												<th>{{timeSheetDetails.employeeName}}</th>
+												<th>{{timeSheetDetails.employeeDesignation}}</th>
 												<th>{{timeSheetDetails.startDateOfWeek|
 													date:'dd-MM-yyyy'}}</th>
 												<th>{{timeSheetDetails.endDateOfWeek|

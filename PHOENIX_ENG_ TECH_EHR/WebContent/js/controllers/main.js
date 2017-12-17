@@ -384,6 +384,7 @@ materialAdmin
 				function($scope, $filter, $sce, ngTableParams, $http,
 						$rootScope, filteredListService, $window, $location,
 						growlService) {
+					$('#downcontent').hide();
 					$scope.footerTotalHour = [];
 					if ($scope.mactrl) {
 						if ($scope.mactrl.sidebarToggle) {
@@ -450,6 +451,11 @@ materialAdmin
 							'dd-MMM-yyyy', 'shortDate' ];
 					$scope.format = $scope.formats[2];
 					$scope.changeweekselected = function() {
+						$('#downcontent').show();
+						$scope.totalhourhead={};
+						$scope.weekTotal='';
+						$scope.rowTotals = [];
+						$scope.colTotals = [ 0, 0, 0, 0, 0, 0, 0 ];
 						var startdate = $scope.dtPopup;
 						var date2 = new Date(startdate);
 
@@ -726,7 +732,8 @@ materialAdmin
 
 					$scope.deleteRow = function() {
 						console.log($scope.ids);
-						var obj = $scope.ids;
+						
+						var obj = $scope.ids[divindex];
 
 						for ( var key in obj) {
 							if (obj.hasOwnProperty(key)) {
@@ -1887,15 +1894,52 @@ materialAdmin
 								'has-error');
 
 						$scope.totalLeaves = $scope.itemSelected.eligible;
-						console.log("Selected Value: "
-								+ $scope.itemSelected.leaveBalanceId
-								+ "\nSelected Text: "
-								+ $scope.itemSelected.eligible);
+
 					}
 					$scope.joindateValidate = function(id) {
-						debugger;
+
 						$('#' + id).closest('.form-group').removeClass(
 								'has-error');
+					}
+					$scope.refreshLeavetakenHalfDay = function() {
+
+						var startdate = $scope.dtPopup;
+						var enddate = $scope.dtPopup1;
+						var date2 = new Date(startdate);
+						var date1 = new Date(enddate);
+						var isHalfDay = $scope.ishalfDay;
+						if (startdate > enddate) {
+							swal("Error",
+									"From date should be less than to date.)",
+									"error");
+							return;
+						}
+						var timeDiff = Math.abs(date2.getTime()
+								- date1.getTime());
+						$scope.leaveTaken;
+						if (isHalfDay) {
+							$scope.leaveTaken = Math.ceil(timeDiff
+									/ (1000 * 3600 * 24)) + 0.5
+						} else {
+							$scope.leaveTaken = Math.ceil(timeDiff
+									/ (1000 * 3600 * 24)) + 1;
+						}
+
+						if ($scope.totalLeaves != ''
+								|| $scope.totalLeaves != 'undefiend') {
+							var remainLeaves = $scope.totalLeaves
+									- $scope.leaveTaken;
+							if (remainLeaves < 0) {
+								$scope.remainLeaves = '';
+								swal("Error",
+										"You cant take number of leaves..",
+										"error");
+								return;
+							}
+							$scope.remainLeaves = $scope.totalLeaves
+									- $scope.leaveTaken;
+						}
+
 					}
 					$scope.refreshLeavetaken = function(id) {
 						$('#' + id).closest('.form-group').removeClass(
@@ -1904,17 +1948,24 @@ materialAdmin
 						var enddate = $scope.dtPopup1;
 						var date2 = new Date(startdate);
 						var date1 = new Date(enddate);
+						var isHalfDay = $scope.ishalfDay;
 						if (startdate > enddate) {
 							swal("Error",
 									"From date should be less than to date.)",
 									"error");
 							return;
 						}
-
 						var timeDiff = Math.abs(date2.getTime()
 								- date1.getTime());
-						$scope.leaveTaken = Math.ceil(timeDiff
-								/ (1000 * 3600 * 24)) + 1;
+						$scope.leaveTaken;
+						if (isHalfDay) {
+							$scope.leaveTaken = Math.ceil(timeDiff
+									/ (1000 * 3600 * 24)) + 0.5
+						} else {
+							$scope.leaveTaken = Math.ceil(timeDiff
+									/ (1000 * 3600 * 24)) + 1;
+						}
+
 						if ($scope.totalLeaves != ''
 								|| $scope.totalLeaves != 'undefiend') {
 							var remainLeaves = $scope.totalLeaves
@@ -1944,6 +1995,8 @@ materialAdmin
 							var employeedepartmentId = $scope.employeedepartmentId;
 							var employeeemail = $scope.employeeemail;
 							var comments = $scope.comments;
+							var isHalfDay = $scope.ishalfDay;
+
 							/*
 							 * var leaveTaken=response.data.employeeId; var
 							 * remainLeaves=response.data.employeeId;
@@ -1974,6 +2027,16 @@ materialAdmin
 							if (endday.toString().length == 1) {
 								endday = '0' + endday;
 							}
+
+							if (isHalfDay) {
+								if (startday != endday
+										|| endmonth != startmonth
+										|| endyear != startyear) {
+									swal("You can't apply half day leave for multiple days");
+									return;
+								}
+							}
+
 							var enddate = endyear + '-' + endmonth + '-'
 									+ endday;
 							var leavetaken = $scope.leaveTaken;
@@ -2464,263 +2527,221 @@ materialAdmin
 										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
-					$scope.deletecpcDetails = function(item) {/*
-																 * 
-																 * swal( { title :
-																 * "Are you
-																 * sure?", text :
-																 * "You will not
-																 * be able to
-																 * recover this
-																 * CPC !", type :
-																 * "warning",
-																 * showCancelButton :
-																 * true,
-																 * confirmButtonColor :
-																 * "#DD6B55",
-																 * confirmButtonText :
-																 * "Yes, Delete
-																 * it!",
-																 * cancelButtonText :
-																 * "No, cancel
-																 * it!",
-																 * closeOnConfirm :
-																 * false,
-																 * closeOnCancel :
-																 * false },
-																 * function(isConfirm) {
-																 * if
-																 * (isConfirm) {
-																 * 
-																 * var
-																 * deleteemployee =
-																 * $scope.webserviceshost +
-																 * 'hr/employee';
-																 * var
-																 * createRoll =
-																 * '/delete/' +
-																 * userid;
-																 * deleteemployee =
-																 * deleteemployee +
-																 * createRoll;
-																 * $http( {
-																 * method :
-																 * "DELETE", url :
-																 * deleteemployee,
-																 * headers : {
-																 * 'XSRF-TOKEN' :
-																 * $window.sessionStorage
-																 * .getItem("Access-Token"),
-																 * 'authorization' :
-																 * $window.sessionStorage
-																 * .getItem("AuthKey") } })
-																 * .then(
-																 * function
-																 * mySucces(
-																 * response) {
-																 * 
-																 * var
-																 * allusersURL =
-																 * $scope.webserviceshost +
-																 * 'hr/employee/all';
-																 * $http( {
-																 * method :
-																 * "GET", url :
-																 * allusersURL,
-																 * headers : {
-																 * 'XSRF-TOKEN' :
-																 * $window.sessionStorage
-																 * .getItem("Access-Token"),
-																 * 'authorization' :
-																 * $window.sessionStorage
-																 * .getItem("AuthKey") } })
-																 * .then(
-																 * function
-																 * mySucces(
-																 * response) {
-																 * console
-																 * .log(response.data);
-																 * if (response !=
-																 * 'undefiend' &&
-																 * response !=
-																 * "") {
-																 * 
-																 * $scope.allUsers =
-																 * response.data;
-																 * $scope.pageSize =
-																 * 150;
-																 * $scope.allItems =
-																 * $scope.allUsers;
-																 * $scope.reverse =
-																 * false;
-																 * 
-																 * $scope.resetAll =
-																 * function() {
-																 * $scope.filteredList =
-																 * $scope.allItems;
-																 * $scope.employeeId =
-																 * '';
-																 * $scope.firstName =
-																 * '';
-																 * $scope.lastName =
-																 * '';
-																 * $scope.emailId =
-																 * '';
-																 * $scope.joiningdate = ''
-																 * $scope.searchText =
-																 * '';
-																 * $scope.currentPage =
-																 * 0;
-																 * $scope.Header = [
-																 * '', '', '',
-																 * '', '', '', '' ]; }
-																 * 
-																 * $scope.search =
-																 * function() {
-																 * $scope.filteredList =
-																 * filteredListService
-																 * .searched(
-																 * $scope.allItems,
-																 * $scope.searchText);
-																 * 
-																 * if
-																 * ($scope.searchText ==
-																 * '') {
-																 * $scope.filteredList =
-																 * $scope.allItems; }
-																 * $scope
-																 * .pagination(); } //
-																 * Calculate //
-																 * Total //
-																 * Number // of //
-																 * Pages //
-																 * based // on //
-																 * Search //
-																 * Result
-																 * $scope.pagination =
-																 * function() {
-																 * $scope.ItemsByPage =
-																 * filteredListService
-																 * .paged(
-																 * $scope.filteredList,
-																 * $scope.pageSize); };
-																 * 
-																 * $scope.setPage =
-																 * function() {
-																 * $scope.currentPage =
-																 * this.n; };
-																 * 
-																 * $scope.firstPage =
-																 * function() {
-																 * $scope.currentPage =
-																 * 0; };
-																 * 
-																 * $scope.lastPage =
-																 * function() {
-																 * $scope.currentPage =
-																 * $scope.ItemsByPage.length -
-																 * 1; };
-																 * 
-																 * $scope.range =
-																 * function(
-																 * input, total) {
-																 * var ret = [];
-																 * if (!total) {
-																 * total =
-																 * input; input =
-																 * 0; } for (var
-																 * i = input; i <
-																 * total; i++) {
-																 * if (i != 0 &&
-																 * i != total -
-																 * 1) { ret
-																 * .push(i); } }
-																 * return ret; };
-																 * 
-																 * $scope.resetuser =
-																 * function() { $(
-																 * '#edituser')
-																 * .hide(); }
-																 * $scope.sort =
-																 * function(
-																 * sortBy) {
-																 * $scope
-																 * .resetAll();
-																 * 
-																 * $scope.columnToOrder =
-																 * sortBy; //
-																 * $Filter // - //
-																 * Standard //
-																 * Service
-																 * $scope.filteredList =
-																 * $filter(
-																 * 'orderBy') (
-																 * $scope.filteredList,
-																 * $scope.columnToOrder,
-																 * $scope.reverse);
-																 * 
-																 * if
-																 * ($scope.reverse)
-																 * iconName =
-																 * 'glyphicon
-																 * glyphicon-chevron-up';
-																 * else iconName =
-																 * 'glyphicon
-																 * glyphicon-chevron-down';
-																 * 
-																 * if (sortBy
-																 * === 'EmpId') {
-																 * $scope.Header[0] =
-																 * iconName; }
-																 * else if
-																 * (sortBy ===
-																 * 'name') {
-																 * $scope.Header[1] =
-																 * iconName; }
-																 * else {
-																 * $scope.Header[2] =
-																 * iconName; }
-																 * 
-																 * $scope.reverse =
-																 * !$scope.reverse;
-																 * 
-																 * $scope
-																 * .pagination(); }; //
-																 * By // Default //
-																 * sort // ny //
-																 * Name $scope
-																 * .sort('name'); //
-																 * console.log($scope.allUsers.length); } },
-																 * function
-																 * myError(
-																 * response) {
-																 * console
-																 * .log(response);
-																 * });
-																 * 
-																 * swal(
-																 * "Deleted
-																 * SuccessFully!",
-																 * "CPC record
-																 * has been
-																 * deleted.",
-																 * "success"); },
-																 * function
-																 * myError(
-																 * response) {
-																 * console
-																 * .log(response);
-																 * }); } else {
-																 * swal(
-																 * "Cancelled",
-																 * "Request has
-																 * been
-																 * cancelled.)",
-																 * "error"); }
-																 * });
-																 * 
-																 * 
-																 */
+					$scope.deletecpcDetails = function(item) {
+
+						swal(
+								{
+									title : "Are you sure?",
+									text : "You will not be able to recover this CPC !",
+									type : "warning",
+									showCancelButton : true,
+									confirmButtonColor : "#DD6B55",
+									confirmButtonText : "Yes, Delete it!",
+									cancelButtonText : "No, cancel it!",
+									closeOnConfirm : false,
+									closeOnCancel : false
+								},
+								function(isConfirm) {
+									if (isConfirm) {
+
+										var deletecpc = $scope.webserviceshost
+												+ 'hr/customerProgram/delete/'
+												+ item.customerProgramId;
+
+										$http(
+												{
+													method : "POST",
+													url : deletecpc,
+													headers : {
+														'XSRF-TOKEN' : $window.sessionStorage
+																.getItem("Access-Token"),
+														'authorization' : $window.sessionStorage
+																.getItem("AuthKey")
+													}
+												})
+												.then(
+														function mySucces(
+																response) {
+															var allcpc = $scope.webserviceshost
+																	+ 'hr/customerProgram/all';
+															$(
+																	'#updatecpcDetails')
+																	.hide();
+															$http(
+																	{
+																		method : "GET",
+																		url : allcpc,
+																		headers : {
+																			'XSRF-TOKEN' : $window.sessionStorage
+																					.getItem("Access-Token"),
+																			'authorization' : $window.sessionStorage
+																					.getItem("AuthKey")
+																		}
+																	})
+																	.then(
+																			function mySucces(
+																					response) {
+
+																				$scope.allUsers = response.data;
+																				$scope.pageSize = 50;
+																				$scope.allItems = $scope.allUsers;
+																				$scope.reverse = false;
+
+																				$scope.resetAll = function() {
+																					$scope.filteredList = $scope.allItems;
+																					$scope.customerProgramId = '';
+																					$scope.customer = '';
+																					$scope.customerProgramCode = '';
+																					$scope.customerProgramType = '';
+																					$scope.projects = '';
+																					$scope.searchText = '';
+																					$scope.currentPage = 0;
+																					$scope.Header = [
+																							'',
+																							'',
+																							'',
+																							'',
+																							'',
+																							'',
+																							'' ];
+																				}
+
+																				$scope.search = function() {
+																					$scope.filteredList = filteredListService
+																							.searched(
+																									$scope.allItems,
+																									$scope.searchText);
+
+																					if ($scope.searchText == '') {
+																						$scope.filteredList = $scope.allItems;
+																					}
+																					$scope
+																							.pagination();
+																				}
+
+																				$scope.pagination = function() {
+																					$scope.ItemsByPage = filteredListService
+																							.paged(
+																									$scope.filteredList,
+																									$scope.pageSize);
+																				};
+
+																				$scope.setPage = function() {
+																					$scope.currentPage = this.n;
+																				};
+
+																				$scope.firstPage = function() {
+																					$scope.currentPage = 0;
+																				};
+
+																				$scope.lastPage = function() {
+																					$scope.currentPage = $scope.ItemsByPage.length - 1;
+																				};
+
+																				$scope.range = function(
+																						input,
+																						total) {
+																					var ret = [];
+																					if (!total) {
+																						total = input;
+																						input = 0;
+																					}
+																					for (var i = input; i < total; i++) {
+																						if (i != 0
+																								&& i != total - 1) {
+																							ret
+																									.push(i);
+																						}
+																					}
+																					return ret;
+																				};
+
+																				$scope.resetcpcuser = function() {
+																					$(
+																							'#updatecpcDetails')
+																							.hide();
+																				}
+																				$scope.sort = function(
+																						sortBy) {
+																					$scope
+																							.resetAll();
+
+																					$scope.columnToOrder = sortBy;
+
+																					// $Filter
+																					// -
+																					// Standard
+																					// Service
+																					$scope.filteredList = $filter(
+																							'orderBy')
+																							(
+																									$scope.filteredList,
+																									$scope.columnToOrder,
+																									$scope.reverse);
+
+																					if ($scope.reverse)
+																						iconName = 'glyphicon glyphicon-chevron-up';
+																					else
+																						iconName = 'glyphicon glyphicon-chevron-down';
+
+																					if (sortBy === 'customerProgramId') {
+																						$scope.Header[0] = iconName;
+																					} else if (sortBy === 'customerName') {
+																						$scope.Header[1] = iconName;
+																					} else if (sortBy === 'customerProgramCode') {
+																						$scope.Header[2] = iconName;
+																					} else if (sortBy === 'customerProgramType') {
+																						$scope.Header[3] = iconName;
+																					} else if (sortBy === 'projects') {
+																						$scope.Header[4] = iconName;
+																					} else {
+																						$scope.Header[2] = iconName;
+																					}
+
+																					$scope.reverse = !$scope.reverse;
+
+																					$scope
+																							.pagination();
+																				};
+
+																				// By
+																				// Default
+																				// sort
+																				// ny
+																				// Name
+																				$scope
+																						.sort('name');
+
+																			},
+																			function myError(
+																					response) {
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
+																						.remove();
+																				console
+																						.log(response);
+																			});
+															swal(
+																	"Success",
+																	"Customer Program Code deleted successfully.)",
+																	"success");
+														},
+														function myError(
+																response) {
+															console
+																	.log(response);
+
+														});
+									} else {
+										swal("Cancelled",
+												"Request has been cancelled.)",
+												"error");
+									}
+								});
+
 					}
 					$scope.editcpcDetails = function(item) {
 
@@ -3127,10 +3148,10 @@ materialAdmin
 						$('#loading-bar-spinner').remove();
 						console.log(response);
 					});
-					$scope.resetcpc=function(){
-						$scope.customerProgCodeType='';
-						 $scope.customerprogName='';
-						$scope.customerId='';
+					$scope.resetcpc = function() {
+						$scope.customerProgCodeType = '';
+						$scope.customerprogName = '';
+						$scope.customerId = '';
 					}
 					$scope.createCPC = function() {
 						var cpcValidater = validateCPC(
@@ -5323,30 +5344,37 @@ materialAdmin
 											'authorization' : $window.sessionStorage
 													.getItem("AuthKey")
 										}
-									}).then(function mySucces(response) {
+									})
+									.then(
+											function mySucces(response) {
 
-								console.log(response.data);
-								swal({
-									title : "Project Added Successfully",
-									closeOnConfirm : false,
-									closeOnCancel : false
-								});
-								$scope.projectname = '';
-								$scope.customerproject = '';
-								$scope.projectstatus = '';
-								$scope.customerprogramcode = '';
-								$scope.departmentid = '';
-								$scope.projectCode = '';
-								$scope.country = '';
-								$scope.customers = '';
-								$scope.cpc = '';
+												console.log(response.data);
+												swal({
+													title : "Project Added Successfully",
+													closeOnConfirm : false,
+													closeOnCancel : false
+												});
+												$scope.projectname = '';
+												$scope.customerproject = '';
+												$scope.projectstatus = '';
+												$scope.customerprogramcode = '';
+												$scope.departmentid = '';
+												$scope.projectCode = '';
+												$scope.country = '';
+												$scope.customers = '';
+												$scope.cpc = '';
 
-							}, function myError(response) {
-								swal('error','Customer project code already exist','error');
-								$('#loading-bar').remove();
-								$('#loading-bar-spinner').remove();
-								console.log(response);
-							});
+											},
+											function myError(response) {
+												swal(
+														'error',
+														'Customer project code already exist',
+														'error');
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
 						} else {
 							$('html, body')
 									.animate(
@@ -7090,7 +7118,10 @@ materialAdmin
 
 											},
 											function myError(response) {
-												swal('error','Project code already exist .','error');
+												swal(
+														'error',
+														'Project code already exist .',
+														'error');
 												$('#loading-bar').remove();
 												$('#loading-bar-spinner')
 														.remove();
@@ -7510,7 +7541,8 @@ materialAdmin
 																});
 											},
 											function myError(response) {
-												swal("error",
+												swal(
+														"error",
 														"combination of three already exist. ",
 														"error");
 												$('#loading-bar').remove();
@@ -8398,7 +8430,8 @@ materialAdmin
 
 											},
 											function myError(response) {
-												swal("error",
+												swal(
+														"error",
 														"Role name already exist. ",
 														"error");
 												$('#loading-bar').remove();
@@ -8690,7 +8723,225 @@ materialAdmin
 										$('#loading-bar-spinner').remove();
 										console.log(response);
 									});
+					$scope.deleteDepartment = function(item) {
 
+						swal(
+								{
+									title : "Are you sure?",
+									text : "You will not be able to recover this Department !",
+									type : "warning",
+									showCancelButton : true,
+									confirmButtonColor : "#DD6B55",
+									confirmButtonText : "Yes, Delete it!",
+									cancelButtonText : "No, cancel it!",
+									closeOnConfirm : false,
+									closeOnCancel : false
+								},
+								function(isConfirm) {
+									if (isConfirm) {
+
+										var deletedepartment = $scope.webserviceshost
+												+ 'hr/department/delete/'
+												+ item.departmentId;
+
+										$http(
+												{
+													method : "POST",
+													url : deletedepartment,
+													headers : {
+														'XSRF-TOKEN' : $window.sessionStorage
+																.getItem("Access-Token"),
+														'authorization' : $window.sessionStorage
+																.getItem("AuthKey")
+													}
+												})
+												.then(
+														function mySucces(
+																response) {
+															var allusersURL = $scope.webserviceshost
+																	+ 'hr/department/all';
+															$http(
+																	{
+																		method : "GET",
+																		url : allusersURL,
+																		headers : {
+																			'XSRF-TOKEN' : $window.sessionStorage
+																					.getItem("Access-Token"),
+																			'authorization' : $window.sessionStorage
+																					.getItem("AuthKey")
+																		}
+																	})
+																	.then(
+																			function mySucces(
+																					response) {
+																				console
+																						.log(response.data);
+																				if (response != 'undefiend'
+																						&& response != "") {
+
+																					$scope.allUsers = response.data;
+																					$scope.pageSize = 30;
+																					$scope.allItems = $scope.allUsers;
+																					$scope.reverse = false;
+
+																					$scope.resetAll = function() {
+																						$scope.filteredList = $scope.allItems;
+																						$scope.departmentId = '';
+																						$scope.departmentCode = '';
+																						$scope.dpartmentName = '';
+																						$scope.parentDepartment = '';
+																						$scope.manager = '';
+																						$scope.searchText = '';
+																						$scope.currentPage = 0;
+																						$scope.Header = [
+																								'',
+																								'',
+																								'',
+																								'',
+																								'' ];
+																					}
+
+																					$scope.search = function() {
+																						$scope.filteredList = filteredListService
+																								.searched(
+																										$scope.allItems,
+																										$scope.searchText);
+
+																						if ($scope.searchText == '') {
+																							$scope.filteredList = $scope.allItems;
+																						}
+																						$scope
+																								.pagination();
+																					}
+
+																					// Calculate
+																					// Total
+																					// Number
+																					// of
+																					// Pages
+																					// based
+																					// on
+																					// Search
+																					// Result
+																					$scope.pagination = function() {
+																						$scope.ItemsByPage = filteredListService
+																								.paged(
+																										$scope.filteredList,
+																										$scope.pageSize);
+																					};
+
+																					$scope.setPage = function() {
+																						$scope.currentPage = this.n;
+																					};
+
+																					$scope.firstPage = function() {
+																						$scope.currentPage = 0;
+																					};
+
+																					$scope.lastPage = function() {
+																						$scope.currentPage = $scope.ItemsByPage.length - 1;
+																					};
+
+																					$scope.range = function(
+																							input,
+																							total) {
+																						var ret = [];
+																						if (!total) {
+																							total = input;
+																							input = 0;
+																						}
+																						for (var i = input; i < total; i++) {
+																							if (i != 0
+																									&& i != total - 1) {
+																								ret
+																										.push(i);
+																							}
+																						}
+																						return ret;
+																					};
+
+																					$scope.sort = function(
+																							sortBy) {
+																						$scope
+																								.resetAll();
+
+																						$scope.columnToOrder = sortBy;
+
+																						// $Filter
+																						// -
+																						// Standard
+																						// Service
+																						$scope.filteredList = $filter(
+																								'orderBy')
+																								(
+																										$scope.filteredList,
+																										$scope.columnToOrder,
+																										$scope.reverse);
+
+																						if ($scope.reverse)
+																							iconName = 'glyphicon glyphicon-chevron-up';
+																						else
+																							iconName = 'glyphicon glyphicon-chevron-down';
+
+																						if (sortBy === 'departmentCode') {
+																							$scope.Header[0] = iconName;
+																						} else if (sortBy === 'departmentName') {
+																							$scope.Header[1] = iconName;
+																						} else if (sortBy === 'parentDepartment') {
+																							$scope.Header[2] = iconName;
+																						} else if (sortBy === 'manager') {
+																							$scope.Header[3] = iconName;
+																						} else {
+																							$scope.Header[1] = iconName;
+																						}
+
+																						$scope.reverse = !$scope.reverse;
+
+																						$scope
+																								.pagination();
+																					};
+
+																					// By
+																					// Default
+																					// sort
+																					// ny
+																					// Name
+																					$scope
+																							.sort('name');
+
+																					// console.log($scope.allUsers.length);
+																				}
+																			},
+																			function myError(
+																					response) {
+																				$(
+																						'#loading-bar')
+																						.remove();
+																				$(
+																						'#loading-bar-spinner')
+																						.remove();
+																				console
+																						.log(response);
+																			})
+																			
+																			swal("success",
+																					"Department Deleted Successfully ..)",
+																					"success");
+														},
+														function myError(
+																response) {
+															console
+																	.log(response);
+
+														});
+									} else {
+										swal("Cancelled",
+												"Request has been cancelled.)",
+												"error");
+									}
+								});
+
+					}
 					$scope.editdepartmentDetails = function(item) {
 						$('#departmentupdatedetails').show();
 						$scope.departmentid = item.departmentId;
@@ -8956,7 +9207,10 @@ materialAdmin
 																	},
 																	function myError(
 																			response) {
-																		swal('error','department code already exist .','error');
+																		swal(
+																				'error',
+																				'department code already exist .',
+																				'error');
 																		$(
 																				'#loading-bar')
 																				.remove();
@@ -8972,8 +9226,11 @@ materialAdmin
 													}
 												},
 												function myError(response) {
-													swal('error','department code already exist .','error');
-													
+													swal(
+															'error',
+															'department code already exist .',
+															'error');
+
 													$('#loading-bar').remove();
 													$('#loading-bar-spinner')
 															.remove();
@@ -10688,7 +10945,10 @@ materialAdmin
 																},
 																function myError(
 																		response) {
-																	swal('error','costomer code already exist .','error');
+																	swal(
+																			'error',
+																			'costomer code already exist .',
+																			'error');
 																	$(
 																			'#loading-bar')
 																			.remove();
@@ -13148,125 +13408,175 @@ materialAdmin
 									}
 								});
 					}
-					/*
-					 * $scope.showDetails = function(sequence) { //
-					 * $window.location.path='headers.timesheet';
-					 * 
-					 * var timesheetDetail = $scope.webserviceshost +
-					 * 'hr/timesheet/detailsBySequence/' + sequence;
-					 * 
-					 * $http( { method : "GET", url : timesheetDetail, headers : {
-					 * 'XSRF-TOKEN' : $window.sessionStorage
-					 * .getItem("Access-Token"), 'authorization' :
-					 * $window.sessionStorage .getItem("AuthKey") } }) .then(
-					 * function mySucces(response) {
-					 * 
-					 * if (response != 'undefiend' && response != "") {
-					 * 
-					 * $scope.timesheetfullDetails = response.data;
-					 * $scope.employeetimesheetid =
-					 * $scope.timesheetfullDetails.employeeId;
-					 * $scope.timesheetcomments =
-					 * $scope.timesheetfullDetails.comments;
-					 * $scope.timesheetweekstart =
-					 * $scope.timesheetfullDetails.startDateOfWeek;
-					 * $scope.timesheetweekend =
-					 * $scope.timesheetfullDetails.endDateOfWeek;
-					 * $scope.timesheettimesheets =
-					 * $scope.timesheetfullDetails.timesheets;
-					 * console.log(response);
-					 * 
-					 * $scope.timeSheetDetails = response.data;
-					 * $scope.timesheetcomments =
-					 * $scope.timeSheetDetails.comments; $scope.weekDays = {};
-					 * $scope.tasks = []; $scope.weekDaysHR = { "dates" : {},
-					 * 'totalHours' : 0 }; $scope.dayName = [ 'Sun', 'Mon',
-					 * 'Tue', 'Wed', 'Thu', 'Fri', 'Sat' ]; if
-					 * ($scope.timeSheetDetails &&
-					 * $scope.timeSheetDetails.startDateOfWeek &&
-					 * $scope.timeSheetDetails.endDateOfWeek) { var weekStart =
-					 * new Date( $scope.timeSheetDetails.startDateOfWeek); var
-					 * weekEnd = new Date(
-					 * $scope.timeSheetDetails.endDateOfWeek); var startDate =
-					 * new Date( $scope.timeSheetDetails.startDateOfWeek); var
-					 * count = 0;
-					 * 
-					 * var totalDays= new Date(weekStart.fullYear(),
-					 * weekStart.getMonth(), 0) .getDate();
-					 * 
-					 * for (var i = weekStart .getDate('dd'); i <= weekEnd
-					 * .getDate('dd'); i++) { $scope.weekDays[(i < 10 ? '0' + i :
-					 * i) + '-' + ((weekStart .getMonth() + 1) < 10 ? '0' +
-					 * (weekStart .getMonth() + 1) : weekStart .getMonth() + 1) +
-					 * '-' + weekStart .getFullYear()] = { date : (i < 10 ? '0' +
-					 * i : i), day : $scope.dayName[new Date( startDate
-					 * .setDate(weekStart .getDate() + count)) .getDay()] };
-					 * 
-					 * count++; } $ .each( $scope.timeSheetDetails.timesheets,
-					 * function( index, value) { var taskObj = { "dates" : {},
-					 * 'totalHours' : 0 }; $ .each( $scope.weekDays, function(
-					 * dateIndex, dateValue) { var taskDetails = $filter(
-					 * 'filter') ( value, { 'timesheetDate' : dateIndex },
-					 * true);
-					 * 
-					 * if (taskDetails.length > 0 && (taskObj.taskId ==
-					 * undefined || taskObj.taskId == null || taskObj.taskId ==
-					 * '')) { taskObj['customerId'] = taskDetails[0].customerId;
-					 * taskObj['customerName'] = taskDetails[0].customerName;
-					 * taskObj['customerProgramId'] =
-					 * taskDetails[0].customerProgramId;
-					 * taskObj['customerProgramCode'] =
-					 * taskDetails[0].customerProgramCode;
-					 * taskObj['customerProgramType'] =
-					 * taskDetails[0].customerProgramType;
-					 * taskObj['departmentId'] = taskDetails[0].departmentId;
-					 * taskObj['projectId'] = taskDetails[0].projectId;
-					 * taskObj['projectName'] = taskDetails[0].projectName;
-					 * taskObj['projectType'] = taskDetails[0].projectType;
-					 * taskObj['taskId'] = taskDetails[0].taskId;
-					 * taskObj['taskName'] = taskDetails[0].taskName; }
-					 * 
-					 * taskObj.totalHours = parseInt(taskObj.totalHours) +
-					 * (taskDetails[0] ? parseInt(taskDetails[0].hours) : 0);
-					 * taskObj.dates[dateIndex] = taskDetails[0] ?
-					 * taskDetails[0].hours : '';
-					 * $scope.weekDaysHR.dates[dateIndex] =
-					 * ($scope.weekDaysHR.dates[dateIndex] == undefined ||
-					 * $scope.weekDaysHR.dates[dateIndex] == '' ||
-					 * $scope.weekDaysHR.dates[dateIndex] == null ? 0 :
-					 * parseInt($scope.weekDaysHR.dates[dateIndex])) +
-					 * (taskObj.dates[dateIndex] == undefined ||
-					 * taskObj.dates[dateIndex] == '' ||
-					 * taskObj.dates[dateIndex] == null ? 0 :
-					 * parseInt(taskObj.dates[dateIndex])); });
-					 * $scope.weekDaysHR.totalHours =
-					 * parseInt($scope.weekDaysHR.totalHours) +
-					 * parseInt(taskObj.totalHours); $scope.tasks
-					 * .push(taskObj); // console.log($scope.weekDaysHR); }); } } })
-					 * console.log($scope.THSEmployeeID, $scope.THSWStartDate,
-					 * $scope.THSWEndDate); // var modalInstance =
-					 * $uibModal.open({ // templateUrl :
-					 * 'views/timesheetDetails.html', // controller :
-					 * 'timesheethistoryDetails', // scope: $scope, // keyboard :
-					 * false, // resolve : { // userData : function() { // var x = { //
-					 * 'employeeid' : employeeid, // 'startDate' : argStart, //
-					 * 'endDate' : argEnd // } // return x; // } // } // });
-					 * 
-					 * 
-					 * return { restrict: 'E', link: function(scope, element,
-					 * attrs) { // some ode }, templateUrl: function(elem,attrs) {
-					 * return attrs.templateUrl || 'view/timesheet.html' } }
-					 * 
-					 * 
-					 * var modalInstance = $uibModal.open({ templateUrl :
-					 * 'views/timesheetDetails.html', controller :
-					 * 'timesheethistoryDetails', backdrop : 'static', keyboard :
-					 * false, resolve : { userData : function() { var x = {
-					 * 'employeeid' : employeeid, 'startDate' : argStart,
-					 * 'endDate' : argEnd } return x; } } });
-					 * modalInstance.result.then(function(selectedItem) {
-					 * $scope.selected = selectedItem; }) }
-					 */
+
+					$scope.THSEmployeeID = '';
+					$scope.THSWStartDate = '';
+					$scope.THSWEndDate = '';
+
+					$scope.showDetails = function(sequence) {
+						// $window.location.path='headers.timesheet';
+						var timesheetDetail = $scope.webserviceshost
+								+ 'hr/timesheet/detailsBySequence/' + sequence;
+
+						$http(
+								{
+									method : "GET",
+									url : timesheetDetail,
+									headers : {
+										'XSRF-TOKEN' : $window.sessionStorage
+												.getItem("Access-Token"),
+										'authorization' : $window.sessionStorage
+												.getItem("AuthKey")
+									}
+								})
+								.then(
+										function mySucces(response) {
+
+											if (response != 'undefiend'
+													&& response != "") {
+												/*
+												 * $scope.timesheetfullDetails =
+												 * response.data;
+												 * $scope.employeetimesheetid =
+												 * $scope.timesheetfullDetails.employeeId;
+												 * $scope.timesheetcomments =
+												 * $scope.timesheetfullDetails.comments;
+												 * $scope.timesheetweekstart =
+												 * $scope.timesheetfullDetails.startDateOfWeek;
+												 * $scope.timesheetweekend =
+												 * $scope.timesheetfullDetails.endDateOfWeek;
+												 * $scope.timesheettimesheets =
+												 * $scope.timesheetfullDetails.timesheets;
+												 * console.log(response);
+												 */
+												$scope.timeSheetDetails = response.data;
+												$scope.timesheetcomments = $scope.timeSheetDetails.comments;
+												$scope.weekDays = {};
+												$scope.tasks = [];
+												$scope.weekDaysHR = {
+													"dates" : {},
+													'totalHours' : 0
+												};
+												$scope.dayName = [ 'Sun',
+														'Mon', 'Tue', 'Wed',
+														'Thu', 'Fri', 'Sat' ];
+												if ($scope.timeSheetDetails
+														&& $scope.timeSheetDetails.startDateOfWeek
+														&& $scope.timeSheetDetails.endDateOfWeek) {
+													var weekStart = new Date(
+															$scope.timeSheetDetails.startDateOfWeek);
+
+													for (var i = 0; i <= 6; i++) {
+														var weekKey = new Date(
+																weekStart
+																		.getTime()
+																		+ i
+																		* 24
+																		* 60
+																		* 60
+																		* 1000); // weekKey.setDate(weekStart.getDate()+i);
+
+														var weekDate = weekKey
+																.getDate() < 10 ? '0'
+																+ weekKey
+																		.getDate()
+																: weekKey
+																		.getDate();
+														var weekMonth = weekKey
+																.getMonth() + 1 < 10 ? '0'
+																+ parseInt(weekKey
+																		.getMonth() + 1)
+																: weekKey
+																		.getMonth() + 1;
+														var weekYear = weekKey
+																.getFullYear();
+
+														$scope.weekDays[weekDate
+																+ '-'
+																+ weekMonth
+																+ '-'
+																+ weekYear] = {
+															date : weekDate,
+															day : $scope.dayName[weekKey
+																	.getDay()]
+														};
+
+														console.log(weekDate,
+																weekMonth,
+																weekYear);
+													}
+
+													$
+															.each(
+																	$scope.timeSheetDetails.timesheets,
+																	function(
+																			index,
+																			value) {
+																		var taskObj = {
+																			"dates" : {},
+																			'totalHours' : 0
+																		};
+																		$
+																				.each(
+																						$scope.weekDays,
+																						function(
+																								dateIndex,
+																								dateValue) {
+
+																							// console.log(dateIndex,
+																							// dateValue);
+																							var taskDetails = $filter(
+																									'filter')
+																									(
+																											value,
+																											{
+																												'timesheetDate' : dateIndex
+																											},
+																											true);
+
+																							if (taskDetails.length > 0
+																									&& (taskObj.taskId == undefined
+																											|| taskObj.taskId == null || taskObj.taskId == '')) {
+																								// console.log(taskDetails);
+																								taskObj['customerId'] = taskDetails[0].customerId;
+																								taskObj['customerName'] = taskDetails[0].customerName;
+																								taskObj['customerProgramId'] = taskDetails[0].customerProgramId;
+																								taskObj['customerProgramCode'] = taskDetails[0].customerProgramCode;
+																								taskObj['customerProgramType'] = taskDetails[0].customerProgramType;
+																								taskObj['departmentId'] = taskDetails[0].departmentId;
+																								taskObj['projectId'] = taskDetails[0].projectId;
+																								taskObj['projectName'] = taskDetails[0].projectName;
+																								taskObj['projectType'] = taskDetails[0].projectType;
+																								taskObj['taskId'] = taskDetails[0].taskId;
+																								taskObj['taskName'] = taskDetails[0].taskName;
+																							}
+
+																							taskObj.totalHours = parseInt(taskObj.totalHours)
+																									+ (taskDetails[0] ? parseInt(taskDetails[0].hours)
+																											: 0);
+																							taskObj.dates[dateIndex] = taskDetails[0] ? taskDetails[0].hours
+																									: '';
+																							$scope.weekDaysHR.dates[dateIndex] = ($scope.weekDaysHR.dates[dateIndex] == undefined
+																									|| $scope.weekDaysHR.dates[dateIndex] == ''
+																									|| $scope.weekDaysHR.dates[dateIndex] == null ? 0
+																									: parseInt($scope.weekDaysHR.dates[dateIndex]))
+																									+ (taskObj.dates[dateIndex] == undefined
+																											|| taskObj.dates[dateIndex] == ''
+																											|| taskObj.dates[dateIndex] == null ? 0
+																											: parseInt(taskObj.dates[dateIndex]));
+																						});
+																		$scope.weekDaysHR.totalHours = parseInt($scope.weekDaysHR.totalHours)
+																				+ parseInt(taskObj.totalHours);
+																		$scope.tasks
+																				.push(taskObj);
+																		// console.log($scope.weekDaysHR);
+																	});
+												}
+
+											}
+										})
+					}
+
 				})
 		.controller(
 				'timesheethistoryDetails',
