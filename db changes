@@ -1,0 +1,19 @@
+alter table Department add column (status char(1) default 'Y');
+alter table Project add column (status char(1) default 'Y');
+alter table Task add column (status char(1) default 'Y');
+alter table Role add column (status char(1) default 'Y');
+alter table Customer add column (status char(1) default 'Y');
+alter table CustomerProgramCode add column (status char(1) default 'Y');
+
+--Update all the values to Y 
+update Department set status = 'Y';
+update Project set status = 'Y';
+update Task set status = 'Y';
+update Role set status = 'Y';
+update Customer set status = 'Y';
+update CustomerProgramCode set status = 'Y';
+
+alter table EmployeeLeaveApplied modify noOfDays float(1);
+alter table EmployeeLeaveBalance modify pendingApproval float(1);
+alter table EmployeeLeaveBalance modify eligible float(1);
+alter table LeaveMaster modify annualEligibility float(1);
