@@ -94,7 +94,7 @@ public class TimesheetReport implements Serializable{
 	private String taskName;
 	
 	@Column(name = "billedHours")
-	private Integer billedHours;
+	private Float billedHours;
 	
 	@Column(name = "timesheetStatus")
 	private String timesheetStatus;
@@ -308,11 +308,11 @@ public class TimesheetReport implements Serializable{
 		this.taskName = taskName;
 	}
 
-	public Integer getBilledHours() {
+	public Float getBilledHours() {
 		return billedHours;
 	}
 
-	public void setBilledHours(Integer billedHours) {
+	public void setBilledHours(Float billedHours) {
 		this.billedHours = billedHours;
 	}
 

@@ -88,3 +88,5 @@ alter table EmployeeLeaveBalance modify pendingApproval float(1);
 alter table EmployeeLeaveBalance modify eligible float(1);
 alter table LeaveMaster modify annualEligibility float(1);
 
+alter table timesheet modify taskHours float(1);
+

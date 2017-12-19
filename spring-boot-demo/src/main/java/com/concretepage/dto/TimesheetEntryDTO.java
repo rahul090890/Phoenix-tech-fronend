@@ -33,7 +33,7 @@ public class TimesheetEntryDTO implements Serializable{
 	
 	private String taskId;
 	private String taskName;
-	private int hours;
+	private Float hours;
 	private String date;
 	private String timesheetStatus;
 	private String timesheetDate;
@@ -70,10 +70,10 @@ public class TimesheetEntryDTO implements Serializable{
 	public void setTaskId(String taskId) {
 		this.taskId = taskId;
 	}
-	public int getHours() {
+	public Float getHours() {
 		return hours;
 	}
-	public void setHours(int hours) {
+	public void setHours(Float hours) {
 		this.hours = hours;
 	}
 	public String getDate() {

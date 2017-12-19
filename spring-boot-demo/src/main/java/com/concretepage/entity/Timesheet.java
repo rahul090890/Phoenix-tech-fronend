@@ -87,7 +87,7 @@ public class Timesheet implements Serializable{
 	private String timesheetdate;
 	
 	@Column(name = "taskHours")
-	private Integer taskHours;
+	private Float taskHours;
 	
 	@Column(name = "timesheetStatus")
 	private String timesheetStatus;
@@ -300,11 +300,11 @@ public class Timesheet implements Serializable{
 		this.timesheetdate = timesheetdate;
 	}
 
-	public Integer getTaskHours() {
+	public Float getTaskHours() {
 		return taskHours;
 	}
 
-	public void setTaskHours(Integer taskHours) {
+	public void setTaskHours(Float taskHours) {
 		this.taskHours = taskHours;
 	}
 
