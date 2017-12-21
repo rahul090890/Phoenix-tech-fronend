@@ -92,8 +92,9 @@ public class TimesheetController {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	@PostMapping("update/{json}")
-	public ResponseEntity<List<TimesheetSummary>> updateTimesheet(@PathVariable("json") String json) throws HRException {
+	@PostMapping("update/{timesheetSequence}/{json}")
+	public ResponseEntity<List<TimesheetSummary>> updateTimesheet(@PathVariable("timesheetSequence") String timesheetSequence, 
+												@PathVariable("json") String json) throws HRException {
 		log.info("Input JSON for  updating timesheet " + json);
 		ObjectMapper mapper = new ObjectMapper();
 		TimesheetDTO dto = null;
@@ -106,7 +107,7 @@ public class TimesheetController {
 		}
 		
 		List<Timesheet> timesheets = toTimesheet(dto);
-		timesheetService.updateTimesheet(timesheets);
+		timesheetService.updateTimesheet(Long.parseLong(timesheetSequence), timesheets);
 		log.info("Successfully updated timesheet " + dto.getEmployeeId() + "for the starting week " + dto.getStartDateOfWeek());
 		List<TimesheetSummary> timesheetSummary = timesheetService.getTimesheetSummary(Integer.parseInt(dto.getEmployeeId()), DateUtils.startDateOfCurrentMonthAsString(), DateUtils.lastDateOfCurrentMonthAsString());
 			

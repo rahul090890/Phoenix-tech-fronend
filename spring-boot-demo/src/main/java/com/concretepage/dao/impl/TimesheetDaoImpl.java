@@ -122,6 +122,15 @@ public class TimesheetDaoImpl implements ITimesheetDao {
 		query.setParameter(1, timesheetSequence);
 		return (List<Timesheet>)query.getResultList();
 	}
+	@Override
+	public void deleteTimesheetBySequenceId(Long timesheetSequence) {
+		String hql = "delete from Timesheet t where t.timesheetSequence = ? ";
+		Query query = entityManager.createNativeQuery(hql);
+		query.setParameter(1, timesheetSequence);
+		
+		query.executeUpdate();
+		
+	}
 	
 
 }

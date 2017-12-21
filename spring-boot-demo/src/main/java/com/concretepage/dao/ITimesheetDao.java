@@ -24,5 +24,7 @@ public interface ITimesheetDao {
 	
 	List<Timesheet> getTimesheetsBySequence(long timesheetSequence);
 	
+	void deleteTimesheetBySequenceId(Long timesheetSequence);
+	
 	
 }

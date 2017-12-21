@@ -11,7 +11,7 @@ public interface ITimesheetService {
 	
 	void saveTimesheet(List<Timesheet> timesheets) throws HRException;
 	
-	void updateTimesheet(List<Timesheet> timesheets) throws HRException ;
+	void updateTimesheet(Long timesheetSequence, List<Timesheet> timesheets) throws HRException ;
 	
 	List<TimesheetSummary> getTimesheetSummary(Integer employeeId, String startDate, String endDate);
 	

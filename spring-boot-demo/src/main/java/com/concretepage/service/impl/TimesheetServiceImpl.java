@@ -50,12 +50,13 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
 
 	@Override
-	public void updateTimesheet(List<Timesheet> timesheets) throws HRException {
+	public void updateTimesheet(Long timesheetSequence, List<Timesheet> timesheets) throws HRException {
+		
+		
 		Timesheet temptimesheet = timesheets.get(0);
 		log.info("Deleting the timesheet for the employee " + temptimesheet.getEmployeeId() + "for starting week"
-				+ temptimesheet.getWeekStartDate());
-		timesheetDao.deleteTimesheet(temptimesheet.getEmployeeId(), temptimesheet.getWeekStartDate(),
-				temptimesheet.getWeekEndDate());
+				+ temptimesheet.getWeekStartDate() + "with sequence no" + timesheetSequence);
+		timesheetDao.deleteTimesheetBySequenceId(timesheetSequence);
 		saveTimesheet(timesheets);
 	}
 
