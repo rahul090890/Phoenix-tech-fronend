@@ -32,6 +32,7 @@ public class TimesheetDTO implements Serializable{
 	//Map<TaskId --> List of TimesheetEntryDTO
 	private Map<String, List<TimesheetEntryDTO>> timesheets = new HashMap<String,List<TimesheetEntryDTO>>();
 	private String comments;
+	private String managerComments;
 	
 	
 	public TimesheetDTO() {
@@ -141,6 +142,17 @@ public class TimesheetDTO implements Serializable{
 	public void setManagerEmailId(String managerEmailId) {
 		this.managerEmailId = managerEmailId;
 	}
+
+
+	public String getManagerComments() {
+		return managerComments;
+	}
+
+
+	public void setManagerComments(String managerComments) {
+		this.managerComments = managerComments;
+	}
+	
 	
 	
 	

@@ -24,8 +24,10 @@ public class TimesheetEntryDTO implements Serializable{
 	private String customerProgramId;
 	private String customerProgramCode;
 	private String customerProgramType;
-	
+	//this is department code
 	private String departmentId;
+	
+	private long userDepartmentId;
 	
 	private String projectId;
 	private String projectName;
@@ -150,6 +152,17 @@ public class TimesheetEntryDTO implements Serializable{
 
 	public void setProjectType(String projectType) {
 		this.projectType = projectType;
+	}
+	
+	
+	
+
+	public long getUserDepartmentId() {
+		return userDepartmentId;
+	}
+
+	public void setUserDepartmentId(long userDepartmentId) {
+		this.userDepartmentId = userDepartmentId;
 	}
 
 	@Override

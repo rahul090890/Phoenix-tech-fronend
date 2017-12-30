@@ -64,7 +64,7 @@ public class Timesheet implements Serializable{
 	
 	@Column(name = "customerProgramType")
 	private String customerProgramType;
-	
+	// this department code
 	@Column(name = "departmentId")
 	private String departmentId ;
 	
@@ -121,6 +121,24 @@ public class Timesheet implements Serializable{
 	
 	@Column(name = "timesheetSequence")
 	private long timesheetSequence;
+	
+	//this is acutal departmentId of the department
+	@Column(name = "userDepartmentId")
+	private long userDepartmentId;
+	
+	
+	public String getManagerComments() {
+		return managerComments;
+	}
+
+	public void setManagerComments(String managerComments) {
+		this.managerComments = managerComments;
+	}
+
+	@Column(name = "managerComments")
+	private String managerComments;
+
+	
 
 	public long getTimesheetSequence() {
 		return timesheetSequence;
@@ -387,6 +405,16 @@ public class Timesheet implements Serializable{
 
 	public void setUpdatedTimeStamp(Date updatedTimeStamp) {
 		this.updatedTimeStamp = updatedTimeStamp;
+	}
+	
+
+
+	public long getUserDepartmentId() {
+		return userDepartmentId;
+	}
+
+	public void setUserDepartmentId(long userDepartmentId) {
+		this.userDepartmentId = userDepartmentId;
 	}
 
 	@Override

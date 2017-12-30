@@ -90,3 +90,51 @@ alter table LeaveMaster modify annualEligibility float(1);
 
 alter table timesheet modify taskHours float(1);
 
+alter table timesheet add column(managerComments varchar(1000);
+alter table timesheet add column(userDepartmentId int);
+
+
+drop view if exists timesheet_reports;
+create view timesheet_reports as (
+select 
+t.weekStartDate as weekStartDate,
+t.weekEndDate as weekEndDate,
+t.employeeId as employeeId,
+e.employeeCode as employeeCode,
+e.firstName as firstName,
+e.lastName as lastName,
+e.employeeType as employeeType,
+e.emailId as employeeEmail,
+t.managerId as approverId,
+t.managerName as approverName,
+t.customerId as customerId,
+t.customerName as customerName,
+c.customerCode as customerCode,
+t.customerProgramId as customerProgramId,
+t.customerProgramCode as customerProgramCode,
+t.customerProgramType as customerProgramType,
+t.departmentId as departmentId,
+d.departmentCode as departmentCode,
+d.departmentName as departmentName,
+t.projectId as projectId,
+p.projectCode as projectCode,
+t.projectName as projectName,
+t.projectType as projectType,
+t.taskid as taskId,
+t.taskName as taskName,
+t.timesheetdate as timesheetDate,
+t.taskHours as billedHours,
+t.timesheetStatus as timesheetStatus,
+t.comments as comments,
+t.managerComments as managerComments,
+t.createdDate as timesheetSubmittedDate
+from timesheet t , employee e, customer c, customerprogramcode cp, department d, project p, task ta
+where t.employeeId = e.employeeId and
+t.customerId = c.customerId and
+t.customerProgramId = cp.customerProgramId and
+t.departmentId = d.departmentId and
+t.projectId = p.projectId and
+t.taskid = ta.taskId
+);
+
+

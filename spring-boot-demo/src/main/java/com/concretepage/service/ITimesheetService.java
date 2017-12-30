@@ -19,9 +19,9 @@ public interface ITimesheetService {
 	
 	List<TimesheetSummary> getTimesheetsForApproval(Integer managerId);
 	
-	void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
+	void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate, String managerComments);
 	
-	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
+	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate,String managerComments);
 	
 	TimesheetDTO getTimesheetDetails(long timesheetSequence) throws HRException;
 	

@@ -105,6 +105,9 @@ public class TimesheetReport implements Serializable{
 	@Column(name = "timesheetSubmittedDate")
 	private String timesheetSubmittedDate;
 	
+	@Column(name = "managerComments")
+	private String managerComments;
+	
 	@Transient
 	private String timesheetDate;
 	
@@ -347,6 +350,16 @@ public class TimesheetReport implements Serializable{
 	public void setTimesheetDate(String timesheetDate) {
 		this.timesheetDate = timesheetDate;
 	}
+
+	public String getManagerComments() {
+		return managerComments;
+	}
+
+	public void setManagerComments(String managerComments) {
+		this.managerComments = managerComments;
+	}
+	
+	
 
 	
 	

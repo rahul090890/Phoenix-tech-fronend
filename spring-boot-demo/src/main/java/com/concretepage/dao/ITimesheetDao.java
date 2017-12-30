@@ -16,9 +16,9 @@ public interface ITimesheetDao {
 	
 	List<Timesheet> getTimesheetsForAWeek(Integer employeeId, String weekStartDate, String weekEndDate);
 	
-	void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
+	void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate, String managerComments);
 	
-	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
+	void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate , String managerComments);
 	
 	void deleteTimesheet(Integer employeeId, String weekStartDate, String weekEndDate);
 	

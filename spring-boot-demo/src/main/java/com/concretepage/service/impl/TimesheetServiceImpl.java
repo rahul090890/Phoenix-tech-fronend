@@ -82,14 +82,14 @@ public class TimesheetServiceImpl implements ITimesheetService {
 	}
 
 	@Override
-	public void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate) {
-		timesheetDao.approveTimesheet(employeeId, weekStartDate, weekEndDate);
+	public void approveTimesheet(Integer employeeId, String weekStartDate, String weekEndDate,  String managerComments) {
+		timesheetDao.approveTimesheet(employeeId, weekStartDate, weekEndDate,managerComments);
 
 	}
 
 	@Override
-	public void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate) {
-		timesheetDao.rejectTimesheet(employeeId, weekStartDate, weekEndDate);
+	public void rejectTimesheet(Integer employeeId, String weekStartDate, String weekEndDate ,  String managerComments) {
+		timesheetDao.rejectTimesheet(employeeId, weekStartDate, weekEndDate,managerComments);
 
 	}
 	
@@ -165,6 +165,7 @@ public class TimesheetServiceImpl implements ITimesheetService {
 		dto.setCustomerProgramType(timesheet.getCustomerProgramType());
 		
 		dto.setDepartmentId(timesheet.getDepartmentId());
+		dto.setUserDepartmentId(timesheet.getUserDepartmentId());
 				
 		dto.setProjectId(timesheet.getProjectId() + "");
 		dto.setProjectName(timesheet.getProjectName());

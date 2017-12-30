@@ -176,14 +176,15 @@ public class TimesheetController {
 		
 	}
 	
-	@PostMapping("approve/{employeeId}/{weekstartDate}/{weekendDate}")
+	@PostMapping("approve/{employeeId}/{weekstartDate}/{weekendDate}/{managerComments}")
 	public ResponseEntity<Void> approveTimesheet(
 			@PathVariable("employeeId") String employeeId,
 			@PathVariable("weekstartDate") String weekStartDate,
-			@PathVariable("weekendDate") String weekEndDate
+			@PathVariable("weekendDate") String weekEndDate,
+			@PathVariable("managerComments") String managerComments
 			) {
 		log.info("Approving the timesheet for the employee " + employeeId + " for the starting week " + weekStartDate);
-		timesheetService.approveTimesheet(Integer.parseInt(employeeId), weekStartDate, weekEndDate);
+		timesheetService.approveTimesheet(Integer.parseInt(employeeId), weekStartDate, weekEndDate,managerComments);
 		log.info(" Successfully Approved the timesheet for the employee " + employeeId + " for the starting week " + weekStartDate);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		
@@ -193,10 +194,11 @@ public class TimesheetController {
 	public ResponseEntity<Void> rejectTimesheet(
 			@PathVariable("employeeId") String employeeId,
 			@PathVariable("weekstartDate") String weekStartDate,
-			@PathVariable("weekendDate") String weekEndDate
+			@PathVariable("weekendDate") String weekEndDate,
+			@PathVariable("managerComments") String managerComments
 			) {
 		log.info("Rejecting the timesheet for the employee " + employeeId + "starting week " + weekStartDate);
-		timesheetService.rejectTimesheet(Integer.parseInt(employeeId), weekStartDate, weekEndDate);
+		timesheetService.rejectTimesheet(Integer.parseInt(employeeId), weekStartDate, weekEndDate,managerComments);
 		log.info("Rejected the timesheet for the employee " + employeeId + "starting week " + weekStartDate);
 		return new ResponseEntity<Void>(HttpStatus.OK);
 		
@@ -254,6 +256,7 @@ public class TimesheetController {
 		timesheet.setCustomerProgramType(customerProgram.getCustomerProgramType());
 		Department department = departmentService.getDepartmentById(Integer.parseInt((entryDTO.getDepartmentId())));
 		timesheet.setDepartmentId(department.getDepartmentCode());
+		timesheet.setUserDepartmentId(Long.parseLong(entryDTO.getDepartmentId()));
 		
 		timesheet.setProjectId(Integer.parseInt(entryDTO.getProjectId()));
 		Project project = projectService.findProjectById(timesheet.getProjectId());
