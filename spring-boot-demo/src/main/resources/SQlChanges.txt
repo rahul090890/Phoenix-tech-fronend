@@ -137,4 +137,4 @@ t.projectId = p.projectId and
 t.taskid = ta.taskId
 );
 
-
+update timesheet set userDepartmentId = substring_index(departmentId, '-', 1)  where timesheetId > 0;

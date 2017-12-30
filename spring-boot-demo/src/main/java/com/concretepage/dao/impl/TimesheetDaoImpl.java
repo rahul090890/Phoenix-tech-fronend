@@ -126,7 +126,7 @@ public class TimesheetDaoImpl implements ITimesheetDao {
 	}
 	@Override
 	public void deleteTimesheetBySequenceId(Long timesheetSequence) {
-		String hql = "delete from Timesheet t where t.timesheetSequence = ? ";
+		String hql = "delete from timesheet  where timesheetSequence = ? ";
 		Query query = entityManager.createNativeQuery(hql);
 		query.setParameter(1, timesheetSequence);
 		
