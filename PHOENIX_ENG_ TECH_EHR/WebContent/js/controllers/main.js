@@ -452,8 +452,656 @@ materialAdmin
 					$scope.format = $scope.formats[2];
 					$scope.changeweekselected = function() {
 						$('#downcontent').show();
-						$scope.totalhourhead={};
-						$scope.weekTotal='';
+						$scope.totalhourhead = {};
+						$scope.weekTotal = '';
+						$scope.rowTotals = [];
+						$scope.colTotals = [ 0, 0, 0, 0, 0, 0, 0 ];
+						var startdate = $scope.dtPopup;
+						var date2 = new Date(startdate);
+
+						Date.prototype.addDays = function(days) {
+							var dat = new Date(this.valueOf());
+							dat.setDate(dat.getDate() + days);
+							return dat;
+						}
+
+						var dat = startdate
+						var date1 = dat.addDays(6);// new Date(enddate);
+						$scope.dtPopup1 = date1;
+
+						if (startdate > date1) {
+							swal("Error",
+									"From date should be less than to date.)",
+									"error");
+							return;
+						}
+
+						if (date2.getDay() != 1 || date1.getDay() != 0) {
+							swal(
+									"Error",
+									"Starte date should be selected as monday and end date should be seleted as sunday )",
+									"error");
+							return;
+						}
+						var startyyyy = date2.getFullYear();
+						var startdd = date2.getDate();
+						var startmm = date2.getMonth() + 1;
+						var endyyyy = date1.getFullYear();
+						var enddd = date1.getDate();
+						var totalNoOfDays = new Date(startyyyy, startmm, 0)
+								.getDate();
+						var endmm = date1.getMonth() + 1;
+						;
+						if (startdd < 10) {
+							startdd = '0' + startdd;
+						}
+						if (startmm < 10) {
+							startmm = '0' + startmm;
+						}
+						if (enddd < 10) {
+							enddd = '0' + enddd;
+						}
+						if (endmm < 10) {
+							endmm = '0' + endmm;
+						}
+
+						$scope.start = startyyyy + '-' + startmm + '-'
+								+ startdd;
+						$scope.end = endyyyy + '-' + endmm + '-' + enddd;
+						$scope.weeksdetails = "selected week as "
+								+ $filter('date')($scope.start, "dd-MMM-yyyy")
+								+ "  to  "
+								+ $filter('date')($scope.end, "dd-MMM-yyyy");
+						var weeksdetails = [ 'MON', 'TUE', 'WED', 'THU', 'FRI',
+								'SAT', 'SUN' ];
+
+						var weekday = [];
+						for (var x = 0; x < 7; x++) {
+
+							if (startdd > totalNoOfDays) {
+								startdd = 1;
+								startmm = startmm + 1;
+								if (startmm > 12) {
+									startmm = 1;
+								}
+							}
+							var dateandDay = {
+								'day' : "",
+								'date' : ""
+							};
+							dateandDay.day = startdd + '(' + weeksdetails[x]
+									+ ')'
+							dateandDay.date = startdd + '-' + startmm + '-'
+									+ startyyyy;
+							weekday.push(dateandDay);
+							startdd++;
+						}
+						$scope.weekdays = weekday;
+						$scope.totalhourhead = "Total hours";
+						$scope.daydetails = {};
+						$scope.task = {};
+					}
+					debugger;
+					var employeeid = $window.sessionStorage
+							.getItem("EmployeeId");
+					;
+					var employeeDetails = $scope.webserviceshost
+							+ 'hr/employee/find/' + employeeid;
+					var customeDetails = $scope.webserviceshost
+							+ 'hr/customer/all/';
+					var departments = $scope.webserviceshost
+							+ 'hr/department/all';
+
+					var allcpc = $scope.webserviceshost
+							+ "hr/customerProgram/all";
+					/*
+					 * var allproject = $scope.webserviceshost +
+					 * 'hr/project/all';
+					 */
+					$scope.fillProject = function(task, divindex) {
+
+						console.log(task);
+						var customer = task[divindex].customer;
+						var department = task[divindex].department;
+						console.log(customer + "   " + department);
+						if (customer && department) {
+							var allproject = $scope.webserviceshost
+									+ 'hr/project/find/' + customer + '/'
+									+ department;
+							$http(
+									{
+										method : "GET",
+										url : allproject,
+										headers : {
+											'XSRF-TOKEN' : $window.sessionStorage
+													.getItem("Access-Token"),
+											'authorization' : $window.sessionStorage
+													.getItem("AuthKey")
+										}
+									})
+									.then(
+											function mySucces(response) {
+												$scope.projects[divindex] = response.data;
+												if ($scope.projects[divindex].length == 0) {
+													swal(
+															'error',
+															'No project mapped with current selection',
+															'error')
+												}
+											},
+											function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
+							var taskdata = $scope.webserviceshost
+									+ 'hr/task/find/' + customer + '/'
+									+ department;
+							$http(
+									{
+										method : "GET",
+										url : taskdata,
+										headers : {
+											'XSRF-TOKEN' : $window.sessionStorage
+													.getItem("Access-Token"),
+											'authorization' : $window.sessionStorage
+													.getItem("AuthKey")
+										}
+									})
+									.then(
+											function mySucces(response) {
+
+												$scope.tasks[divindex] = response.data;
+												if ($scope.tasks[divindex].length == 0) {
+													swal(
+															'error',
+															'No Task mapped with current selection',
+															'error')
+												}
+											},
+											function myError(response) {
+												$('#loading-bar').remove();
+												$('#loading-bar-spinner')
+														.remove();
+												console.log(response);
+											});
+						}
+
+					}
+					$http(
+							{
+								method : "GET",
+								url : employeeDetails,
+								headers : {
+									'XSRF-TOKEN' : $window.sessionStorage
+											.getItem("Access-Token"),
+									'authorization' : $window.sessionStorage
+											.getItem("AuthKey")
+								}
+							})
+							.then(
+									function mySucces(response) {
+
+										if (response != 'undefiend'
+												&& response != "") {
+											$scope.employeeid = response.data.employeeId;
+											$scope.employeename = response.data.firstName
+													+ ' '
+													+ response.data.lastName;
+											$scope.employeedesignation = response.data.designation;
+											$scope.employeelocation = response.data.address;
+											$scope.employeeType = response.data.employeeType;
+											$scope.employeedepartment = response.data.department.departmentName;
+											$scope.employeedepartmentId = response.data.department.departmentId;
+											$scope.employeeemail = response.data.emailId;
+
+										}
+									}, function myError(response) {
+										$('#loading-bar').remove();
+										$('#loading-bar-spinner').remove();
+										console.log(response);
+									});
+
+					$http(
+							{
+								method : "GET",
+								url : customeDetails,
+								headers : {
+									'XSRF-TOKEN' : $window.sessionStorage
+											.getItem("Access-Token"),
+									'authorization' : $window.sessionStorage
+											.getItem("AuthKey")
+								}
+							}).then(function mySucces(response) {
+						$scope.customers = response.data;
+					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner').remove();
+						console.log(response);
+					});
+					$http(
+							{
+								method : "GET",
+								url : departments,
+								headers : {
+									'XSRF-TOKEN' : $window.sessionStorage
+											.getItem("Access-Token"),
+									'authorization' : $window.sessionStorage
+											.getItem("AuthKey")
+								}
+							}).then(function mySucces(response) {
+						$scope.departments = response.data;
+					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner').remove();
+						console.log(response);
+					});
+
+					$http(
+							{
+								method : "GET",
+								url : allcpc,
+								headers : {
+									'XSRF-TOKEN' : $window.sessionStorage
+											.getItem("Access-Token"),
+									'authorization' : $window.sessionStorage
+											.getItem("AuthKey")
+								}
+							}).then(function mySucces(response) {
+						$scope.cpcs = response.data;
+					}, function myError(response) {
+						$('#loading-bar').remove();
+						$('#loading-bar-spinner').remove();
+						console.log(response);
+					});
+					$scope.updateTotalhour = function() {
+
+					}
+					$scope.taskList = [];
+
+					$scope.collectData = {
+
+						"employeeId" : "",
+						"startDateOfWeek" : "",
+						"endDateOfWeek" : "",
+						"timesheets" : $scope.multipleTimeSheetList,
+						"comments" : $scope.comments
+					}
+
+					var myTaskName;
+
+					$scope.deleteRow = function() {
+						console.log($scope.ids);
+
+						var obj = $scope.ids[divindex];
+
+						for ( var key in obj) {
+							if (obj.hasOwnProperty(key)) {
+
+								var val = obj[key];
+								if (val) {
+									$scope.divIterator.pop(key);
+									obj.key = false;
+								}
+								console.log(val);
+							}
+						}
+						/*
+						 * var pushval = $scope.deleteval.length; for (var x =
+						 * 0; x < pushval; x++) {
+						 * $scope.divIterator.pop(deleteval); }
+						 */
+
+					}
+					$scope.countTotalhours = function(value, modelName) {
+
+						$scope.modelName = $scope.modelName + value;
+
+					}
+					$scope.saveTimeSheet = function(task, daydetails) {
+
+						var timesheetData = constructTimeSheetJson(task,
+								daydetails);
+						// console.log(timesheetData);
+						var weekStartdate = $scope.start;
+						var weekEndDate = $scope.end;
+						var employeeid = $scope.employeeid;
+						$scope.collectData.employeeId = employeeid;
+						$scope.collectData.startDateOfWeek = weekStartdate;
+						$scope.collectData.endDateOfWeek = weekEndDate;
+						$scope.collectData.comments = $scope.usercomments;
+						$scope.collectData.timesheets = timesheetData;
+						$scope.totalhours = 0;
+						angular.forEach(timesheetData, function(key, value) {
+							angular.forEach(key, function(innerkey, innerVal) {
+								var hour = innerkey.hours;
+
+								$scope.totalhours += parseFloat(hour);
+
+								console.log(key, value.hours);
+							})
+						})
+						if ($scope.totalhours < 40) {
+							swal(
+									'error',
+									"Your total hours are not 40 ! You can't submit",
+									'error');
+							/*
+							 * 
+							 * swal( { title : "Your total hours are not 40 !
+							 * You can't submit", text : "Submitting Timesheet ",
+							 * showCancelButton : true, confirmButtonColor :
+							 * "#DD6B55", confirmButtonText : "Yes, Submit it!",
+							 * cancelButtonText : "No, cancel it!",
+							 * closeOnConfirm : false, closeOnCancel : false },
+							 * function(isConfirm) { if (isConfirm) { var
+							 * timesheeturl = $scope.webserviceshost +
+							 * "hr/timesheet/save/" + JSON
+							 * .stringify($scope.collectData); $http( { method :
+							 * "POST", url : timesheeturl, headers : {
+							 * 'XSRF-TOKEN' : $window.sessionStorage
+							 * .getItem("Access-Token"), 'authorization' :
+							 * $window.sessionStorage .getItem("AuthKey") } })
+							 * .then( function mySucces( response) {
+							 * swal("TimeSheet Submitted") $location
+							 * .path('/headers/timesheethistory'); },
+							 * 
+							 * function myError( response) { console
+							 * .log(response); }); } else { swal( "Cancelled",
+							 * "Request has been cancelled.)", "error"); } })
+							 * 
+							 */} else {
+
+							swal(
+									{
+										title : "Are you sure",
+										text : "Submitting Timesheet ",
+										showCancelButton : true,
+										confirmButtonColor : "#DD6B55",
+										confirmButtonText : "Yes, Submit it!",
+										cancelButtonText : "No, cancel it!",
+										closeOnConfirm : false,
+										closeOnCancel : false
+									},
+									function(isConfirm) {
+										if (isConfirm) {
+											debugger;
+											var timesheeturl = $scope.webserviceshost
+													+ "hr/timesheet/save"
+													
+											$http(
+													{
+														method : "POST",
+														url : timesheeturl,
+														data: JSON.stringify($scope.collectData),
+														headers : {
+															'XSRF-TOKEN' : $window.sessionStorage
+																	.getItem("Access-Token"),
+															'authorization' : $window.sessionStorage
+																	.getItem("AuthKey")
+														}
+													})
+													.then(
+															function mySucces(
+																	response) {
+																swal("TimeSheet Submitted")
+																$location
+																		.path('/headers/timesheethistory');
+
+															},
+
+															function myError(
+																	response) {
+
+																swal(
+																		'error',
+																		'TimeSheet already submitted for selected period',
+																		'error');
+																$(
+																		'#loading-bar')
+																		.remove();
+																$(
+																		'#loading-bar-spinner')
+																		.remove();
+
+																console
+																		.log(response);
+															});
+
+										} else {
+											swal(
+													"Cancelled",
+													"Request has been cancelled.)",
+													"error");
+										}
+									})
+						}
+						console.log($scope.totalhours);
+						// console.log($scope.collectData);
+
+						// console.log(timesheetData);
+						// $location.path('/headers/timesheethistory')
+						// console.log(JSON.stringify($scope.collectData));
+					}
+					$scope.clearTimeSheet = function() {
+						$scope.dtPopup = '';
+						$scope.dtPopup1 = '';
+						$scope.weeksdetails = ''
+					}
+					$scope.taskName = {
+						"customerId" : "",
+						"customerProgramId" : "",
+						"departmentId" : "",
+						"projectId" : "",
+						"taskName" : "",
+						"hours" : "",
+						"timesheetDate" : ""
+					}
+
+					var taskDetails = {};
+
+					function constructTimeSheetJson(task, daydetails) {
+
+						var divRowsCount = $scope.divIterator.length;
+
+						angular
+								.forEach(
+										$scope.divIterator,
+										function(value, rowNumb) {
+											var taskInfo = task[rowNumb].taskdetails
+													.split('&&');
+											var taskID = taskInfo[0];
+											taskDetails[taskID] = [];
+
+											angular
+													.forEach(
+															daydetails[rowNumb],
+															function(value,
+																	key, obj) {
+
+																var partTime = key
+																		.split("-");
+																var datefi = "";
+																for (var tt = 0; tt < partTime.length; tt++) {
+																	if (partTime[tt].length < 2) {
+																		datefi = datefi
+																				+ "0"
+																				+ partTime[tt]
+																				+ "-";
+																	} else {
+																		datefi = datefi
+																				+ partTime[tt]
+																				+ "-";
+																	}
+																}
+																datefi = datefi
+																		.substr(
+																				0,
+																				datefi.length - 1);
+																var taskDetailsInner = {
+																	customerId : task[rowNumb]["customer"],
+																	departmentId : task[rowNumb]["department"],
+																	taskName : taskInfo[1],
+																	customerProgramId : 1/* task[rowNumb]["cpcdetails"] */,
+																	projectId : task[rowNumb]["projectId"],
+																	hours : value,
+																	timesheetDate : datefi
+																};
+																this
+																		.push(taskDetailsInner);
+
+															},
+															taskDetails[taskID]);
+
+										});
+
+						// footerTotalHour = rowDateArr;
+						return taskDetails;
+
+					}
+					;
+					$scope.rowTotals = [];
+					$scope.colTotals = [ 0, 0, 0, 0, 0, 0, 0 ];
+					$scope.weekTotalFN = function() {
+
+						$scope.weekTotal = 0;
+						$.each($scope.colTotals, function(index, value) {
+							$scope.weekTotal = $scope.weekTotal + value;
+						});
+					};
+
+					$scope.onChangeHR = function(rowIndex, colIndex, weekKey) {
+
+						var HrPrev = 0;
+
+						$
+								.each(
+										$scope.daydetails,
+										function(index, value) {
+											var rowTotal = 0;
+											var weekPrev = value[weekKey] ? parseFloat(value[weekKey])
+													: 0;
+											HrPrev = HrPrev + weekPrev;
+											// console.log(weekPrev,HrPrev,
+											// value, value[weekKey], weekKey);
+
+											$
+													.each(
+															value,
+															function(
+																	childIndex,
+																	childValue) {
+																var colValue = childValue ? childValue
+																		: 0;
+																rowTotal = parseFloat(rowTotal)
+																		+ parseFloat(colValue);
+															});
+											$scope.rowTotals[index] = parseFloat(rowTotal);
+											$scope.colTotals[colIndex] = HrPrev;
+										});
+						$scope.weekTotalFN();
+						// console.log(rowIndex, colIndex,
+						// $scope.daydetails[rowIndex][weekKey],
+						// $scope.rowTotals, $scope.colTotals);
+					};
+
+					$scope.addRow = function(task, daydetails) {
+						var divRowsCount = $scope.divIterator.length;
+						var checkTask = false;
+						angular.forEach(task, function(value, key) {
+							angular.forEach(value, function(objValue, objKey) {
+								if (!objValue) {
+									checkTask = false;
+								} else {
+									checkTask = true;
+								}
+							});
+						});
+						if (divRowsCount && !checkTask) {
+							return false;
+						} else {
+							constructTimeSheetJson(task, daydetails);
+							$scope.divIterator.push(++divRowsCount);
+						}
+					};
+
+				})
+		.controller(
+				'edittimesheetcontroller',
+				function($scope, $filter, $sce, ngTableParams, $http,
+						$rootScope, filteredListService, $window, $location,
+						growlService) {
+					$('#downcontent').hide();
+					$scope.footerTotalHour = [];
+					if ($scope.mactrl) {
+						if ($scope.mactrl.sidebarToggle) {
+							$scope.mactrl.sidebarToggle.left = false;
+						}
+					}
+					function gettingDetails() {
+						$scope.$on(function(x) {
+							console.log('a');
+
+						});
+					}
+					$scope.$on(function(x) {
+						console.log('a');
+
+					});
+					$scope.projects = [];
+					$scope.tasks = [];
+					$scope.onlyNumbers = /^\d+$/;
+
+					$scope.divIterator = [ 1 ];
+					$scope.totalhourhead = '';
+					$scope.today = function() {
+						$scope.dt = new Date();
+
+					};
+					$scope.today();
+
+					$scope.myDate = new Date();
+
+					$scope.toggleMin = function() {
+						$scope.minDate = new Date($scope.myDate.getFullYear(),
+								$scope.myDate.getMonth() - 11, $scope.myDate
+										.getDate());
+
+					};
+					$scope.toggleMin();
+
+					$scope.open = function($event, calId) {
+						$event.preventDefault();
+						$event.stopPropagation();
+						if (calId === 1) {
+							$scope.opened = true;
+							$scope.opened2 = false;
+
+						}
+						if (calId === 2) {
+							$scope.opened2 = true;
+							$scope.opened = false;
+
+						}
+
+					};
+					this.onlyWeekendsPredicate = function(date) {
+						var day = $scope.myDate.getDay();
+						return day === 0 || day === 6;
+					};
+					$scope.dateOptions = {
+						formatYear : 'yy',
+						startingDay : 1
+					};
+
+					$scope.formats = [ 'dd-MMMM-yyyy', 'yyyy-MM-dd',
+							'dd-MMM-yyyy', 'shortDate' ];
+					$scope.format = $scope.formats[2];
+					$scope.changeweekselected = function() {
+						$('#downcontent').show();
+						$scope.totalhourhead = {};
+						$scope.weekTotal = '';
 						$scope.rowTotals = [];
 						$scope.colTotals = [ 0, 0, 0, 0, 0, 0, 0 ];
 						var startdate = $scope.dtPopup;
@@ -732,7 +1380,7 @@ materialAdmin
 
 					$scope.deleteRow = function() {
 						console.log($scope.ids);
-						
+
 						var obj = $scope.ids[divindex];
 
 						for ( var key in obj) {
@@ -776,7 +1424,7 @@ materialAdmin
 							angular.forEach(key, function(innerkey, innerVal) {
 								var hour = innerkey.hours;
 
-								$scope.totalhours += parseInt(hour);
+								$scope.totalhours += parseFloat(hour);
 
 								console.log(key, value.hours);
 							})
@@ -845,8 +1493,7 @@ materialAdmin
 															function mySucces(
 																	response) {
 																swal("TimeSheet Submitted")
-																$location
-																		.path('/headers/timesheethistory');
+																$location.path('/headers/timesheethistory');
 
 															},
 
@@ -979,7 +1626,7 @@ materialAdmin
 										$scope.daydetails,
 										function(index, value) {
 											var rowTotal = 0;
-											var weekPrev = value[weekKey] ? parseInt(value[weekKey])
+											var weekPrev = value[weekKey] ? parseFloat(value[weekKey])
 													: 0;
 											HrPrev = HrPrev + weekPrev;
 											// console.log(weekPrev,HrPrev,
@@ -993,10 +1640,10 @@ materialAdmin
 																	childValue) {
 																var colValue = childValue ? childValue
 																		: 0;
-																rowTotal = parseInt(rowTotal)
-																		+ parseInt(colValue);
+																rowTotal = parseFloat(rowTotal)
+																		+ parseFloat(colValue);
 															});
-											$scope.rowTotals[index] = parseInt(rowTotal);
+											$scope.rowTotals[index] = parseFloat(rowTotal);
 											$scope.colTotals[colIndex] = HrPrev;
 										});
 						$scope.weekTotalFN();
@@ -8923,10 +9570,11 @@ materialAdmin
 																				console
 																						.log(response);
 																			})
-																			
-																			swal("success",
-																					"Department Deleted Successfully ..)",
-																					"success");
+
+															swal(
+																	"success",
+																	"Department Deleted Successfully ..)",
+																	"success");
 														},
 														function myError(
 																response) {
@@ -12196,7 +12844,1053 @@ materialAdmin
 						}
 
 					};
+					$scope.closeTimeSheet=function(){
+						$scope.IsVisible=false;
+					}
+					// editing timesheet
+					$scope.editTimesheet = function(sequence) {
+						$scope.IsVisible =  true;
+						$scope.sequenceId = sequence;
+						
+						var timesheetDetail = $scope.webserviceshost
+								+ 'hr/timesheet/detailsBySequence/' + sequence;
+						$http(
+								{
+									method : "GET",
+									url : timesheetDetail,
+									headers : {
+										'XSRF-TOKEN' : $window.sessionStorage
+												.getItem("Access-Token"),
+										'authorization' : $window.sessionStorage
+												.getItem("AuthKey")
+									}
+								})
+								.then(
+										function mySucces(response) {
+											if (response != 'undefiend'
+													&& response != "") {
+												$scope.timeSheetDetails = response.data;
+												
+												$scope.employeeid = $scope.timeSheetDetails.employeeId;
+												$scope.employeename = $scope.timeSheetDetails.employeeName;
+												$scope.employeeType = 'EMP Type';
+												$scope.employeedesignation = $scope.timeSheetDetails.employeeDesignation;
+												$scope.employeedepartment = 'EMP Department';
+												$scope.usercomments = $scope.timeSheetDetails.comments;
 
+												$scope.dtPopupedit = new Date(
+														$scope.timeSheetDetails.startDateOfWeek);
+												$scope.dtPopupedit1 = new Date(
+														$scope.timeSheetDetails.endDateOfWeek);
+
+												$scope.weeksdetails = "selected week as "
+														+ $filter('date')(
+																$scope.dtPopupedit,
+																"dd-MMM-yyyy")
+														+ "  to  "
+														+ $filter('date')
+																(
+																		$scope.dtPopupedit1,
+																		"dd-MMM-yyyy");
+
+												$scope.tasks = [];
+												$scope.projects = [];
+
+												var count = 1;
+												var employeeid = $window.sessionStorage
+														.getItem("EmployeeId");
+
+												var employeeid = $window.sessionStorage
+														.getItem("EmployeeId");
+
+												var employeeDetails = $scope.webserviceshost
+														+ 'hr/employee/find/'
+														+ employeeid;
+												var customeDetails = $scope.webserviceshost
+														+ 'hr/customer/all/';
+												var departments = $scope.webserviceshost
+														+ 'hr/department/all';
+
+												var allcpc = $scope.webserviceshost
+														+ "hr/customerProgram/all";
+
+												function getProjects(deptId,
+														customerId, rowNumb) {
+
+													var allproject = $scope.webserviceshost
+															+ 'hr/project/find/'
+															+ customerId
+															+ '/'
+															+ deptId;
+													$http(
+															{
+																method : "GET",
+																url : allproject,
+																headers : {
+																	'XSRF-TOKEN' : $window.sessionStorage
+																			.getItem("Access-Token"),
+																	'authorization' : $window.sessionStorage
+																			.getItem("AuthKey")
+																}
+															})
+															.then(
+																	function mySucces(
+																			response) {
+																		$scope.projects[rowNumb] = response.data;
+																	},
+																	function myError(
+																			response) {
+																		$(
+																				'#loading-bar')
+																				.remove();
+																		$(
+																				'#loading-bar-spinner')
+																				.remove();
+																	});
+												}
+
+												function getTasks(deptId,
+														customerId, rowNumb) {
+													var taskdata = $scope.webserviceshost
+															+ 'hr/task/find/'
+															+ customerId
+															+ '/'
+															+ deptId;
+													$http(
+															{
+																method : "GET",
+																url : taskdata,
+																headers : {
+																	'XSRF-TOKEN' : $window.sessionStorage
+																			.getItem("Access-Token"),
+																	'authorization' : $window.sessionStorage
+																			.getItem("AuthKey")
+																}
+															})
+															.then(
+																	function mySucces(
+																			response) {
+																		$scope.tasks[rowNumb] = response.data;
+																	},
+																	function myError(
+																			response) {
+																		$(
+																				'#loading-bar')
+																				.remove();
+																		$(
+																				'#loading-bar-spinner')
+																				.remove();
+																	});
+												}
+
+												$scope.fillProject = function(
+														task, divindex) {
+
+													var customer = task[divindex].customer;
+													var department = task[divindex].department;
+
+													if (customer && department) {
+
+														var allproject = $scope.webserviceshost
+																+ 'hr/project/find/'
+																+ customer
+																+ '/'
+																+ department;
+														$http(
+																{
+																	method : "GET",
+																	url : allproject,
+																	headers : {
+																		'XSRF-TOKEN' : $window.sessionStorage
+																				.getItem("Access-Token"),
+																		'authorization' : $window.sessionStorage
+																				.getItem("AuthKey")
+																	}
+																})
+																.then(
+																		function mySucces(
+																				response) {
+																			$scope.projects[divindex] = response.data;
+																			if ($scope.projects[divindex].length == 0) {
+																				swal(
+																						'error',
+																						'No project mapped with current selection',
+																						'error')
+																			}
+																		},
+																		function myError(
+																				response) {
+																			$(
+																					'#loading-bar')
+																					.remove();
+																			$(
+																					'#loading-bar-spinner')
+																					.remove();
+																			console
+																					.log(response);
+																		});
+														
+														var taskdata = $scope.webserviceshost
+														+ 'hr/task/find/'
+														+ customer
+														+ '/'
+														+ department;
+														$http(
+																{
+																	method : "GET",
+																	url : taskdata,
+																	headers : {
+																		'XSRF-TOKEN' : $window.sessionStorage
+																				.getItem("Access-Token"),
+																		'authorization' : $window.sessionStorage
+																				.getItem("AuthKey")
+																	}
+																})
+																.then(
+																		function mySucces(
+																				response) {
+																			$scope.tasks[divindex] = response.data;
+																			if ($scope.tasks[divindex].length == 0) {
+																				swal(
+																						'error',
+																						'No Task mapped with current selection',
+																						'error')
+																			}
+																		},
+																		function myError(
+																				response) {
+																			$(
+																					'#loading-bar')
+																					.remove();
+																			$(
+																					'#loading-bar-spinner')
+																					.remove();
+																		});
+													}
+
+												};
+
+												$http(
+														{
+															method : "GET",
+															url : employeeDetails,
+															headers : {
+																'XSRF-TOKEN' : $window.sessionStorage
+																		.getItem("Access-Token"),
+																'authorization' : $window.sessionStorage
+																		.getItem("AuthKey")
+															}
+														})
+														.then(
+																function mySucces(
+																		response) {
+
+																	if (response != 'undefiend'
+																			&& response != "") {
+																		$scope.employeeid = response.data.employeeId;
+																		$scope.employeename = response.data.firstName
+																				+ ' '
+																				+ response.data.lastName;
+																		$scope.employeedesignation = response.data.designation;
+																		$scope.employeelocation = response.data.address;
+																		$scope.employeeType = response.data.employeeType;
+																		$scope.employeedepartment = response.data.department.departmentName;
+																		$scope.employeedepartmentId = response.data.department.departmentId;
+																		$scope.employeeemail = response.data.emailId;
+																		$scope.usercomments = response.data.comments;
+
+																	}
+																},
+																function myError(
+																		response) {
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
+																			.remove();
+																});
+
+												$http(
+														{
+															method : "GET",
+															url : customeDetails,
+															headers : {
+																'XSRF-TOKEN' : $window.sessionStorage
+																		.getItem("Access-Token"),
+																'authorization' : $window.sessionStorage
+																		.getItem("AuthKey")
+															}
+														})
+														.then(
+																function mySucces(
+																		response) {
+																	$scope.customers = response.data;
+																},
+																function myError(
+																		response) {
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
+																			.remove();
+																});
+
+												$http(
+														{
+															method : "GET",
+															url : departments,
+															headers : {
+																'XSRF-TOKEN' : $window.sessionStorage
+																		.getItem("Access-Token"),
+																'authorization' : $window.sessionStorage
+																		.getItem("AuthKey")
+															}
+														})
+														.then(
+																function mySucces(
+																		response) {
+																	$scope.departments = response.data;
+																},
+																function myError(
+																		response) {
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
+																			.remove();
+																});
+
+												$http(
+														{
+															method : "GET",
+															url : allcpc,
+															headers : {
+																'XSRF-TOKEN' : $window.sessionStorage
+																		.getItem("Access-Token"),
+																'authorization' : $window.sessionStorage
+																		.getItem("AuthKey")
+															}
+														})
+														.then(
+																function mySucces(
+																		response) {
+																	$scope.cpcs = response.data;
+																},
+																function myError(
+																		response) {
+																	$(
+																			'#loading-bar')
+																			.remove();
+																	$(
+																			'#loading-bar-spinner')
+																			.remove();
+																});
+												$scope.usercomments = $scope.timeSheetDetails.comments; 
+												//console.log($scope.usercomments);
+												$scope.divIterator = [];
+												$scope.task = [];
+												$scope.weekdays = {};
+												$scope.weekDays = {};
+												$scope.weekDaysHR = {
+													"dates" : {},
+													'totalHours' : 0
+												};
+												$scope.daydetails = [];
+												$scope.ids = [];
+												$scope.colTotals = [];
+												$scope.rowTotals = [];
+
+												$scope.dayName = [ 'Sun',
+														'Mon', 'Tue', 'Wed',
+														'Thu', 'Fri', 'Sat' ];
+												if ($scope.timeSheetDetails
+														&& $scope.timeSheetDetails.startDateOfWeek
+														&& $scope.timeSheetDetails.endDateOfWeek) {
+													var weekStart = new Date(
+															$scope.timeSheetDetails.startDateOfWeek);
+
+													for (var i = 0; i <= 6; i++) {
+														var weekKey = new Date(
+																weekStart
+																		.getTime()
+																		+ i
+																		* 24
+																		* 60
+																		* 60
+																		* 1000); // weekKey.setDate(weekStart.getDate()+i);
+
+														var weekDate = weekKey
+																.getDate() < 10 ? '0'
+																+ weekKey
+																		.getDate()
+																: weekKey
+																		.getDate();
+														var weekMonth = weekKey
+																.getMonth() + 1 < 10 ? '0'
+																+ parseInt(weekKey
+																		.getMonth() + 1)
+																: weekKey
+																		.getMonth() + 1;
+														var weekYear = weekKey
+																.getFullYear();
+
+														$scope.weekDays[weekDate
+																+ '-'
+																+ weekMonth
+																+ '-'
+																+ weekYear] = {
+															date : weekDate,
+															day : $scope.dayName[weekKey
+																	.getDay()]
+														};
+
+														$scope.weekdays[weekDate
+																+ '-'
+																+ weekMonth
+																+ '-'
+																+ weekYear] = {
+															date : weekDate
+																	+ '-'
+																	+ weekMonth
+																	+ '-'
+																	+ weekYear,
+															day : weekDate
+																	+ '('
+																	+ $scope.dayName[weekKey
+																			.getDay()]
+																	+ ')'
+														};
+													}
+												}
+
+												$
+														.each(
+																$scope.timeSheetDetails.timesheets,
+																function(index,
+																		value) {
+																	$scope.divIterator
+																			.push(count);
+																	$scope.task
+																			.push(count);
+																	$scope.daydetails
+																			.push(count);
+																	$scope.daydetails[count - 1] = {};
+																	$scope.ids
+																			.push(count);
+																	$
+																			.each(
+																					value,
+																					function(
+																							taskKey,
+																							taskValue) { 
+																						var taskDetails = {
+																							"customer" : taskValue.customerId,
+																							"department" : ''+taskValue.userDepartmentId+'',
+																							"departmentName" : taskValue.departmentId,
+																							"taskdetails" : taskValue.taskId+'&&'+taskValue.taskName,
+																							"customerProgramId" : taskValue.customerProgramId,
+																							"projectId" : taskValue.projectId,
+																							"hours" : taskValue.hours,
+																							"timesheetDate" : taskValue.timesheetDate
+																						};
+																						$scope.task[count - 1] = (taskDetails);
+																					});
+																	getProjects(
+																			$scope.task[count - 1].department,
+																			$scope.task[count - 1].customer,
+																			count - 1);
+																	getTasks(
+																			$scope.task[count - 1].department,
+																			$scope.task[count - 1].customer,
+																			count - 1);
+
+																	var taskObj = {
+																		"dates" : {},
+																		'totalHours' : 0
+																	};
+																	var colCount = 0;
+																	$
+																			.each(
+																					$scope.weekdays,
+																					function(
+																							dateIndex,
+																							dateValue) {
+																						// console.log(dateIndex,
+																						// dateValue);
+																						var taskDetails = $filter(
+																								'filter')
+																								(
+																										value,
+																										{
+																											'timesheetDate' : dateIndex
+																										},
+																										true);
+
+																						$scope.daydetails[count - 1][dateIndex] = taskDetails[0] ? taskDetails[0].hours
+																								: 0;
+																						$scope.rowTotals[count - 1] = parseFloat($scope.rowTotals[count - 1] ? $scope.rowTotals[count - 1]
+																								: 0)
+																								+ parseFloat($scope.daydetails[count - 1][dateIndex]);
+
+																						taskObj.totalHours = parseFloat(taskObj.totalHours)
+																								+ (taskDetails[0] ? parseFloat(taskDetails[0].hours)
+																										: 0);
+																						taskObj.dates[dateIndex] = taskDetails[0] ? taskDetails[0].hours
+																								: '';
+																						$scope.weekDaysHR.dates[dateIndex] = ($scope.weekDaysHR.dates[dateIndex] == undefined
+																								|| $scope.weekDaysHR.dates[dateIndex] == ''
+																								|| $scope.weekDaysHR.dates[dateIndex] == null ? 0
+																								: parseFloat($scope.weekDaysHR.dates[dateIndex]))
+																								+ (taskObj.dates[dateIndex] == undefined
+																										|| taskObj.dates[dateIndex] == ''
+																										|| taskObj.dates[dateIndex] == null ? 0
+																										: parseFloat(taskObj.dates[dateIndex]));
+																						$scope.colTotals[colCount] = $scope.weekDaysHR.dates[dateIndex];
+																						colCount++;
+																					});
+																	$scope.weekDaysHR.totalHours = parseFloat($scope.weekDaysHR.totalHours)
+																			+ parseFloat(taskObj.totalHours);
+
+																	count++;
+																});
+
+												console
+														.log(
+																$scope.weekdays,
+																$scope.weekDaysHR.dates,
+																$scope.daydetails,
+																$scope.rowTotals,
+																$scope.colTotals);
+
+												$scope.weekTotal = $scope.weekDaysHR.totalHours;
+
+												$scope.weekTotalFN = function() {
+													$scope.weekTotal = 0;
+													$
+															.each(
+																	$scope.colTotals,
+																	function(
+																			index,
+																			value) {
+																		$scope.weekTotal = $scope.weekTotal
+																				+ value;
+																	});
+												};
+
+												$scope.onChangeHR = function(
+														rowIndex, colIndex,
+														weekKey) {
+
+													var HrPrev = 0;
+													$
+															.each(
+																	$scope.daydetails,
+																	function(
+																			index,
+																			value) {
+																		var rowTotal = 0;
+																		var weekPrev = value[weekKey] ? parseFloat(value[weekKey])
+																				: 0;
+																		HrPrev = HrPrev
+																				+ weekPrev;
+
+																		$
+																				.each(
+																						value,
+																						function(
+																								childIndex,
+																								childValue) {
+																							var colValue = childValue ? childValue
+																									: 0;
+																							rowTotal = parseFloat(rowTotal)
+																									+ parseFloat(colValue);
+																						});
+																		$scope.rowTotals[index] = parseFloat(rowTotal);
+																		$scope.colTotals[colIndex] = HrPrev;
+																	});
+													$scope.weekTotalFN();
+													console.log(
+															$scope.rowTotals,
+															$scope.colTotals);
+												};
+
+												$scope.open = function($event,
+														calId) {
+													$event.preventDefault();
+													$event.stopPropagation();
+													if (calId === 1) {
+														$scope.opened = true;
+														$scope.opened2 = false;
+
+													}
+													if (calId === 2) {
+														$scope.opened2 = true;
+														$scope.opened = false;
+													}
+
+												};
+												this.onlyWeekendsPredicate = function(
+														date) {
+													var day = $scope.myDate
+															.getDay();
+													return day === 0
+															|| day === 6;
+												};
+												$scope.dateOptions = {
+													formatYear : 'yy',
+													startingDay : 1
+												};
+
+												$scope.formats = [
+														'dd-MMMM-yyyy',
+														'yyyy-MM-dd',
+														'dd-MMM-yyyy',
+														'shortDate' ];
+												$scope.format = $scope.formats[2];
+												 $scope.deleteRowsArr = [];
+
+										            $scope.deleteThis = function (rowId) {
+										                var rowIdInArray = $.inArray(rowId, $scope.deleteRowsArr);
+										                if (rowIdInArray < 0) {
+										                    $scope.deleteRowsArr.push(rowId);
+										                } else {
+										                    $scope.deleteRowsArr.splice(rowIdInArray, 1);
+										                }
+										            };
+												 $scope.deleteRow = function () {
+										                $.each($scope.deleteRowsArr, function (index, value) {
+										                    $scope.task.splice(value, 1);
+										                    $scope.daydetails.splice(value, 1);
+										                    $scope.divIterator.pop();
+
+										                    var rowIdInArray = $.inArray(value, $scope.deleteRowsArr);
+										                    $scope.deleteRowsArr.splice(rowIdInArray, 1);
+										                });
+
+										                var count = 0;
+										                $.each($scope.weekdays, function (index, value) {
+										                    $scope.onChangeHR(0, count, index);
+										                    count++;
+										                });
+
+										                $scope.ids = [];
+										            };
+
+
+												$scope.addRow = function(task,
+														daydetails) {
+													var divRowsCount = $scope.divIterator.length;
+													var checkTask = false;
+													angular.forEach(task,function(value,key) {
+																				angular.forEach(value,function(objValue,
+																								objKey) {
+																							if (!objValue) {
+																								checkTask = false;
+																							} else {
+																								checkTask = true;
+																							}
+																						});
+																	});
+													if (divRowsCount
+															&& !checkTask) {
+														return false;
+													} else {
+														constructTimeSheetJson(
+																task,
+																daydetails);
+														$scope.divIterator
+																.push(++divRowsCount);
+													}
+												};
+
+												$scope.clearTimeSheet = function() {
+													$scope.dtPopup = '';
+													$scope.dtPopup1 = '';
+													$scope.weeksdetails = '';
+												};
+												$scope.taskName = {
+													"customerId" : "",
+													"customerProgramId" : "",
+													"departmentId" : "",
+													"projectId" : "",
+													"taskName" : "",
+													"hours" : "",
+													"timesheetDate" : ""
+												};
+
+												var taskDetails = {};
+
+												function constructTimeSheetJson(
+														task, daydetails) {
+									                var taskDetails = {};
+									                var divRowsCount = $scope.divIterator.length;
+
+									                angular.forEach($scope.divIterator, function (value, rowNumb) {
+									                    var taskInfo = task[rowNumb].taskdetails.split('&&');
+									                    var taskID = taskInfo[0];
+									                    taskDetails[taskID] = [];
+
+									                    angular.forEach(daydetails[rowNumb], function (value, key, obj) {
+									                        if (value > 0) {
+									                            //console.log(value, key, obj, daydetails);
+									                            //console.log(task[rowNumb]);
+									                            var partTime = key.split("-");
+									                            var datefi = "";
+									                            for (var tt = 0; tt < partTime.length; tt++) {
+									                                if (partTime[tt].length < 2) {
+									                                    datefi = datefi + "0" + partTime[tt] + "-";
+									                                } else {
+									                                    datefi = datefi + partTime[tt] + "-";
+									                                }
+									                            }
+									                            datefi = datefi.substr(0, datefi.length - 1);
+									                            var taskDetailsInner = {
+									                                customerId: task[rowNumb]["customer"],
+									                                departmentId: task[rowNumb]["department"],
+									                                taskName: taskInfo[1],
+									                                customerProgramId: 1/* task[rowNumb]["cpcdetails"] */,
+									                                projectId: task[rowNumb]["projectId"],
+									                                hours: value,
+									                                timesheetDate: datefi
+									                            };
+									                            this.push(taskDetailsInner);
+									                        }
+
+									                    }, taskDetails[taskID]);
+									                });
+									                //console.log(taskDetails);
+									                return taskDetails;
+
+									            }
+
+												$scope.taskList = [];
+												$scope.collectData = {
+													"employeeId" : "",
+													"startDateOfWeek" : "",
+													"endDateOfWeek" : "",
+													"timesheets" : $scope.multipleTimeSheetList,
+													"comments" : $scope.comments
+												};
+												$scope.saveTimeSheet = function(
+														task, daydetails) {
+
+													var timesheetData = constructTimeSheetJson(
+															task, daydetails);
+													// console.log(timesheetData);
+													var startyyyy = $scope.dtPopupedit.getFullYear();
+													var startdd = $scope.dtPopupedit.getDate();
+													var startmm = $scope.dtPopupedit.getMonth() + 1;
+													var endyyyy = $scope.dtPopupedit1.getFullYear();
+													var enddd = $scope.dtPopupedit1.getDate();
+													var totalNoOfDays = new Date(startyyyy, startmm, 0)
+															.getDate();
+													var endmm = $scope.dtPopupedit1.getMonth() + 1;
+													
+													if (startdd < 10) {
+														startdd = '0' + startdd;
+													}
+													if (startmm < 10) {
+														startmm = '0' + startmm;
+													}
+													if (enddd < 10) {
+														enddd = '0' + enddd;
+													}
+													if (endmm < 10) {
+														endmm = '0' + endmm;
+													}
+
+													$scope.start = startyyyy + '-' + startmm + '-'
+															+ startdd;
+													$scope.end = endyyyy + '-' + endmm + '-' + enddd;
+													var weekStartdate = $scope.start;
+													var weekEndDate = $scope.end;
+													
+													var employeeid = $scope.employeeid;
+													$scope.collectData.employeeId = employeeid;
+													$scope.collectData.startDateOfWeek = weekStartdate;
+													$scope.collectData.endDateOfWeek = weekEndDate;
+													$scope.collectData.comments = $scope.usercomments;
+													$scope.collectData.timesheets = timesheetData;
+													$scope.totalhours = 0;
+													angular
+															.forEach(
+																	timesheetData,
+																	function(
+																			key,
+																			value) {
+																		angular
+																				.forEach(
+																						key,
+																						function(
+																								innerkey,
+																								innerVal) {
+																							var hour = innerkey.hours;
+
+																							$scope.totalhours += parseFloat(hour);
+
+																							// console.log(key,
+																							// value.hours);
+																						});
+																	});
+													console
+															.log(JSON
+																	.stringify(timesheetData));
+													if ($scope.totalhours < 40) {
+														swal(
+																'error',
+																"Your total hours are not 40 ! You can't submit",
+																'error');
+													} else {
+														swal(
+																{
+																	title : "Are you sure",
+																	text : "Submitting Timesheet ",
+																	showCancelButton : true,
+																	confirmButtonColor : "#DD6B55",
+																	confirmButtonText : "Yes, Submit it!",
+																	cancelButtonText : "No, cancel it!",
+																	closeOnConfirm : false,
+																	closeOnCancel : false
+																},
+																function(
+																		isConfirm) {
+																	if (isConfirm) {
+																		
+																		var timesheeturl = $scope.webserviceshost
+																				+ "hr/timesheet/update/"+$scope.sequenceId;
+																				
+																		$http(
+																				{
+																					method : "POST",
+																					data: JSON.stringify($scope.collectData),
+																					url : timesheeturl,
+																					headers : {
+																						'XSRF-TOKEN' : $window.sessionStorage
+																								.getItem("Access-Token"),
+																						'authorization' : $window.sessionStorage
+																								.getItem("AuthKey")
+																					}
+																				})
+																				.then(
+																						function mySucces(
+																								response) {
+																							
+																							
+																							if(!$scope.dtPopup || !$scope.dtPopup1){
+																								var testDate=new Date()
+																								$scope.dtPopup=new Date(testDate.getFullYear(),testDate.getMonth(),1);
+																								$scope.dtPopup1=new Date(testDate.getFullYear(),testDate.getMonth()+1,0);
+																							}
+																							var startyyyy = $scope.dtPopup.getFullYear();
+																							var startdd = $scope.dtPopup.getDate();
+																							var startmm = $scope.dtPopup.getMonth() + 1;
+																							var endyyyy = $scope.dtPopup1.getFullYear();
+																							var enddd = $scope.dtPopup1.getDate();
+																							var totalNoOfDays = new Date(startyyyy, startmm, 0)
+																									.getDate();
+																							var endmm = $scope.dtPopup1.getMonth() + 1;
+																							
+																							if (startdd < 10) {
+																								startdd = '0' + startdd;
+																							}
+																							if (startmm < 10) {
+																								startmm = '0' + startmm;
+																							}
+																							if (enddd < 10) {
+																								enddd = '0' + enddd;
+																							}
+																							if (endmm < 10) {
+																								endmm = '0' + endmm;
+																							}
+
+																							$scope.start = startyyyy + '-' + startmm + '-'
+																									+ startdd;
+																							$scope.end = endyyyy + '-' + endmm + '-' + enddd;
+																							var timesheethistory = $scope.webserviceshost
+																							+ 'hr/timesheet/summary/' + employeeid + "/"
+																							+ $scope.start + "/" + $scope.end;
+
+																							$http(
+																									{
+																										method : "GET",
+																										url : timesheethistory,
+																										headers : {
+																											'XSRF-TOKEN' : $window.sessionStorage
+																													.getItem("Access-Token"),
+																											'authorization' : $window.sessionStorage
+																													.getItem("AuthKey")
+																										}
+																									})
+																									.then(
+																											function mySucces(response) {
+																												console.log(response.data);
+																												if (response != 'undefiend'
+																														&& response != "") {
+
+																													$scope.allUsers = response.data;
+																													$scope.pageSize = 50;
+																													$scope.allItems = $scope.allUsers;
+																													$scope.reverse = false;
+
+																													$scope.resetAll = function() {
+																														$scope.filteredList = $scope.allItems;
+																														$scope.employeeId = '';
+
+																														$scope.firstName = '';
+																														$scope.lastName = '';
+																														$scope.weekStartDate = '';
+																														$scope.weekEndDate = '';
+																														$scope.totalHours = '';
+																														$scope.timesheetStatus = '';
+																														$scope.currentPage = 0;
+																														$scope.Header = [ '', '', '',
+																																'', '', '', '' ];
+																													}
+
+																													$scope.search = function() {
+																														$scope.filteredList = filteredListService
+																																.searched(
+																																		$scope.allItems,
+																																		$scope.searchText);
+
+																														if ($scope.searchText == '') {
+																															$scope.filteredList = $scope.allItems;
+																														}
+																														$scope.pagination();
+																													}
+
+																													$scope.pagination = function() {
+																														$scope.ItemsByPage = filteredListService
+																																.paged(
+																																		$scope.filteredList,
+																																		$scope.pageSize);
+																													};
+
+																													$scope.setPage = function() {
+																														$scope.currentPage = this.n;
+																													};
+
+																													$scope.firstPage = function() {
+																														$scope.currentPage = 0;
+																													};
+
+																													$scope.lastPage = function() {
+																														$scope.currentPage = $scope.ItemsByPage.length - 1;
+																													};
+
+																													$scope.range = function(input,
+																															total) {
+																														var ret = [];
+																														if (!total) {
+																															total = input;
+																															input = 0;
+																														}
+																														for (var i = input; i < total; i++) {
+																															if (i != 0
+																																	&& i != total - 1) {
+																																ret.push(i);
+																															}
+																														}
+																														return ret;
+																													};
+
+																													$scope.sort = function(sortBy) {
+																														$scope.resetAll();
+
+																														$scope.columnToOrder = sortBy;
+
+																														// $Filter
+																														// -
+																														// Standard
+																														// Service
+																														$scope.filteredList = $filter(
+																																'orderBy')(
+																																$scope.filteredList,
+																																$scope.columnToOrder,
+																																$scope.reverse);
+
+																														if ($scope.reverse)
+																															iconName = 'glyphicon glyphicon-chevron-up';
+																														else
+																															iconName = 'glyphicon glyphicon-chevron-down';
+
+																														if (sortBy === 'EmpId') {
+																															$scope.Header[0] = iconName;
+																														} else if (sortBy === 'firstName') {
+																															$scope.Header[1] = iconName;
+																														} else if (sortBy === 'lastName') {
+																															$scope.Header[2] = iconName;
+																														} else if (sortBy === 'weekStartDate') {
+																															$scope.Header[3] = iconName;
+																														} else if (sortBy === 'weekEndDate') {
+																															$scope.Header[4] = iconName;
+																														} else if (sortBy === 'totalHours') {
+																															$scope.Header[5] = iconName;
+																														} else if (sortBy === 'timesheetStatus') {
+																															$scope.Header[6] = iconName;
+																														} else {
+																															$scope.Header[1] = iconName;
+																														}
+
+																														$scope.reverse = !$scope.reverse;
+
+																														$scope.pagination();
+																													};
+
+																													// By
+																													// Default
+																													// sort
+																													// ny
+																													// Name
+																													$scope.sort('name');
+
+																													// console.log($scope.allUsers.length);
+																												}
+																											}, function myError(response) {
+																												$('#loading-bar').remove();
+																												$('#loading-bar-spinner').remove();
+																												console.log(response);
+																											});
+																							
+																						
+																							$scope.IsVisible = false ;
+																							swal("Timesheet Updated");	},
+																						function myError(
+																								response) {
+																							swal(
+																									'error',
+																									'TimeSheet already submitted for selected period',
+																									'error');
+																							$(
+																									'#loading-bar')
+																									.remove();
+																							$(
+																									'#loading-bar-spinner')
+																									.remove();
+																						});
+																	} else {
+																		swal(
+																				"Cancelled",
+																				"Request has been cancelled.)",
+																				"error");
+																	}
+																});
+													}
+													console
+															.log($scope.totalhours);
+												};
+												$scope.clearTimeSheet = function() {
+													$scope.dtPopup = '';
+													$scope.dtPopup1 = '';
+													$scope.weeksdetails = '';
+												};
+											}
+										});
+
+					}
 					$scope.dateOptions = {
 						formatYear : 'yy',
 						startingDay : 1
@@ -12231,6 +13925,8 @@ materialAdmin
 					var timesheethistory = $scope.webserviceshost
 							+ 'hr/timesheet/summary/' + employeeid + "/"
 							+ $scope.start + "/" + $scope.end;
+					$scope.IsVisible = false;
+
 					$http(
 							{
 								method : "GET",
@@ -12515,22 +14211,22 @@ materialAdmin
 																								taskObj['taskName'] = taskDetails[0].taskName;
 																							}
 
-																							taskObj.totalHours = parseInt(taskObj.totalHours)
-																									+ (taskDetails[0] ? parseInt(taskDetails[0].hours)
+																							taskObj.totalHours = parseFloat(taskObj.totalHours)
+																									+ (taskDetails[0] ? parseFloat(taskDetails[0].hours)
 																											: 0);
 																							taskObj.dates[dateIndex] = taskDetails[0] ? taskDetails[0].hours
 																									: '';
 																							$scope.weekDaysHR.dates[dateIndex] = ($scope.weekDaysHR.dates[dateIndex] == undefined
 																									|| $scope.weekDaysHR.dates[dateIndex] == ''
 																									|| $scope.weekDaysHR.dates[dateIndex] == null ? 0
-																									: parseInt($scope.weekDaysHR.dates[dateIndex]))
+																									: parseFloat($scope.weekDaysHR.dates[dateIndex]))
 																									+ (taskObj.dates[dateIndex] == undefined
 																											|| taskObj.dates[dateIndex] == ''
 																											|| taskObj.dates[dateIndex] == null ? 0
-																											: parseInt(taskObj.dates[dateIndex]));
+																											: parseFloat(taskObj.dates[dateIndex]));
 																						});
-																		$scope.weekDaysHR.totalHours = parseInt($scope.weekDaysHR.totalHours)
-																				+ parseInt(taskObj.totalHours);
+																		$scope.weekDaysHR.totalHours = parseFloat($scope.weekDaysHR.totalHours)
+																				+ parseFloat(taskObj.totalHours);
 																		$scope.tasks
 																				.push(taskObj);
 																		// console.log($scope.weekDaysHR);
@@ -12761,6 +14457,7 @@ materialAdmin
 										});
 
 					}
+
 				}
 
 		/*
@@ -12962,19 +14659,26 @@ materialAdmin
 									});
 					$scope.approveTimeSheet = function(item) {
 
-						swal(
-								{
-									title : "Are you sure?",
-									text : "Approve Timesheet ",
-									showCancelButton : true,
-									confirmButtonColor : "#DD6B55",
-									confirmButtonText : "Yes, Approve it!",
-									cancelButtonText : "No, cancel it!",
-									closeOnConfirm : false,
-									closeOnCancel : false
-								},
-								function(isConfirm) {
-									if (isConfirm) {
+						swal({
+
+							title : "Are you sure?",
+							text : "Confirm Timesheet Approval ",
+							type : "input",
+							inputPlaceholder : "approver Comments",
+							showCancelButton : true,
+							confirmButtonColor : "#4caf50",
+							confirmButtonText : "Yes, Approve it!",
+							cancelButtonText : "No, cancel it!",
+							closeOnConfirm : false,
+							closeOnCancel : true
+						},
+						function(inputValue) {
+							if (inputValue === false)
+								return false;
+
+							$scope.managerComments = inputValue === "" ? "No Comments"
+									: inputValue;
+								
 										var employeeId = item.id.employeeId;
 										var weekStartDate = item.id.weekStartDate;
 										var weekEndDate = item.weekEndDate;
@@ -12984,7 +14688,7 @@ materialAdmin
 												+ '/'
 												+ weekStartDate
 												+ '/'
-												+ weekEndDate;
+												+ weekEndDate+'/'+$scope.managerComments;
 
 										$http(
 												{
@@ -13175,28 +14879,32 @@ materialAdmin
 															console
 																	.log(response);
 														});
-									} else {
-										swal("Cancelled",
-												"Request has been cancelled.)",
-												"error");
-									}
-								});
+						});
 					}
 					$scope.rejecttimeSheet = function(item) {
 
 						swal(
 								{
+
 									title : "Are you sure?",
-									text : "Reject Timesheet ",
+									text : "Confirm Timesheet Rejection ",
+									type : "input",
+									inputPlaceholder : "Rejector Comments",
 									showCancelButton : true,
-									confirmButtonColor : "#DD6B55",
+									confirmButtonColor : "#F44336",
 									confirmButtonText : "Yes, Reject it!",
 									cancelButtonText : "No, cancel it!",
 									closeOnConfirm : false,
-									closeOnCancel : false
+									closeOnCancel : true
 								},
-								function(isConfirm) {
-									if (isConfirm) {
+								function(inputValue) {
+									if (inputValue === false)
+										return false;
+
+									$scope.managerComments = inputValue === "" ? "No Comments"
+											: inputValue;
+								
+								
 										var employeeId = item.id.employeeId;
 										var weekStartDate = item.id.weekStartDate;
 										var weekEndDate = item.weekEndDate;
@@ -13206,7 +14914,7 @@ materialAdmin
 												+ '/'
 												+ weekStartDate
 												+ '/'
-												+ weekEndDate;
+												+ weekEndDate+'/'+$scope.managerComments;
 
 										$http(
 												{
@@ -13224,15 +14932,13 @@ materialAdmin
 																response) {
 
 															var managerid = $window.sessionStorage
-																	.getItem("EmployeeId");
-															;// hard
+																	.getItem("EmployeeId");// hard
 															// coded
 															// as
-															// of
-															// now
+															// of now
 															var timesheettoapprove = $scope.webserviceshost
 																	+ 'hr/timesheet/timesheetsToApprove/'
-																	+ 70;
+																	+ managerid;
 
 															$http(
 																	{
@@ -13384,7 +15090,10 @@ materialAdmin
 																				console
 																						.log(response);
 																			});
-
+															swal(
+																	"Approved",
+																	"Timesheet has been approved.)",
+																	"success");
 														},
 														function myError(
 																response) {
@@ -13400,12 +15109,7 @@ materialAdmin
 												"Rejected",
 												"Timesheet has been rejected.)",
 												"success");
-									} else {
-										swal(
-												"Cancelled",
-												"Timesheet has been cancelled.)",
-												"error");
-									}
+									
 								});
 					}
 
@@ -13551,22 +15255,22 @@ materialAdmin
 																								taskObj['taskName'] = taskDetails[0].taskName;
 																							}
 
-																							taskObj.totalHours = parseInt(taskObj.totalHours)
-																									+ (taskDetails[0] ? parseInt(taskDetails[0].hours)
+																							taskObj.totalHours = parseFloat(taskObj.totalHours)
+																									+ (taskDetails[0] ? parseFloat(taskDetails[0].hours)
 																											: 0);
 																							taskObj.dates[dateIndex] = taskDetails[0] ? taskDetails[0].hours
 																									: '';
 																							$scope.weekDaysHR.dates[dateIndex] = ($scope.weekDaysHR.dates[dateIndex] == undefined
 																									|| $scope.weekDaysHR.dates[dateIndex] == ''
 																									|| $scope.weekDaysHR.dates[dateIndex] == null ? 0
-																									: parseInt($scope.weekDaysHR.dates[dateIndex]))
+																									: parseFloat($scope.weekDaysHR.dates[dateIndex]))
 																									+ (taskObj.dates[dateIndex] == undefined
 																											|| taskObj.dates[dateIndex] == ''
 																											|| taskObj.dates[dateIndex] == null ? 0
-																											: parseInt(taskObj.dates[dateIndex]));
+																											: parseFloat(taskObj.dates[dateIndex]));
 																						});
-																		$scope.weekDaysHR.totalHours = parseInt($scope.weekDaysHR.totalHours)
-																				+ parseInt(taskObj.totalHours);
+																		$scope.weekDaysHR.totalHours = parseFloat($scope.weekDaysHR.totalHours)
+																				+ parseFloat(taskObj.totalHours);
 																		$scope.tasks
 																				.push(taskObj);
 																		// console.log($scope.weekDaysHR);

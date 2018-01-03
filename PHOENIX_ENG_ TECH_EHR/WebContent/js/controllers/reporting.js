@@ -103,10 +103,11 @@ materialAdmin
 							field : 'lastName',
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							/* cellFilter: 'date:\'dd-MMM-yyyy\'' , */
 							visible : true,
-							
+
 							width : 150
 						}, {
 							field : 'employeeId',
@@ -114,18 +115,18 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'weekStartDate',
-							cellFilter: 'date:\'dd-MMM-yyyy\'',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							/* cellFilter: 'date:\'dd-MMM-yyyy\'' , */
 							visible : false,
-						
+
 							width : 150
 
 						}, {
 							field : 'weekEndDate',
-							cellFilter: 'date:\'dd-MMM-yyyy\'',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							/* cellFilter: 'date:\'dd-MMM-yyyy\'' , */
 							visible : false,
-							
+
 							width : 150
 						}, {
 							field : 'employeeCode',
@@ -194,6 +195,10 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'comments',
+							visible : false,
+							width : 150
+						}, {
+							field : 'managerComments',
 							visible : false,
 							width : 150
 						} /*
@@ -473,7 +478,8 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -481,12 +487,14 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekStartDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekEndDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 						}, {
@@ -548,6 +556,10 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'comments',
+							visible : false,
+							width : 150
+						}, {
+							field : 'managerComments',
 							visible : false,
 							width : 150
 						} /*
@@ -824,7 +836,8 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -832,12 +845,14 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekStartDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekEndDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 						}, {
@@ -901,7 +916,11 @@ materialAdmin
 							field : 'comments',
 							visible : false,
 							width : 150
-						} /*
+						} , {
+							field : 'managerComments',
+							visible : false,
+							width : 150
+						}/*
 							 * , { field : 'timesheetSubmittedDate',visible:
 							 * false }
 							 */
@@ -1182,7 +1201,8 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -1190,12 +1210,14 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekStartDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekEndDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 						}, {
@@ -1259,7 +1281,11 @@ materialAdmin
 							field : 'comments',
 							visible : false,
 							width : 150
-						} /*
+						} , {
+							field : 'managerComments',
+							visible : false,
+							width : 150
+						}/*
 							 * , { field : 'timesheetSubmittedDate',visible:
 							 * false }
 							 */
@@ -1544,7 +1570,8 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -1552,12 +1579,14 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekStartDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekEndDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 						}, {
@@ -1610,6 +1639,10 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'comments',
+							visible : false,
+							width : 150
+						}, {
+							field : 'managerComments',
 							visible : false,
 							width : 150
 						} /*
@@ -1897,7 +1930,8 @@ materialAdmin
 							visible : true,
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -1905,12 +1939,14 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekStartDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekEndDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : false,
 							width : 150
 						}, {
@@ -1963,6 +1999,10 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'comments',
+							visible : false,
+							width : 150
+						}, {
+							field : 'managerComments',
 							visible : false,
 							width : 150
 						} /*
@@ -2237,7 +2277,8 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'timesheetDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'timesheetDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -2245,12 +2286,14 @@ materialAdmin
 							visible : false,
 							width : 150
 						}, {
-							field : 'weekStartDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekStartDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 
 						}, {
-							field : 'weekEndDate',cellFilter: 'date:\'dd-MMM-yyyy\'' ,
+							field : 'weekEndDate',
+							cellFilter : 'date:\'dd-MMM-yyyy\'',
 							visible : true,
 							width : 150
 						}, {
@@ -2303,6 +2346,10 @@ materialAdmin
 							width : 150
 						}, {
 							field : 'comments',
+							visible : false,
+							width : 150
+						}, {
+							field : 'managerComments',
 							visible : false,
 							width : 150
 						} /*
@@ -2427,7 +2474,7 @@ materialAdmin
 									&& status != undefined && status != "") {
 								url += "&status=" + status;
 							}
-debugger;
+							debugger;
 							$http(
 									{
 										method : "GET",

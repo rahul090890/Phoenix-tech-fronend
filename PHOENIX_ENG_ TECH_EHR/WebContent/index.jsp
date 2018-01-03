@@ -147,6 +147,7 @@
 	<script src="js/underscore.js"></script>
 	<script src="js/controllers/main.js"></script>
 		<script src="js/controllers/reporting.js"></script>
+			<script src="js/controllers/edittimesheet.js"></script>
 	<script src="js/services.js"></script>
 	<script src="js/controllers/csv.js"></script>
 	<script src="js/controllers/pdfmake.js"></script>

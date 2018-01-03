@@ -171,8 +171,7 @@
 													<div class='form-group'>
 														<div class="fg-line">
 															<label class="checkbox " id='checkAll'> <input
-																type="checkbox" ng-model="ids[divindex]" >
-																<!-- <i
+																type="checkbox" ng-model="ids[divindex]"> <!-- <i
 															class="input-helper"></i> -->
 															</label>
 														</div>
@@ -269,7 +268,7 @@
 																<input type="text" class="form-control"
 																	ng-model="daydetails[divindex-1][week.date]"
 																	ng-change='onChangeHR($parent.$index, $index, week.date)'
-																	numbers-only>
+																	 allow-decimal-numbers />
 															</div>
 														</div>
 													</div>
@@ -395,7 +394,7 @@
 
 									<div class="form-group ">
 										<div class="fg-line">
-											<input type="text" class="form-control ng-isolate-scope"
+											<input type="text" class="form-control"
 												ng-model="usercomments" value="">
 										</div>
 									</div>
