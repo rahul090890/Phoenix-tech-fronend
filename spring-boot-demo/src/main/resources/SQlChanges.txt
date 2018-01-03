@@ -93,7 +93,7 @@ alter table timesheet modify taskHours float(1);
 alter table timesheet add column(managerComments varchar(1000);
 alter table timesheet add column(userDepartmentId int);
 
-
+use hrdb;
 drop view if exists timesheet_reports;
 create view timesheet_reports as (
 select 
@@ -122,7 +122,7 @@ t.projectName as projectName,
 t.projectType as projectType,
 t.taskid as taskId,
 t.taskName as taskName,
-t.timesheetdate as timesheetDate,
+str_to_date(t.timesheetdate,'%d-%m-%Y')  as timesheetDate,
 t.taskHours as billedHours,
 t.timesheetStatus as timesheetStatus,
 t.comments as comments,
@@ -136,5 +136,4 @@ t.departmentId = d.departmentId and
 t.projectId = p.projectId and
 t.taskid = ta.taskId
 );
-
 update timesheet set userDepartmentId = substring_index(departmentId, '-', 1)  where timesheetId > 0;

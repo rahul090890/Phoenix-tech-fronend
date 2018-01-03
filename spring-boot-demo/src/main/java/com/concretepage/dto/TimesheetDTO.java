@@ -18,7 +18,10 @@ public class TimesheetDTO implements Serializable{
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -3800124261709634751L;
+	private static final long serialVersionUID = 4780711380668362354L;
+	/**
+	 * 
+	 */
 	
 	
 	private String  employeeId;

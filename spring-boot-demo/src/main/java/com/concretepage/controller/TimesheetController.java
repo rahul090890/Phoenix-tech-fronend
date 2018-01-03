@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -70,15 +71,15 @@ public class TimesheetController {
 	
 
 	@Transactional(propagation = Propagation.REQUIRED)
-	@PostMapping("save/{json}")
-	public ResponseEntity<List<TimesheetSummary>> saveTimesheet(@PathVariable("json") String json) throws HRException {
+	@PostMapping("save")
+	public ResponseEntity<List<TimesheetSummary>> saveTimesheet(@RequestBody String json) throws HRException {
 		log.info("Input JSON for  creating timesheet " + json);
 		ObjectMapper mapper = new ObjectMapper();
 		TimesheetDTO dto = null;
 		try {
 			 dto = mapper.readValue(json, TimesheetDTO.class);
 		} catch (IOException e) {
-			System.out.println("Error in parsing Input JSON");
+			System.out.println("Error in parsing Input JSON"+e);
 			e.printStackTrace();
 			throw new HRException("Unable to save timesheet...." + json);
 		}
@@ -92,9 +93,9 @@ public class TimesheetController {
 	}
 	
 	@Transactional(propagation = Propagation.REQUIRED)
-	@PostMapping("update/{timesheetSequence}/{json}")
+	@PostMapping("update/{timesheetSequence}")
 	public ResponseEntity<List<TimesheetSummary>> updateTimesheet(@PathVariable("timesheetSequence") String timesheetSequence, 
-												@PathVariable("json") String json) throws HRException {
+												@RequestBody String json) throws HRException {
 		log.info("Input JSON for  updating timesheet " + json);
 		ObjectMapper mapper = new ObjectMapper();
 		TimesheetDTO dto = null;
@@ -190,7 +191,7 @@ public class TimesheetController {
 		
 	}
 	
-	@PostMapping("reject/{employeeId}/{weekstartDate}/{weekendDate}")
+	@PostMapping("reject/{employeeId}/{weekstartDate}/{weekendDate}/{managerComments}")
 	public ResponseEntity<Void> rejectTimesheet(
 			@PathVariable("employeeId") String employeeId,
 			@PathVariable("weekstartDate") String weekStartDate,
