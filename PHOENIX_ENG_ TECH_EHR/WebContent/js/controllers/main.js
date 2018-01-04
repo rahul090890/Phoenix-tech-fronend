@@ -13465,7 +13465,7 @@ materialAdmin
 										                    $scope.task.splice(value, 1);
 										                    $scope.daydetails.splice(value, 1);
 										                    $scope.divIterator.pop();
-
+												     $scope.rowTotals[value]=0;
 										                    var rowIdInArray = $.inArray(value, $scope.deleteRowsArr);
 										                    $scope.deleteRowsArr.splice(rowIdInArray, 1);
 										                });
